@@ -2,6 +2,12 @@
 
 This is an addon/plugin template for [Zotero](https://www.zotero.org/).
 
+[Documentation](https://zotero.yuque.com/books/share/8d230829-6004-4934-b4c6-685a7001bfa0/vec88d)(Chinese, provides English translation)
+
+> ❌You are currently in `overlay` extension mode, which will no longer be maintained and will be abandonded in Zotero 7. To use `bootstrap` mode, plsase switch to `bootstrap` branch in git.
+
+> ⚠️`overlay` mode will no longer be supported in the coming Zotero 7. Please use the `bootstrap` extension mode instead. See discussion here: https://groups.google.com/g/zotero-dev/c/TT_rcLVpQwg
+
 ## Features
 
 - TypeScript support;
@@ -49,7 +55,7 @@ This section shows the directory structure of a template.
 ```shell
 │  .gitignore
 │  .release-it.json # release-it conf
-|  jsconfig.json    # https://code.visualstudio.com/docs/languages/jsconfig#
+|  tsconfig.json    # https://code.visualstudio.com/docs/languages/jsconfig#
 │  build.js         # esbuild
 │  LICENSE
 │  package.json     # npm conf
@@ -151,6 +157,8 @@ You can also debug code in these ways:
 **Search for a Zotero API**  
 Zotero docs are outdated or incomplete. Searching the source code of Zotero is unavoidable.  
 Clone https://github.com/zotero/zotero and search the keyword globally. You can search the UI text in `.xul`/`.dtd` files, and then search the keys of the text value in `.js`/`.xul` files.
+
+> ⭐The [zotero-types](https://github.com/windingwind/zotero-types) provides most frequently used Zotero APIs. It's included in this template by default.
 
 ## Disclaimer
 
