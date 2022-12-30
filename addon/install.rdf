@@ -18,7 +18,7 @@
         em:multiprocessCompatible="true"
         em:bootstrap="true">>
         <em:type>2</em:type>
-        <em:targetApplication RDF:resource="rdf:#$x61SL3"/>
+        <!-- <em:targetApplication RDF:resource="rdf:#$x61SL3"/> -->
         <em:targetApplication>
             <Description>
                 <em:id>zotero@chnm.gmu.edu</em:id>
