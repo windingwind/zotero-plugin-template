@@ -59,7 +59,7 @@ class AddonEvents extends AddonModule {
   public initPrefs() {
     this._Addon.toolkit.Tool.log(this._Addon.rootURI);
     const prefOptions = {
-      pluginID: config.addonID,
+      id: config.addonID.replace(/[@\.#]/g,  '-'),  // Replace invalid characters in CSS selector
       src: this._Addon.rootURI + "chrome/content/preferences.xhtml",
       label: this._Addon.locale.getString("prefs.title"),
       image: `chrome://${config.addonRef}/content/icons/favicon.png`,
