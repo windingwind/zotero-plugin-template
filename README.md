@@ -46,6 +46,11 @@ If you are using this repo, I recommended that you put this badge ([![Using Zote
 [![Using Zotero Plugin Template](https://img.shields.io/badge/Using-Zotero%20Plugin%20Template-blue?style=flat-square&logo=github)](https://github.com/windingwind/zotero-plugin-template)
 ```
 
+### README.md
+- en [English](README.md)
+- zh_CN [简体中文](readme/README.zh-CN.md)
+
+
 ## Features
 
 > ❗The localization system is upgraded (dtd is deprecated and we do not use .properties anymore). Only supports Zotero 7.0.0-beta.12 or higher now. If you want to support Zotero 6, you may need to use `dtd`, `properties`, and `ftl` at the same time. See the staled branch `zotero6-bootstrap`.
