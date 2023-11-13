@@ -50,12 +50,12 @@
 
 > ❗Zotero系统已升级(dtd 已弃用，我们将不在使用 .properties). 主分支将只支持 Zotero 7.0.0-beta.12 或更高版本. 如果需要支持 Zotero 6，可能需要同时使用`dtd`、`properties` 和`ftl`. 请参考此库的 `zotero6-bootstrap` 分支.
 
-- 广泛骨架下的事件驱动、函数式编程；
+- 事件驱动、函数式编程；
 - 简单易用，开箱即用；
-- ⭐[新!]自动热重载！每当修改源码时，都会自动翻译并重新加载；[详情请跳转→](#auto-hot-reload)
+- ⭐[新特性!]自动热重载！每当修改源码时，都会自动编译并重新加载插件；[详情请跳转→](#auto-hot-reload)
 - `src/modules/examples.ts` 中有丰富的示例，涵盖了插件中常用的大部分API(使用的插件工具包 [zotero-plugin-toolkit](https://github.com/windingwind/zotero-plugin-toolkit))；
 - TypeScript 支持:
-  - 对整个Zotero项目的完整类型定义支持，并且使用 JavaScript 编写 (使用的类型定义[zotero-types](https://github.com/windingwind/zotero-types))；
+  - 为Zotero项目提供全面的类型定义支持，并且使用 JavaScript 编写 (使用的类型定义[zotero-types](https://github.com/windingwind/zotero-types))；
   - 全局变量和环境设置；
 - 插件构建/测试/发布工作流:
   - 自动生成/更新插件id和版本、更新配置和设置环境变量 (`development/production`)；
@@ -115,7 +115,7 @@
 - progressWindowExample
 - vtableExample(See Preference Pane Examples)
 
-### 提示示例(PromptExamples)
+### 指令行示例(PromptExamples)
 
 Obsidian风格的指令输入模块，它通过接受文本来运行插件，并在弹出窗口中显示可选项.
 
@@ -131,9 +131,9 @@ Obsidian风格的指令输入模块，它通过接受文本来运行插件，并
 
 通过直接在GitHub中下载构建好的 `xpi` 文件并将其安装到Zotero中来了解示例的工作原理.
 
-这也是您的插件发布并被其他人使用的方式.
+这也是你发布插件的格式，同时这也将是其他人可以直接使用的版本.
 
-> 该库构建好的xpi文件不承诺任何实际功能，它可能不是最新的版本. 
+> 该库构建好的xpi文件不具有任何实际功能，它可能不随Zotero更新而随时更新. 
 >
 > `xpi` 文件实际上是一个zip压缩包，然而，请不要直接修改它，而是修改源代码并重新构建它.
 
@@ -200,7 +200,7 @@ npm run release
 
 3. 复制 zotero 命令行配置文件，修改开始安装 beta Zotero 的命令.
 
-   > (可选项) 此操作仅需执行以此: 使用 `/path/to/zotero -p` 启动 Zotero，创建一个新的配置文件并用作开发配置文件.
+   > (可选项) 此操作仅需执行一次: 使用 `/path/to/zotero -p` 启动 Zotero，创建一个新的配置文件并用作开发配置文件.
    > 将配置文件的路径 `profilePath` 放入 `zotero-cmd.json` 中，以指定要使用的配置文件.
 
    ```sh
@@ -224,7 +224,7 @@ npm run release
 
 10. 点击 "Inspect Main Process"
 
-### 自动热加载(Auto Hot Reload)
+### 自动热重载(Auto Hot Reload)
 
 厌倦了无休止的重启吗？忘掉它，拥抱热加载！
 
@@ -326,7 +326,7 @@ Zotero 文档已过时且不完整，克隆 https://github.com/zotero/zotero 并
 - UI 文件: `./addon/chrome/content/*.xhtml`.
 - 区域设置文件: `./addon/locale/**/*.flt`;
 - 首选项文件: `./addon/prefs.js`;
-  > 不要中断 `prefs.js`
+  > 不要在 `prefs.js` 中换行
 
 ```shell
 .
