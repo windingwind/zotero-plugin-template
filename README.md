@@ -5,6 +5,8 @@
 
 This is a plugin template for [Zotero](https://www.zotero.org/).
 
+[English](README.md) | [简体中文](doc/README-zhCN.md)
+
 Some plugins created with this template:
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/windingwind/zotero-better-notes?label=zotero-better-notes&style=flat-square)](https://github.com/windingwind/zotero-better-notes)
@@ -45,11 +47,6 @@ If you are using this repo, I recommended that you put this badge ([![Using Zote
 ```md
 [![Using Zotero Plugin Template](https://img.shields.io/badge/Using-Zotero%20Plugin%20Template-blue?style=flat-square&logo=github)](https://github.com/windingwind/zotero-plugin-template)
 ```
-
-### README.md
-- en [English](README.md)
-- zh_CN [简体中文](readme/README.zh-CN.md)
-
 
 ## Features
 

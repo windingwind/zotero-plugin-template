@@ -5,6 +5,8 @@
 
 这是 [Zotero](https://www.zotero.org/) 的插件模板.
 
+[English](../README.md) | [简体中文](./README-zhCN.md)
+
 使用此模板创建的一些插件:
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/windingwind/zotero-better-notes?label=zotero-better-notes&style=flat-square)](https://github.com/windingwind/zotero-better-notes)
@@ -50,12 +52,12 @@
 
 > ❗Zotero系统已升级(dtd 已弃用，我们将不在使用 .properties). 主分支将只支持 Zotero 7.0.0-beta.12 或更高版本. 如果需要支持 Zotero 6，可能需要同时使用`dtd`、`properties` 和`ftl`. 请参考此库的 `zotero6-bootstrap` 分支.
 
-- 事件驱动、函数式编程；
+- 事件驱动、函数式编程的可扩展框架；
 - 简单易用，开箱即用；
 - ⭐[新特性!]自动热重载！每当修改源码时，都会自动编译并重新加载插件；[详情请跳转→](#auto-hot-reload)
 - `src/modules/examples.ts` 中有丰富的示例，涵盖了插件中常用的大部分API(使用的插件工具包 [zotero-plugin-toolkit](https://github.com/windingwind/zotero-plugin-toolkit))；
 - TypeScript 支持:
-  - 为Zotero项目提供全面的类型定义支持，并且使用 JavaScript 编写 (使用的类型定义[zotero-types](https://github.com/windingwind/zotero-types))；
+  - 为使用 JavaScript 编写的Zotero源码提供全面的类型定义支持(使用类型定义包[zotero-types](https://github.com/windingwind/zotero-types))；
   - 全局变量和环境设置；
 - 插件构建/测试/发布工作流:
   - 自动生成/更新插件id和版本、更新配置和设置环境变量 (`development/production`)；
@@ -133,7 +135,7 @@ Obsidian风格的指令输入模块，它通过接受文本来运行插件，并
 
 这也是你发布插件的格式，同时这也将是其他人可以直接使用的版本.
 
-> 该库构建好的xpi文件不具有任何实际功能，它可能不随Zotero更新而随时更新. 
+> 该库构建好的xpi文件不具有任何实际功能，它可能不随Zotero更新而随时更新.
 >
 > `xpi` 文件实际上是一个zip压缩包，然而，请不要直接修改它，而是修改源代码并重新构建它.
 
@@ -152,7 +154,7 @@ _GitHub CodeSpace_ 使你可以直接开始开发而无需在本地下载代码/
 - 去 [homepage](https://github.com/windingwind/zotero-plugin-template)顶部，点击绿色按钮`Use this template`，点击 `Open in codespace`， 你需要登录你的GitHub账号.
 - 等待 codespace 加载.
 - 修改 `./package.json` 中的设置，包括：
-</details>
+  </details>
 
   ```json5
   {
@@ -309,7 +311,7 @@ createElement(document, "button", { namespace: "xul" }); // manually set namespa
 
 ### 关于 Zotero API(About Zotero API)
 
-Zotero 文档已过时且不完整，克隆 https://github.com/zotero/zotero 并全局搜索关键字.
+Zotero 文档已过时且不完整，git clone https://github.com/zotero/zotero 并全局搜索关键字.
 
 > ⭐[zotero-types](https://github.com/windingwind/zotero-types) 提供了最常用的 Zotero API，在默认情况下它被包含在此模板中. 你的 IDE 将为大多数的 API 提供提醒.
 
