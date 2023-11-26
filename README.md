@@ -24,6 +24,8 @@ Plugins created with this template:
 [![GitHub Repo stars](https://img.shields.io/github/stars/MuiseDestiny/zotero-gpt?label=zotero-gpt&style=flat-square)](https://github.com/MuiseDestiny/zotero-gpt)
 [![GitHub Repo stars](https://img.shields.io/github/stars/zoushucai/zotero-journalabbr?label=zotero-journalabbr&style=flat-square)](https://github.com/zoushucai/zotero-journalabbr)
 [![GitHub Repo stars](https://img.shields.io/github/stars/MuiseDestiny/zotero-figure?label=zotero-figure&style=flat-square)](https://github.com/MuiseDestiny/zotero-figure)
+[![GitHub Repo stars](https://img.shields.io/github/stars/l0o0/jasminum?label=jasminum&style=flat-square)](https://github.com/l0o0/jasminum)
+[![GitHub Repo stars](https://img.shields.io/github/stars/lifan0127/ai-research-assistant?label=ai-research-assistant&style=flat-square)](https://github.com/lifan0127/ai-research-assistant)
 
 📖 [Plugin Development Documentation](https://zotero.yuque.com/books/share/8d230829-6004-4934-b4c6-685a7001bfa0/vec88d) (Chinese, provides English translation)
 
@@ -140,6 +142,7 @@ This is also how your plugin will be released and used by others.
 - Fork this repo/Click `Use this template`;
 - Git clone the forked repo;
 - Enter the repo folder;
+
 <details >
 <summary>💡 Start with GitHub Codespace</summary>
 
@@ -173,7 +176,9 @@ Replace the steps above and build you first plugin in 30 seconds!
 
   > Be careful to set the addonID and addonRef to avoid confliction.
 
-- Run `npm install` to set up the plugin and install dependencies. If you don't have NodeJS installed, please download it [here](https://nodejs.org/en/);
+- Run `npm install` to set up the plugin and install dependencies.
+  - If you don't have NodeJS installed, please download it [here](https://nodejs.org/en/);
+  - If you are using `pnpm` as the package manager for your project, you need to add `public-hoist-pattern[]=*@types/bluebird*` to `.npmrc`, see <https://github.com/windingwind/zotero-types?tab=readme-ov-file#usage>.
 - Run `npm run build` to build the plugin in production mode. Run `npm run build-dev` to build the plugin in development mode. The xpi for installation and the built code is under `build` folder.
 
   > What the difference between dev & prod?
