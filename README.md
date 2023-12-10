@@ -131,9 +131,15 @@ Activate with `Shift+P`.
 
 ## Quick Start Guide
 
-1. Install a beta version of Zotero: <https://www.zotero.org/support/beta_builds> (Zotero 7 beta: <https://www.zotero.org/support/dev/zotero_7_for_developers>);
-2. Click `Use this template`;
-3. Git clone your new repo;
+### 0 Requirement
+
+1. Install a beta version of Zotero: <https://www.zotero.org/support/beta_builds> (Zotero 7 beta: <https://www.zotero.org/support/dev/zotero_7_for_developers>)
+2. Install Node.js and Git
+
+### 1 Creat your repo
+
+1. Click `Use this template`;
+2. Git clone your new repo;
     <details >
     <summary>💡 Start with GitHub Codespace</summary>
 
@@ -145,9 +151,11 @@ Activate with `Shift+P`.
     - Wait for codespace to load.
 
     </details>
-4. Enter the repo folder;
+3. Enter the repo folder;
 
-5. Modify the settings in `./package.json`, including:
+### 2 Config template settings and enviroment
+
+1. Modify the settings in `./package.json`, including:
 
     ```json5
     {
@@ -170,7 +178,7 @@ Activate with `Shift+P`.
 
     > Be careful to set the addonID and addonRef to avoid conflict.
 
-6. Copy zotero command line config file. Modify the commands that starts your installation of the beta Zotero.
+2. Copy zotero command line config file. Modify the commands that starts your installation of the beta Zotero.
 
    > (Optional) Do this only once: Start the beta Zotero with `/path/to/zotero -p`. Create a new profile and use it as your development profile.
    > Put the path of the profile into the `profilePath` in `zotero-cmd.json` to specify which profile to use.
@@ -180,34 +188,20 @@ Activate with `Shift+P`.
    vim ./scripts/zotero-cmd.json
    ```
 
-7. Install dependencies with `npm install`.
+3. Install dependencies with `npm install`.
    - If you don't have NodeJS installed, please download it [here](https://nodejs.org/en/);
 
-8. Start development server with `npm run start`.
-   - Run `npm start` to start a development server, it will:
-     - Build the plugin in development mode
-     - Start Zotero
-     - Open devtool
-     - Watch `src/**` and `addon/**`.
-       - If `src/**` changed, run esbuild and reload
-       - If `addon/**` has changed, build the plugin (in development mode)
-   - Run `npm run build` to build the plugin in production mode, and the xpi for installation and the built code is under `build` folder
-      - Create/empty `build/`.
-      - Copy `addon/**` to `build/addon/**`
-      - Replace placeholders
-      - Prepare locale files
-        - Rename `**/*.flt` to `**/${addonRef}-*.flt`
-        - Prefix each fluent message with `addonRef-`
-      - (Production mode only) Packaging the plugin to `*.xpi`
-      - (Production mode only) Prepare `update.json` or `update-beta.json`
+### 3 Coding
 
-     > What the difference between dev & prod?
-     >
-     > - This environment variable is stored in `Zotero.${addonInstance}.data.env`. The outputs to console is disabled in prod mode.
-     > - You can decide what users cannot see/use based on this variable.
-     > - In production mode, the build script will pack the plugin and update the `update.json`
+Start development server with `npm run start`, it will:
+   - Build the plugin in development mode
+   - Start Zotero
+   - Open devtool
+   - Watch `src/**` and `addon/**`.
+     - If `src/**` changed, run esbuild and reload
+     - If `addon/**` has changed, build the plugin (in development mode)
 
-### Auto Hot Reload
+#### Auto Hot Reload
 
 Tired of endless restarting? Forget about it!
 
@@ -226,7 +220,34 @@ When file changes are detected in `src` or `addon`, the plugin will be automatic
 
 </details>
 
-### Release
+#### Debug in Zotero
+
+You can also:
+
+- Test code snipastes in Tools -> Developer -> Run Javascript;
+- Debug output with `Zotero.debug()`. Find the outputs in Help->Debug Output Logging->View Output;
+- Debug UI. Zotero is built on the Firefox XUL framework. Debug XUL UI with software like [XUL Explorer](https://udn.realityripple.com/docs/Archive/Mozilla/XUL_Explorer).
+  > XUL Documentation: <http://www.devdoc.net/web/developer.mozilla.org/en-US/docs/XUL.html>
+
+### 4 Build
+
+Run `npm run build` to build the plugin in production mode, and the xpi for installation and the built code is under `build` folder
+    - Create/empty `build/`.
+    - Copy `addon/**` to `build/addon/**`
+    - Replace placeholders
+    - Prepare locale files
+      - Rename `**/*.flt` to `**/${addonRef}-*.flt`
+      - Prefix each fluent message with `addonRef-`
+    - (Production mode only) Packaging the plugin to `*.xpi`
+    - (Production mode only) Prepare `update.json` or `update-beta.json`
+
+     > What the difference between dev & prod?
+     >
+     > - This environment variable is stored in `Zotero.${addonInstance}.data.env`. The outputs to console is disabled in prod mode.
+     > - You can decide what users cannot see/use based on this variable.
+     > - In production mode, the build script will pack the plugin and update the `update.json`
+
+### 5 Release
 
 To build and release, use
 
@@ -236,15 +257,6 @@ To build and release, use
 # release-it: https://github.com/release-it/release-it
 npm run release
 ```
-
-### Debug in Zotero
-
-You can also:
-
-- Test code snipastes in Tools->Developer->Run Javascript;
-- Debug output with `Zotero.debug()`. Find the outputs in Help->Debug Output Logging->View Output;
-- Debug UI. Zotero is built on the Firefox XUL framework. Debug XUL UI with software like [XUL Explorer](https://udn.realityripple.com/docs/Archive/Mozilla/XUL_Explorer).
-  > XUL Documentation: <http://www.devdoc.net/web/developer.mozilla.org/en-US/docs/XUL.html>
 
 ## Details
 
