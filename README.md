@@ -134,12 +134,12 @@ Activate with `Shift+P`.
 ### 0 Requirement
 
 1. Install a beta version of Zotero: <https://www.zotero.org/support/beta_builds> (Zotero 7 beta: <https://www.zotero.org/support/dev/zotero_7_for_developers>)
-2. Install Node.js and Git
+2. Install [Node.js](https://nodejs.org/en/) and Git
 
 ### 1 Creat your repo
 
-1. Click `Use this template`;
-2. Git clone your new repo;
+1. Click `Use this template`
+2. Git clone your new repo
     <details >
     <summary>💡 Start with GitHub Codespace</summary>
 
@@ -151,7 +151,8 @@ Activate with `Shift+P`.
     - Wait for codespace to load.
 
     </details>
-3. Enter the repo folder;
+
+3. Enter the repo folder
 
 ### 2 Config template settings and enviroment
 
@@ -171,11 +172,12 @@ Activate with `Shift+P`.
         "prefsPrefix": "",     // the prefix of prefs
         "releasePage": "",     // URL to releases
         "updateJSON": "",      // URL to update.json
-        "updateBetaJSON": "",  // URL to update.json
+        "updateBetaJSON": "",  // URL to update-beta.json
       }
     }
     ```
 
+    > [!warn]
     > Be careful to set the addonID and addonRef to avoid conflict.
 
 2. Copy zotero command line config file. Modify the commands that starts your installation of the beta Zotero.
@@ -188,14 +190,13 @@ Activate with `Shift+P`.
    vim ./scripts/zotero-cmd.json
    ```
 
-3. Install dependencies with `npm install`.
-   - If you don't have NodeJS installed, please download it [here](https://nodejs.org/en/);
+3. Install dependencies with `npm install`
 
 ### 3 Coding
 
 Start development server with `npm run start`, it will:
 
-- Build the plugin in development mode
+- Prebuild the plugin in development mode
 - Start Zotero with plugin loaded from `build/`
 - Open devtool
 - Watch `src/**` and `addon/**`.
@@ -232,7 +233,7 @@ You can also:
 
 ### 4 Build
 
-Run `npm run build` to build the plugin in production mode, and the xpi for installation and the built code is under `build` folder
+Run `npm run build` to build the plugin in production mode, and the xpi for installation and the built code is under `build` folder, it will:
 
 - Create/empty `build/`.
 - Copy `addon/**` to `build/addon/**`
@@ -243,11 +244,12 @@ Run `npm run build` to build the plugin in production mode, and the xpi for inst
 - (Production mode only) Packaging the plugin to `*.xpi`
 - (Production mode only) Prepare `update.json` or `update-beta.json`
 
- > What the difference between dev & prod?
- >
- > - This environment variable is stored in `Zotero.${addonInstance}.data.env`. The outputs to console is disabled in prod mode.
- > - You can decide what users cannot see/use based on this variable.
- > - In production mode, the build script will pack the plugin and update the `update.json`
+> [!note]
+> **What's the difference between dev & prod?**
+>
+> - This environment variable is stored in `Zotero.${addonInstance}.data.env`. The outputs to console is disabled in prod mode.
+> - You can decide what users cannot see/use based on this variable.
+> - In production mode, the build script will pack the plugin and update the `update.json`
 
 ### 5 Release
 
@@ -255,10 +257,12 @@ To build and release, use
 
 ```shell
 # A release-it command: version increase, npm run build, git push, and GitHub release
-# You need to set the environment variable GITHUB_TOKEN https://github.com/settings/tokens
 # release-it: https://github.com/release-it/release-it
 npm run release
 ```
+
+> [!note]
+> You need to set the environment variable GITHUB_TOKEN https://github.com/settings/tokens
 
 ## Details
 
