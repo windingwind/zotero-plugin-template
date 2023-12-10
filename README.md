@@ -52,7 +52,8 @@ If you are using this repo, I recommended that you put the following badge on yo
 
 ## Features
 
-> ❗The localization system is upgraded (dtd is deprecated and we do not use .properties anymore). Only supports Zotero 7.0.0-beta.12 or higher now. If you want to support Zotero 6, you may need to use `dtd`, `properties`, and `ftl` at the same time. See the staled branch `zotero6-bootstrap`.
+> [!warning]
+> The localization system is upgraded (dtd is deprecated and we do not use .properties anymore). Only supports Zotero 7.0.0-beta.12 or higher now. If you want to support Zotero 6, you may need to use `dtd`, `properties`, and `ftl` at the same time. See the staled branch `zotero6-bootstrap`.
 
 - Event-driven, functional programming, under extensive skeleton;
 - Simple and user-friendly, works out-of-the-box.
@@ -177,7 +178,7 @@ Activate with `Shift+P`.
     }
     ```
 
-    > [!warn]
+    > [!warning]
     > Be careful to set the addonID and addonRef to avoid conflict.
 
 2. Copy zotero command line config file. Modify the commands that starts your installation of the beta Zotero.
