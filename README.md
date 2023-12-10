@@ -194,12 +194,13 @@ Activate with `Shift+P`.
 ### 3 Coding
 
 Start development server with `npm run start`, it will:
-   - Build the plugin in development mode
-   - Start Zotero
-   - Open devtool
-   - Watch `src/**` and `addon/**`.
-     - If `src/**` changed, run esbuild and reload
-     - If `addon/**` has changed, build the plugin (in development mode)
+
+- Build the plugin in development mode
+- Start Zotero with plugin loaded from `build/`
+- Open devtool
+- Watch `src/**` and `addon/**`.
+  - If `src/**` changed, run esbuild and reload
+  - If `addon/**` has changed, build the plugin (in development mode)
 
 #### Auto Hot Reload
 
@@ -232,20 +233,21 @@ You can also:
 ### 4 Build
 
 Run `npm run build` to build the plugin in production mode, and the xpi for installation and the built code is under `build` folder
-    - Create/empty `build/`.
-    - Copy `addon/**` to `build/addon/**`
-    - Replace placeholders
-    - Prepare locale files
-      - Rename `**/*.flt` to `**/${addonRef}-*.flt`
-      - Prefix each fluent message with `addonRef-`
-    - (Production mode only) Packaging the plugin to `*.xpi`
-    - (Production mode only) Prepare `update.json` or `update-beta.json`
 
-     > What the difference between dev & prod?
-     >
-     > - This environment variable is stored in `Zotero.${addonInstance}.data.env`. The outputs to console is disabled in prod mode.
-     > - You can decide what users cannot see/use based on this variable.
-     > - In production mode, the build script will pack the plugin and update the `update.json`
+- Create/empty `build/`.
+- Copy `addon/**` to `build/addon/**`
+- Replace placeholders
+- Prepare locale files
+  - Rename `**/*.flt` to `**/${addonRef}-*.flt`
+  - Prefix each fluent message with `addonRef-`
+- (Production mode only) Packaging the plugin to `*.xpi`
+- (Production mode only) Prepare `update.json` or `update-beta.json`
+
+ > What the difference between dev & prod?
+ >
+ > - This environment variable is stored in `Zotero.${addonInstance}.data.env`. The outputs to console is disabled in prod mode.
+ > - You can decide what users cannot see/use based on this variable.
+ > - In production mode, the build script will pack the plugin and update the `update.json`
 
 ### 5 Release
 
