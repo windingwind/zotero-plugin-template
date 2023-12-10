@@ -1,9 +1,10 @@
-import { execSync } from "child_process";
-import { exit } from "process";
-import { existsSync, writeFileSync, readFileSync, mkdirSync } from "fs";
-import path from "path";
 import details from "../package.json" assert { type: "json" };
+import { Logger, isRunning } from "./utils.mjs";
 import cmd from "./zotero-cmd.json" assert { type: "json" };
+import { spawn } from "child_process";
+import { existsSync, readFileSync, writeFileSync } from "fs";
+import path from "path";
+import { exit } from "process";
 
 const { addonID } = details.config;
 const { zoteroBinPath, profilePath, dataDir } = cmd.exec;
@@ -12,22 +13,20 @@ if (!existsSync(zoteroBinPath)) {
   throw new Error("Zotero binary does not exist.");
 }
 
-if (existsSync(profilePath)) {
+if (!existsSync(profilePath)) {
+  throw new Error("The given Zotero profile does not exist.");
+}
+
+function prepareDevEnv() {
   const addonProxyFilePath = path.join(profilePath, `extensions/${addonID}`);
   const buildPath = path.resolve("build/addon");
 
-  if (!existsSync(path.join(buildPath, "./manifest.json"))) {
-    throw new Error(
-      `The built file does not exist, maybe you need to build the addon first.`,
-    );
-  }
-
   function writeAddonProxyFile() {
     writeFileSync(addonProxyFilePath, buildPath);
-    console.log(
-      `[info] Addon proxy file has been updated. 
-      File path: ${addonProxyFilePath} 
-      Addon path: ${buildPath} `,
+    Logger.debug(
+      `Addon proxy file has been updated. 
+          File path: ${addonProxyFilePath} 
+          Addon path: ${buildPath} `,
     );
   }
 
@@ -36,12 +35,6 @@ if (existsSync(profilePath)) {
       writeAddonProxyFile();
     }
   } else {
-    if (
-      existsSync(profilePath) &&
-      !existsSync(path.join(profilePath, "extensions"))
-    ) {
-      mkdirSync(path.join(profilePath, "extensions"));
-    }
     writeAddonProxyFile();
   }
 
@@ -62,13 +55,28 @@ if (existsSync(profilePath)) {
     });
     const updatedPrefs = filteredLines.join("\n");
     writeFileSync(prefsPath, updatedPrefs, "utf-8");
-    console.log("[info] The <profile>/prefs.js has been modified.");
+    Logger.debug("The <profile>/prefs.js has been modified.");
   }
-} else {
-  throw new Error("The given Zotero profile does not exist.");
 }
 
-const startZotero = `"${zoteroBinPath}" --debugger --purgecaches -profile "${profilePath}"`;
+export function main() {
+  prepareDevEnv();
 
-execSync(startZotero);
-exit(0);
+  const zoteroProcess = spawn(zoteroBinPath, [
+    "--debugger",
+    "--purgecaches",
+    "-profile",
+    profilePath,
+  ]);
+
+  zoteroProcess.on("close", (code) => {
+    Logger.info(`Zotero terminated with code ${code}.`);
+    exit(0);
+  });
+
+  process.on("SIGINT", () => {
+    // Handle interrupt signal (Ctrl+C) to gracefully terminate Zotero process
+    zoteroProcess.kill();
+    exit();
+  });
+}
