@@ -143,17 +143,17 @@ Activate with `Shift+P`.
 
 1. Click `Use this template`
 2. Git clone your new repo
-    <details >
-    <summary>💡 Start with GitHub Codespace</summary>
+   <details >
+   <summary>💡 Start with GitHub Codespace</summary>
 
-    _GitHub CodeSpace_ enables you getting started without the need to download code/IDE/dependencies locally.
+   _GitHub CodeSpace_ enables you getting started without the need to download code/IDE/dependencies locally.
 
-    Replace the steps above and build you first plugin in 30 seconds!
+   Replace the steps above and build you first plugin in 30 seconds!
 
-    - Goto top of the [homepage](https://github.com/windingwind/zotero-plugin-template), click the green button `Use this template`, click `Open in codespace`. You may need to login to your GitHub account.
-    - Wait for codespace to load.
+   - Goto top of the [homepage](https://github.com/windingwind/zotero-plugin-template), click the green button `Use this template`, click `Open in codespace`. You may need to login to your GitHub account.
+   - Wait for codespace to load.
 
-    </details>
+   </details>
 
 3. Enter the repo folder
 
@@ -161,27 +161,27 @@ Activate with `Shift+P`.
 
 1. Modify the settings in `./package.json`, including:
 
-    ```json5
-    {
-      "version": "",           // to 0.0.0
-      "author": "",
-      "description": "",
-      "homepage": "",
-      "config": {
-        "addonName": "",       // name to be displayed in the plugin manager
-        "addonID": "",         // ID to avoid conflict. IMPORTANT!
-        "addonRef": "",        // e.g. Element ID prefix
-        "addonInstance": "",   // the plugin's root instance: Zotero.${addonInstance}
-        "prefsPrefix": "",     // the prefix of prefs
-        "releasePage": "",     // URL to releases
-        "updateJSON": "",      // URL to update.json
-        "updateBetaJSON": "",  // URL to update-beta.json
-      }
-    }
-    ```
+   ```json5
+   {
+     version: "", // to 0.0.0
+     author: "",
+     description: "",
+     homepage: "",
+     config: {
+       addonName: "", // name to be displayed in the plugin manager
+       addonID: "", // ID to avoid conflict. IMPORTANT!
+       addonRef: "", // e.g. Element ID prefix
+       addonInstance: "", // the plugin's root instance: Zotero.${addonInstance}
+       prefsPrefix: "", // the prefix of prefs
+       releasePage: "", // URL to releases
+       updateJSON: "", // URL to update.json
+       updateBetaJSON: "", // URL to update-beta.json
+     },
+   }
+   ```
 
-    > [!warning]
-    > Be careful to set the addonID and addonRef to avoid conflict.
+   > [!warning]
+   > Be careful to set the addonID and addonRef to avoid conflict.
 
 2. Copy zotero command line config file. Modify the commands that starts your installation of the beta Zotero.
 
@@ -253,6 +253,7 @@ Steps in `scripts/build.mjs`:
 - (Production mode only) Prepare `update.json` or `update-beta.json`
 
 > [!note]
+>
 > **What's the difference between dev & prod?**
 >
 > - This environment variable is stored in `Zotero.${addonInstance}.data.env`. The outputs to console is disabled in prod mode.

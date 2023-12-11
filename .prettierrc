@@ -1,3 +1,13 @@
 {
-  "tabWidth": 2
+  "printWidth": 80,
+  "tabWidth": 2,
+  "endOfLine": "lf",
+  "overrides": [
+    {
+      "files": ["*.xhtml"],
+      "options": {
+        "htmlWhitespaceSensitivity": "css"
+      }
+    }
+  ]
 }

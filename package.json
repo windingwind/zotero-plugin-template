@@ -17,7 +17,7 @@
     "start": "node scripts/server.mjs",
     "build": "tsc --noEmit && node scripts/build.mjs production",
     "stop": "node scripts/stop.mjs",
-    "lint": "prettier --write src && eslint . --ext .ts --fix",
+    "lint": "prettier --write . && eslint . --ext .ts --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
     "release": "release-it",
     "update-deps": "npm update --save"
