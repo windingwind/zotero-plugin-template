@@ -6,7 +6,7 @@
     "publish": false
   },
   "github": {
-    "release": true,
+    "release": false,
     "assets": ["build/*.xpi"]
   },
   "hooks": {

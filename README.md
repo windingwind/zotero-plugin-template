@@ -265,7 +265,9 @@ npm run release
 ```
 
 > [!note]
-> You need to set the environment variable GITHUB_TOKEN <https://github.com/settings/tokens>
+> In this template, release-it is configured to locally bump the version, build, and push commits and git.tags, subsequently GitHub Action will rebuild the plugin and publish the XPI to GitHub Release.
+>
+> If you need to release a locally built XPI, set `github.release` in `.release-it.json` to `true` and remove `.github/workflows/release.yml`. Besides that, you need to set the environment variable `GITHUB_TOKEN`, get it in <https://github.com/settings/tokens>
 
 ## Details
 
