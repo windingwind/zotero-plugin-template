@@ -7,7 +7,22 @@ This is a plugin template for [Zotero](https://www.zotero.org/).
 
 [English](README.md) | [简体中文](doc/README-zhCN.md)
 
-Some plugins created with this template:
+[📖 Plugin Development Documentation](https://zotero.yuque.com/books/share/8d230829-6004-4934-b4c6-685a7001bfa0/vec88d) (Chinese, outdated)
+
+[📖 Plugin Development Documentation for Zotero 7](https://www.zotero.org/support/dev/zotero_7_for_developers)
+
+[🛠️ Zotero Plugin Toolkit](https://github.com/windingwind/zotero-plugin-toolkit) | [API Documentation](https://github.com/windingwind/zotero-plugin-toolkit/blob/master/docs/zotero-plugin-toolkit.md)
+
+[ℹ️ Zotero Type Definitions](https://github.com/windingwind/zotero-types)
+
+[📜 Zotero Source Code](https://github.com/zotero/zotero)
+
+[📌 Zotero Plugin Template](https://github.com/windingwind/zotero-plugin-template) (This repo)
+
+> [!tip]
+> 👁 Watch this repo so that you can be notified whenever there are fixes & updates.
+
+## Plugins built with this template
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/windingwind/zotero-better-notes?label=zotero-better-notes&style=flat-square)](https://github.com/windingwind/zotero-better-notes)
 [![GitHub Repo stars](https://img.shields.io/github/stars/windingwind/zotero-pdf-preview?label=zotero-pdf-preview&style=flat-square)](https://github.com/windingwind/zotero-pdf-preview)
@@ -29,19 +44,6 @@ Some plugins created with this template:
 [![GitHub Repo stars](https://img.shields.io/github/stars/l0o0/jasminum?label=jasminum&style=flat-square)](https://github.com/l0o0/jasminum)
 [![GitHub Repo stars](https://img.shields.io/github/stars/lifan0127/ai-research-assistant?label=ai-research-assistant&style=flat-square)](https://github.com/lifan0127/ai-research-assistant)
 
-📖 [Plugin Development Documentation](https://zotero.yuque.com/books/share/8d230829-6004-4934-b4c6-685a7001bfa0/vec88d) (Chinese, provides English translation)
-
-🛠️ [Zotero Plugin Toolkit](https://github.com/windingwind/zotero-plugin-toolkit) | [API Documentation](https://github.com/windingwind/zotero-plugin-toolkit/blob/master/docs/zotero-plugin-toolkit.md)
-
-ℹ️ [Zotero Type Definitions](https://github.com/windingwind/zotero-types)
-
-📜 [Zotero Source Code](https://github.com/zotero/zotero)
-
-📌 [Zotero Plugin Template](https://github.com/windingwind/zotero-plugin-template) (This repo)
-
-> [!important]
-> 👁 Watch this repo so that you can be notified whenever there are fixes & updates.
-
 If you are using this repo, I recommended that you put the following badge on your README:
 
 [![Using Zotero Plugin Template](https://img.shields.io/badge/Using-Zotero%20Plugin%20Template-blue?style=flat-square&logo=github)](https://github.com/windingwind/zotero-plugin-template)
@@ -52,20 +54,20 @@ If you are using this repo, I recommended that you put the following badge on yo
 
 ## Features
 
-> [!warning]
-> The localization system is upgraded (dtd is deprecated and we do not use .properties anymore). Only supports Zotero 7.0.0-beta.12 or higher now. If you want to support Zotero 6, you may need to use `dtd`, `properties`, and `ftl` at the same time. See the staled branch `zotero6-bootstrap`.
-
 - Event-driven, functional programming, under extensive skeleton;
 - Simple and user-friendly, works out-of-the-box.
-- ⭐[New!]Auto hot reload! Whenever the source code is modified, automatically compile and reload. [See here→](#auto-hot-reload)
-- Abundant examples in `src/modules/examples.ts`, covering most of the commonly used APIs in plugins(using [zotero-plugin-toolkit](https://github.com/windingwind/zotero-plugin-toolkit));
+- ⭐ [New!] Auto hot reload! Whenever the source code is modified, automatically compile and reload. [See here→](#auto-hot-reload)
+- Abundant examples in `src/modules/examples.ts`, covering most of the commonly used APIs in plugins (using [zotero-plugin-toolkit](https://github.com/windingwind/zotero-plugin-toolkit));
 - TypeScript support:
-  - Full type definition support for the whole Zotero project, which is written in JavaScript(using [zotero-types](https://github.com/windingwind/zotero-types));
+  - Full type definition support for the whole Zotero project, which is written in JavaScript (using [zotero-types](https://github.com/windingwind/zotero-types));
   - Global variables and environment setup;
 - Plugin build/test/release workflow:
-  - Automatically generate/update plugin id/version, update configrations, and set environment variables(`development/production`);
+  - Automatically generate/update plugin id/version, update configrations, and set environment variables (`development` / `production`);
   - Automatically build and reload code in Zotero;
-  - Automatically release to GitHub(using [release-it](https://github.com/release-it/release-it));
+  - Automatically release to GitHub (using [release-it](https://github.com/release-it/release-it));
+
+> [!warning]
+> The localization system is upgraded (dtd is deprecated and we do not use .properties anymore). Only supports Zotero 7.0.0-beta.12 or higher now. If you want to support Zotero 6, you may need to use `dtd`, `properties`, and `ftl` at the same time. See the staled branch `zotero6-bootstrap`.
 
 ## Examples
 
@@ -134,7 +136,7 @@ Activate with `Shift+P`.
 
 ### 0 Requirement
 
-1. Install a beta version of Zotero: <https://www.zotero.org/support/beta_builds> (Zotero 7 beta: <https://www.zotero.org/support/dev/zotero_7_for_developers>)
+1. Install a beta version of Zotero: <https://www.zotero.org/support/beta_builds>
 2. Install [Node.js](https://nodejs.org/en/) and Git
 
 ### 1 Creat your repo
