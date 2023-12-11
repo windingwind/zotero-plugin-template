@@ -244,8 +244,8 @@ Steps in `scripts/build.mjs`:
 
 - Create/empty `build/`.
 - Copy `addon/**` to `build/addon/**`
-- Replace placeholders: use `replace-in-file` to replace keywords and configurations defined in `package.json` in non-build files (`xhtml`, `.flt`, et. al.).
-- Prepare locale files
+- Replace placeholders: use `replace-in-file` to replace keywords and configurations defined in `package.json` in non-build files (`xhtml`, `json`, et al.).
+- Prepare locale files to [avaid conflict](https://www.zotero.org/support/dev/zotero_7_for_developers#avoiding-localization-conflicts)
   - Rename `**/*.flt` to `**/${addonRef}-*.flt`
   - Prefix each fluent message with `addonRef-`
 - Use Esbuild to build `.ts` source code to `.js`, build `src/index.ts` to `./build/addon/chrome/content/scripts`.
