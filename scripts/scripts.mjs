@@ -22,6 +22,13 @@ progressWindow.startCloseTimer(5000);
 
 export const openDevToolScript = `
 (async () => {
+
+// const { BrowserToolboxLauncher } = ChromeUtils.import(
+//   "resource://devtools/client/framework/browser-toolbox/Launcher.jsm",
+// );
+// BrowserToolboxLauncher.init();
+// TODO: Use the above code to open the devtool after https://github.com/zotero/zotero/pull/3387
+
 Zotero.Prefs.set("devtools.debugger.remote-enabled", true, true);
 Zotero.Prefs.set("devtools.debugger.remote-port", 6100, true);
 Zotero.Prefs.set("devtools.debugger.prompt-connection", false, true);
