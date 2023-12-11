@@ -197,7 +197,7 @@ Activate with `Shift+P`.
 
 ### 3 Coding
 
-Start development server with `npm run start`, it will:
+Start development server with `npm start`, it will:
 
 - Prebuild the plugin in development mode
 - Start Zotero with plugin loaded from `build/`
@@ -210,7 +210,7 @@ Start development server with `npm run start`, it will:
 
 Tired of endless restarting? Forget about it!
 
-1. Run `npm run start`.
+1. Run `npm start`.
 2. Coding. (Yes, that's all)
 
 When file changes are detected in `src` or `addon`, the plugin will be automatically compiled and reloaded.

@@ -191,7 +191,7 @@ export const esbuildOptions = {
     `addon/chrome/content/scripts/${config.addonRef}.js`,
   ),
   // Don't turn minify on
-  minify: env.NODE_ENV === "production" ? true : false,
+  minify: env.NODE_ENV === "production",
 };
 
 export async function main() {
