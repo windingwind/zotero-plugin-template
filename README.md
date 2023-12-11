@@ -263,7 +263,7 @@ npm run release
 ```
 
 > [!note]
-> You need to set the environment variable GITHUB_TOKEN https://github.com/settings/tokens
+> You need to set the environment variable GITHUB_TOKEN <https://github.com/settings/tokens>
 
 ## Details
 

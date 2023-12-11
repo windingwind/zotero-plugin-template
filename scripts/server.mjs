@@ -30,7 +30,6 @@ async function watch() {
       Logger.info(`${path} changed.`);
       if (path.startsWith("src")) {
         await esbuildCTX.rebuild();
-        // await esbuild();
       } else if (path.startsWith("addon")) {
         await build()
           // Do not abort the watcher when errors occur in builds triggered by the watcher.

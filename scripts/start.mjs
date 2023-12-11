@@ -1,5 +1,5 @@
 import details from "../package.json" assert { type: "json" };
-import { Logger, isRunning } from "./utils.mjs";
+import { Logger } from "./utils.mjs";
 import cmd from "./zotero-cmd.json" assert { type: "json" };
 import { spawn } from "child_process";
 import { existsSync, readFileSync, writeFileSync } from "fs";

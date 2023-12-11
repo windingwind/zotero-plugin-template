@@ -103,7 +103,7 @@ export class Logger {
 
   // cyan
   static trace(...args) {
-    console.log("\u001b[36m [INFO]\u001b[0m", ...args);
+    console.log("\u001b[36m [TRACE]\u001b[0m", ...args);
   }
 }
 

@@ -15,11 +15,8 @@ import replaceInFile from "replace-in-file";
 
 const { replaceInFileSync } = replaceInFile;
 
-if (process.argv[2] === "production") {
-  process.env.NODE_ENV = "production";
-} else {
-  process.env.NODE_ENV = "development";
-}
+process.env.NODE_ENV =
+  process.argv[2] === "production" ? "production" : "development";
 
 const buildDir = "build";
 
