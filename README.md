@@ -236,15 +236,18 @@ You can also:
 
 ### 4 Build
 
-Run `npm run build` to build the plugin in production mode, and the xpi for installation and the built code is under `build` folder, it will:
+Run `npm run build` to build the plugin in production mode, and the xpi for installation and the built code is under `build` folder.
+
+Steps in `scripts/build.mjs`:
 
 - Create/empty `build/`.
 - Copy `addon/**` to `build/addon/**`
-- Replace placeholders
+- Replace placeholders: use `replace-in-file` to replace keywords and configurations defined in `package.json` in non-build files (`xhtml`, `.flt`, et. al.).
 - Prepare locale files
   - Rename `**/*.flt` to `**/${addonRef}-*.flt`
   - Prefix each fluent message with `addonRef-`
-- (Production mode only) Packaging the plugin to `*.xpi`
+- Use Esbuild to build `.ts` source code to `.js`, build `src/index.ts` to `./build/addon/chrome/content/scripts`.
+- (Production mode only) Zip the `./build/addon` to `./build/*.xpi`
 - (Production mode only) Prepare `update.json` or `update-beta.json`
 
 > [!note]
@@ -310,20 +313,6 @@ createElement(document, "hbox"); // returns XUL.Box
 createElement(document, "button", { namespace: "xul" }); // manually set namespace. returns XUL.Button
 ```
 
-### About Build
-
-Use Esbuild to build `.ts` source code to `.js`.
-
-Use `replace-in-file` to replace keywords and configurations defined in `package.json` in non-build files (`xhtml`, `.flt`, et. al.).
-
-Steps in `scripts/build.mjs`:
-
-1. Clean `./build`
-2. Copy `./addon` to `./build`
-3. Esbuild to `./build/addon/chrome/content/scripts`
-4. Replace `__buildVersion__` and `__buildTime__` in `./build/addon`
-5. Zip the `./build/addon` to `./build/*.xpi`
-
 ### About Zotero API
 
 Zotero docs are outdated and incomplete. Clone <https://github.com/zotero/zotero> and search the keyword globally.
@@ -380,11 +369,14 @@ This section shows the directory structure of a template.
 |   `-- prefs.js
 |-- build/                         # build dir
 |-- scripts                        # scripts for dev
-|   |-- build.mjs                  # esbuild and replace
-|   |-- reload.mjs
-|   |-- start.mjs
-|   |-- stop.mjs
-|   `-- zotero-cmd-default.json
+|   |-- build.mjs                      # script to build plugin
+|   |-- scripts.mjs                    # scripts send to Zotero, such as reload, openDevTool, etc
+|   |-- server.mjs                     # script to start a development server
+|   |-- start.mjs                      # script to start Zotero process
+|   |-- stop.mjs                       # script to kill Zotero process
+|   |-- utils.mjs                      # utils functions for dev scripts
+|   |-- update-template.json      # template of `update.json`
+|   `-- zotero-cmd-default.json   # example of local env
 |-- src                           # source code
 |   |-- addon.ts                  # base class
 |   |-- hooks.ts                  # lifecycle hooks
@@ -400,7 +392,6 @@ This section shows the directory structure of a template.
 |-- tsconfig.json                 # https://code.visualstudio.com/docs/languages/jsconfig
 |-- typings                       # ts typings
 |   `-- global.d.ts
-|-- update-template.json          # template of `update.json`
 `-- update.json
 ```
 
