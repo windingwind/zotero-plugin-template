@@ -193,6 +193,8 @@ Activate with `Shift+P`.
 
 3. Install dependencies with `npm install`
 
+   - If you are using `pnpm` as the package manager for your project, you need to add `public-hoist-pattern[]=*@types/bluebird*` to `.npmrc`, see <https://github.com/windingwind/zotero-types?tab=readme-ov-file#usage>.
+
 ### 3 Coding
 
 Start development server with `npm run start`, it will:
