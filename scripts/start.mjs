@@ -2,12 +2,15 @@ import details from "../package.json" assert { type: "json" };
 import { Logger } from "./utils.mjs";
 import cmd from "./zotero-cmd.json" assert { type: "json" };
 import { spawn } from "child_process";
-import { existsSync, readFileSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import path from "path";
 import { exit } from "process";
 
 const { addonID } = details.config;
 const { zoteroBinPath, profilePath, dataDir } = cmd.exec;
+
+const logPath = path.join("build", "log");
+const logFilePath = path.join(logPath, "zotero.log");
 
 if (!existsSync(zoteroBinPath)) {
   throw new Error("Zotero binary does not exist.");
@@ -59,8 +62,18 @@ function prepareDevEnv() {
   }
 }
 
+function prepareLog() {
+  if (existsSync(logPath)) {
+    rmSync(logPath, { recursive: true });
+  }
+  mkdirSync(logPath);
+  writeFileSync(logFilePath, "");
+}
+
 export function main() {
   prepareDevEnv();
+
+  prepareLog();
 
   const zoteroProcess = spawn(zoteroBinPath, [
     "--debugger",
@@ -68,6 +81,18 @@ export function main() {
     "-profile",
     profilePath,
   ]);
+
+  zoteroProcess.stdout.on("data", (data) => {
+    writeFileSync(logFilePath, data, {
+      flag: "a",
+    });
+  });
+
+  zoteroProcess.stderr.on("data", (data) => {
+    writeFileSync(logFilePath, data, {
+      flag: "a",
+    });
+  });
 
   zoteroProcess.on("close", (code) => {
     Logger.info(`Zotero terminated with code ${code}.`);
