@@ -2,14 +2,15 @@ import details from "../package.json" assert { type: "json" };
 import { Logger } from "./utils.mjs";
 import cmd from "./zotero-cmd.json" assert { type: "json" };
 import { spawn } from "child_process";
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
+import { existsSync, readFileSync, writeFileSync } from "fs";
+import { clearFolder } from "./utils.mjs";
 import path from "path";
 import { exit } from "process";
 
 const { addonID } = details.config;
 const { zoteroBinPath, profilePath, dataDir } = cmd.exec;
 
-const logPath = path.join("build", "log");
+const logPath = "logs";
 const logFilePath = path.join(logPath, "zotero.log");
 
 if (!existsSync(zoteroBinPath)) {
@@ -63,10 +64,7 @@ function prepareDevEnv() {
 }
 
 function prepareLog() {
-  if (existsSync(logPath)) {
-    rmSync(logPath, { recursive: true });
-  }
-  mkdirSync(logPath);
+  clearFolder(logPath);
   writeFileSync(logFilePath, "");
 }
 
