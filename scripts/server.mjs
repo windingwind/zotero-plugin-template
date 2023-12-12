@@ -54,7 +54,7 @@ function reload() {
   execSync(command);
 }
 
-function openDevToolUrl() {
+function openDevTool() {
   Logger.debug("Open dev tools...");
   const url = `zotero://ztoolkit-debug/?run=${encodeURIComponent(
     openDevToolScript,
@@ -70,7 +70,7 @@ async function main() {
   // start Zotero
   startZotero();
   setTimeout(() => {
-    openDevToolUrl();
+    openDevTool();
   }, 2000);
 
   // watch
@@ -79,6 +79,7 @@ async function main() {
 
 main().catch((err) => {
   Logger.error(err);
+  // execSync("node scripts/stop.mjs");
   exit(1);
 });
 
