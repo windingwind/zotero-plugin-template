@@ -61,10 +61,11 @@ If you are using this repo, I recommended that you put the following badge on yo
 - TypeScript support:
   - Full type definition support for the whole Zotero project, which is written in JavaScript (using [zotero-types](https://github.com/windingwind/zotero-types));
   - Global variables and environment setup;
-- Plugin build/test/release workflow:
+- Plugin develop/build/release workflow:
   - Automatically generate/update plugin id/version, update configrations, and set environment variables (`development` / `production`);
   - Automatically build and reload code in Zotero;
   - Automatically release to GitHub (using [release-it](https://github.com/release-it/release-it));
+- Prettier and ES Lint integration.
 
 > [!warning]
 > The localization system is upgraded (dtd is deprecated and we do not use .properties anymore). Only supports Zotero 7.0.0-beta.12 or higher now. If you want to support Zotero 6, you may need to use `dtd`, `properties`, and `ftl` at the same time. See the staled branch `zotero6-bootstrap`.
@@ -277,7 +278,7 @@ npm run release
 > [!note]
 > In this template, release-it is configured to locally bump the version, build, and push commits and git.tags, subsequently GitHub Action will rebuild the plugin and publish the XPI to GitHub Release.
 >
-> If you need to release a locally built XPI, set `github.release` in `.release-it.json` to `true` and remove `.github/workflows/release.yml`. Besides that, you need to set the environment variable `GITHUB_TOKEN`, get it in <https://github.com/settings/tokens>
+> If you need to release a locally built XPI, set `release-it.github.release` to `true` in `package.json` and remove `.github/workflows/release.yml`. Besides that, you need to set the environment variable `GITHUB_TOKEN`, get it in <https://github.com/settings/tokens>
 
 #### About Prerelease
 
