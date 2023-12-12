@@ -139,7 +139,10 @@ Activate with `Shift+P`.
 1. Install a beta version of Zotero: <https://www.zotero.org/support/beta_builds>
 2. Install [Node.js](https://nodejs.org/en/) and Git
 
-### 1 Creat your repo
+> [!note]
+> This guide assumes that you have an initial understanding of the basic structure and workings of the Zotero plugin. If you don't, please refer to the [documentation](https://www.zotero.org/support/dev/zotero_7_for_developers) and official plugin examples [Make It Red](https://github.com/zotero/make-it-red) first.
+
+### 1 Creat Your Repo
 
 1. Click `Use this template`
 2. Git clone your new repo
@@ -157,7 +160,7 @@ Activate with `Shift+P`.
 
 3. Enter the repo folder
 
-### 2 Config template settings and enviroment
+### 2 Config Template Settings and Enviroment
 
 1. Modify the settings in `./package.json`, including:
 
@@ -172,16 +175,17 @@ Activate with `Shift+P`.
        addonID: "", // ID to avoid conflict. IMPORTANT!
        addonRef: "", // e.g. Element ID prefix
        addonInstance: "", // the plugin's root instance: Zotero.${addonInstance}
-       prefsPrefix: "", // the prefix of prefs
+       prefsPrefix: "extensions.zotero.${addonRef}", // the prefix of prefs
        releasePage: "", // URL to releases
        updateJSON: "", // URL to update.json
-       updateBetaJSON: "", // URL to update-beta.json
      },
    }
    ```
 
    > [!warning]
    > Be careful to set the addonID and addonRef to avoid conflict.
+
+   If you need to host your XPI packages outside of GitHub, remove `releasePage` and add `updateLink` with the value set to your XPI download URL.
 
 2. Copy zotero command line config file. Modify the commands that starts your installation of the beta Zotero.
 
@@ -274,6 +278,13 @@ npm run release
 > In this template, release-it is configured to locally bump the version, build, and push commits and git.tags, subsequently GitHub Action will rebuild the plugin and publish the XPI to GitHub Release.
 >
 > If you need to release a locally built XPI, set `github.release` in `.release-it.json` to `true` and remove `.github/workflows/release.yml`. Besides that, you need to set the environment variable `GITHUB_TOKEN`, get it in <https://github.com/settings/tokens>
+
+#### About Prerelease
+
+The template defines `prerelease` as the beta version of the plugin, when you select a `prerelease` version in release-it (with `-` in the version number), the build script will create a new `update-beta.json` for prelease use, which ensures that users of the regular version won't be able to update to the beta, only users who have manually downloaded and installed the beta will be able to update to the next beta automatically.  When the next regular release is updated, both `update.json` and `update-beta.json` will be updated so that both regular and beta users can update to the new regular release.
+
+> [!warning]
+> Strictly speaking, distinguishing between Zotero 6 and Zotero 7 compatible plugin versions should be done by configuring `applications.zotero.strict_min_version` in `addons.__addonID__.updates[]` of `update.json` respectively, so that Zotero recognizes it properly.
 
 ## Details
 

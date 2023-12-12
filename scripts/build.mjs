@@ -33,7 +33,9 @@ function replaceString(buildTime) {
   ];
   const replaceTo = [author, description, homepage, version, buildTime];
 
-  config.updateURL = isPreRelease ? config.updateBetaJSON : config.updateJSON;
+  config.updateURL = isPreRelease
+    ? config.updateJSON.replace("update.json", "update-beta.json")
+    : config.updateJSON;
 
   replaceFrom.push(
     ...Object.keys(config).map((k) => new RegExp(`__${k}__`, "g")),
@@ -142,14 +144,17 @@ function prepareLocaleFiles() {
 
 function prepareUpdateJson() {
   // If it is a pre-release, use update-beta.json
-  copyFileSync("scripts/update-template.json", "update.json");
+  if (!isPreRelease) {
+    copyFileSync("scripts/update-template.json", "update.json");
+  }
   if (existsSync("update-beta.json") || isPreRelease) {
     copyFileSync("scripts/update-template.json", "update-beta.json");
   }
 
-  const updateLink = isPreRelease
-    ? `${config.releasePage}/download/v${version}/${name}.xpi`
-    : `${config.releasePage}/latest/download/${name}.xpi`;
+  const updateLink =
+    config.updateLink ?? isPreRelease
+      ? `${config.releasePage}/download/v${version}/${name}.xpi`
+      : `${config.releasePage}/latest/download/${name}.xpi`;
 
   const replaceResult = replaceInFileSync({
     files: [

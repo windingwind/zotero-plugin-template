@@ -9,8 +9,7 @@
     "addonInstance": "AddonTemplate",
     "prefsPrefix": "extensions.zotero.addontemplate",
     "releasePage": "https://github.com/windingwind/zotero-addon-template/releases",
-    "updateJSON": "https://raw.githubusercontent.com/windingwind/zotero-addon-template/main/update.json",
-    "updateBetaJSON": "https://raw.githubusercontent.com/windingwind/zotero-addon-template/main/update-beta.json"
+    "updateJSON": "https://raw.githubusercontent.com/windingwind/zotero-addon-template/main/update.json"
   },
   "main": "src/index.ts",
   "scripts": {
