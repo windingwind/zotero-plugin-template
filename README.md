@@ -249,7 +249,7 @@ Steps in `scripts/build.mjs`:
 - Create/empty `build/`.
 - Copy `addon/**` to `build/addon/**`
 - Replace placeholders: use `replace-in-file` to replace keywords and configurations defined in `package.json` in non-build files (`xhtml`, `json`, et al.).
-- Prepare locale files to [avaid conflict](https://www.zotero.org/support/dev/zotero_7_for_developers#avoiding-localization-conflicts)
+- Prepare locale files to [avaid conflict](https://www.zotero.org/support/dev/zotero_7_for_developers#avoiding_localization_conflicts)
   - Rename `**/*.flt` to `**/${addonRef}-*.flt`
   - Prefix each fluent message with `addonRef-`
 - Use Esbuild to build `.ts` source code to `.js`, build `src/index.ts` to `./build/addon/chrome/content/scripts`.
@@ -284,7 +284,7 @@ npm run release
 The template defines `prerelease` as the beta version of the plugin, when you select a `prerelease` version in release-it (with `-` in the version number), the build script will create a new `update-beta.json` for prerelease use, which ensures that users of the regular version won't be able to update to the beta, only users who have manually downloaded and installed the beta will be able to update to the next beta automatically. When the next regular release is updated, both `update.json` and `update-beta.json` will be updated so that both regular and beta users can update to the new regular release.
 
 > [!warning]
-> Strictly speaking, distinguishing between Zotero 6 and Zotero 7 compatible plugin versions should be done by configuring `applications.zotero.strict_min_version` in `addons.__addonID__.updates[]` of `update.json` respectively, so that Zotero recognizes it properly.
+> Strictly, distinguishing between Zotero 6 and Zotero 7 compatible plugin versions should be done by configuring `applications.zotero.strict_min_version` in `addons.__addonID__.updates[]` of `update.json` respectively, so that Zotero recognizes it properly, see <https://www.zotero.org/support/dev/zotero_7_for_developers#updaterdf_updatesjson>.
 
 ## Details
 
