@@ -191,9 +191,8 @@ export class UIExampleFactory {
       },
     });
     document.documentElement.appendChild(styles);
-    document
-      .getElementById("zotero-item-pane-content")
-      ?.classList.add("makeItRed");
+    document.getElementById("zotero-item-pane-content")
+      ?.classList.add("make"); // 给panel加上红色背景
   }
 
   @example
@@ -334,6 +333,9 @@ export class UIExampleFactory {
 
   @example
   static registerLibraryTabPanel() {
+    const doc = window.document;
+    const test = doc.getSelection;
+    var child = doc.childNodes;
     const tabId = ztoolkit.LibraryTabPanel.register(
       getString("tabpanel-lib-tab-label"),
       (panel: XUL.Element, win: Window) => {
@@ -344,6 +346,18 @@ export class UIExampleFactory {
               properties: {
                 innerText: "Hello World!",
               },
+            },
+            {
+              tag: 'p',
+              properties: {
+                innerText: test
+              }
+            },
+            {
+              tag: 'p',
+              properties: {
+                innerText: child
+              }
             },
             {
               tag: "div",
@@ -371,7 +385,7 @@ export class UIExampleFactory {
         panel.append(elem);
       },
       {
-        targetIndex: 1,
+        targetIndex: 0, // 标签页中标签所在位置
       },
     );
   }

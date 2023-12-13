@@ -138,7 +138,7 @@ Activate with `Shift+P`.
 ### 0 Requirement
 
 1. Install a beta version of Zotero: <https://www.zotero.org/support/beta_builds>
-2. Install [Node.js](https://nodejs.org/en/) and Git
+2. Install [Node.js](https://nodejs.org/en/) and [Git](https://git-scm.com/)
 
 > [!note]
 > This guide assumes that you have an initial understanding of the basic structure and workings of the Zotero plugin. If you don't, please refer to the [documentation](https://www.zotero.org/support/dev/zotero_7_for_developers) and official plugin examples [Make It Red](https://github.com/zotero/make-it-red) first.
@@ -200,7 +200,7 @@ Activate with `Shift+P`.
 
 3. Install dependencies with `npm install`
 
-   > If you are using `pnpm` as the package manager for your project, you need to add `public-hoist-pattern[]=*@types/bluebird*` to `.npmrc`, see <https://github.com/windingwind/zotero-types?tab=readme-ov-file#usage>.
+   > If you are using `pnpm` as the package manager for your project, you need to add `public-hoist-pattern[]=*@types/bluebird*` to `.npmrc`, see [here](https://github.com/windingwind/zotero-types?tab=readme-ov-file#usage).
 
 ### 3 Coding
 
@@ -263,7 +263,7 @@ Steps in `scripts/build.mjs`:
 >
 > - This environment variable is stored in `Zotero.${addonInstance}.data.env`. The outputs to console is disabled in prod mode.
 > - You can decide what users cannot see/use based on this variable.
-> - In production mode, the build script will pack the plugin and update the `update.json`
+> - In production mode, the build script will pack the plugin and update the `update.json`.
 
 ### 5 Release
 
@@ -278,14 +278,14 @@ npm run release
 > [!note]
 > In this template, release-it is configured to locally bump the version, build, and push commits and git.tags, subsequently GitHub Action will rebuild the plugin and publish the XPI to GitHub Release.
 >
-> If you need to release a locally built XPI, set `release-it.github.release` to `true` in `package.json` and remove `.github/workflows/release.yml`. Besides that, you need to set the environment variable `GITHUB_TOKEN`, get it in <https://github.com/settings/tokens>
+> If you need to release a locally built XPI, set `release-it.github.release` to `true` in `package.json` and remove `.github/workflows/release.yml`. Besides that, you need to set the environment variable `GITHUB_TOKEN`, get it in [here](https://github.com/settings/tokens).
 
 #### About Prerelease
 
 The template defines `prerelease` as the beta version of the plugin, when you select a `prerelease` version in release-it (with `-` in the version number), the build script will create a new `update-beta.json` for prerelease use, which ensures that users of the regular version won't be able to update to the beta, only users who have manually downloaded and installed the beta will be able to update to the next beta automatically. When the next regular release is updated, both `update.json` and `update-beta.json` will be updated so that both regular and beta users can update to the new regular release.
 
 > [!warning]
-> Strictly, distinguishing between Zotero 6 and Zotero 7 compatible plugin versions should be done by configuring `applications.zotero.strict_min_version` in `addons.__addonID__.updates[]` of `update.json` respectively, so that Zotero recognizes it properly, see <https://www.zotero.org/support/dev/zotero_7_for_developers#updaterdf_updatesjson>.
+> Strictly, distinguishing between Zotero 6 and Zotero 7 compatible plugin versions should be done by configuring `applications.zotero.strict_min_version` in `addons.__addonID__.updates[]` of `update.json` respectively, so that Zotero recognizes it properly, see [here](https://www.zotero.org/support/dev/zotero_7_for_developers#updaterdf_updatesjson).
 
 ## Details
 
@@ -330,7 +330,7 @@ createElement(document, "button", { namespace: "xul" }); // manually set namespa
 
 ### About Zotero API
 
-Zotero docs are outdated and incomplete. Clone <https://github.com/zotero/zotero> and search the keyword globally.
+Zotero docs are outdated and incomplete. Clone [Zotero Code Repo](https://github.com/zotero/zotero) and search the keyword globally.
 
 > ⭐The [zotero-types](https://github.com/windingwind/zotero-types) provides most frequently used Zotero APIs. It's included in this template by default. Your IDE would provide hint for most of the APIs.
 
