@@ -56,7 +56,7 @@ If you are using this repo, I recommended that you put the following badge on yo
 
 - Event-driven, functional programming, under extensive skeleton;
 - Simple and user-friendly, works out-of-the-box.
-- ⭐ [New!] Auto hot reload! Whenever the source code is modified, automatically compile and reload. [See here→](#auto-hot-reload)
+- ⭐ [New!] Auto hot reload! Whenever the source code is modified, automatically compile and reload. See more in [section auto hot reload](#auto-hot-reload)
 - Abundant examples in `src/modules/examples.ts`, covering most of the commonly used APIs in plugins (using [zotero-plugin-toolkit](https://github.com/windingwind/zotero-plugin-toolkit));
 - TypeScript support:
   - Full type definition support for the whole Zotero project, which is written in JavaScript (using [zotero-types](https://github.com/windingwind/zotero-types));
@@ -68,7 +68,7 @@ If you are using this repo, I recommended that you put the following badge on yo
 - Prettier and ES Lint integration.
 
 > [!warning]
-> The localization system is upgraded (dtd is deprecated and we do not use .properties anymore). Only supports Zotero 7.0.0-beta.12 or higher now. If you want to support Zotero 6, you may need to use `dtd`, `properties`, and `ftl` at the same time. See the staled branch `zotero6-bootstrap`.
+> The localization system is upgraded (`dtd` is deprecated and we do not use `.properties` anymore). Only supports Zotero 7.0.0-beta.12 or higher now. If you want to support Zotero 6, you may need to use `dtd`, `properties`, and `ftl` at the same time. See the staled branch `zotero6-bootstrap`.
 
 ## Examples
 
@@ -200,7 +200,7 @@ Activate with `Shift+P`.
 
 3. Install dependencies with `npm install`
 
-   > If you are using `pnpm` as the package manager for your project, you need to add `public-hoist-pattern[]=*@types/bluebird*` to `.npmrc`, see [here](https://github.com/windingwind/zotero-types?tab=readme-ov-file#usage).
+   > If you are using `pnpm` as the package manager for your project, you need to add `public-hoist-pattern[]=*@types/bluebird*` to `.npmrc`, see the document of [zotero-types](https://github.com/windingwind/zotero-types?tab=readme-ov-file#usage).
 
 ### 3 Coding
 
@@ -278,14 +278,14 @@ npm run release
 > [!note]
 > In this template, release-it is configured to locally bump the version, build, and push commits and git.tags, subsequently GitHub Action will rebuild the plugin and publish the XPI to GitHub Release.
 >
-> If you need to release a locally built XPI, set `release-it.github.release` to `true` in `package.json` and remove `.github/workflows/release.yml`. Besides that, you need to set the environment variable `GITHUB_TOKEN`, get it in [here](https://github.com/settings/tokens).
+> If you need to release a locally built XPI, set `release-it.github.release` to `true` in `package.json` and remove `.github/workflows/release.yml`. Besides that, you need to set the environment variable `GITHUB_TOKEN`, get [GitHub Token](https://github.com/settings/tokens) here.
 
 #### About Prerelease
 
 The template defines `prerelease` as the beta version of the plugin, when you select a `prerelease` version in release-it (with `-` in the version number), the build script will create a new `update-beta.json` for prerelease use, which ensures that users of the regular version won't be able to update to the beta, only users who have manually downloaded and installed the beta will be able to update to the next beta automatically. When the next regular release is updated, both `update.json` and `update-beta.json` will be updated so that both regular and beta users can update to the new regular release.
 
 > [!warning]
-> Strictly, distinguishing between Zotero 6 and Zotero 7 compatible plugin versions should be done by configuring `applications.zotero.strict_min_version` in `addons.__addonID__.updates[]` of `update.json` respectively, so that Zotero recognizes it properly, see [here](https://www.zotero.org/support/dev/zotero_7_for_developers#updaterdf_updatesjson).
+> Strictly, distinguishing between Zotero 6 and Zotero 7 compatible plugin versions should be done by configuring `applications.zotero.strict_min_version` in `addons.__addonID__.updates[]` of `update.json` respectively, so that Zotero recognizes it properly, see more in [the development document for Zotero 7](https://www.zotero.org/support/dev/zotero_7_for_developers#updaterdf_updatesjson).
 
 ## Details
 

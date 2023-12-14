@@ -17,10 +17,10 @@
 
 📜 [Zotero 源代码](https://github.com/zotero/zotero)
 
-📌 [Zotero 插件模板](https://github.com/windingwind/zotero-plugin-template) (即当前库)
+📌 [Zotero 插件模板](https://github.com/windingwind/zotero-plugin-template) (即本仓库)
 
 > [!tip]
-> 👁 关注此库，以便在有修复或更新时及时收到通知.
+> 👁 Watch 本仓库，以及时收到修复或更新的通知.
 
 ## 使用此模板构建的插件
 
@@ -54,7 +54,7 @@
 
 - 事件驱动、函数式编程的可扩展框架；
 - 简单易用，开箱即用；
-- ⭐[新特性!]自动热重载！每当修改源码时，都会自动编译并重新加载插件；[详情请跳转→](#auto-hot-reload)
+- ⭐[新特性!]自动热重载！每当修改源码时，都会自动编译并重新加载插件；详情请看[自动热重载章节](#自动热重载)
 - `src/modules/examples.ts` 中有丰富的示例，涵盖了插件中常用的大部分API (使用的插件工具包 [zotero-plugin-toolkit](https://github.com/windingwind/zotero-plugin-toolkit))；
 - TypeScript 支持:
   - 为使用 JavaScript 编写的Zotero源码提供全面的类型定义支持 (使用类型定义包[zotero-types](https://github.com/windingwind/zotero-types))；
@@ -66,7 +66,7 @@
 - 集成Prettier和ES Lint;
 
 > [!warning]
-> Zotero系统已升级(dtd 已弃用，我们将不在使用 .properties). 主分支将只支持 Zotero 7.0.0-beta.12 或更高版本. 如果需要支持 Zotero 6，可能需要同时使用`dtd`、`properties` 和`ftl`. 请参考此库的 `zotero6-bootstrap` 分支.
+> Zotero本地化已升级(`dtd` 已弃用，我们将不再使用 `.properties`). 主分支将只支持 Zotero 7.0.0-beta.12 或更高版本. 如果需要支持 Zotero 6，你可能需要同时使用`dtd`、`properties` 和`ftl`. 请参考此库的 `zotero6-bootstrap` 分支.
 
 ## Examples 示例
 
@@ -133,18 +133,18 @@ Obsidian风格的指令输入模块，它通过接受文本来运行插件，并
 
 ## Quick Start Guide 快速入门指南
 
-### 0 环境要求(Requirement)
+### 0 前置要求(Requirement)
 
-1. 安装beta版Zotero: https://www.zotero.org/support/beta_builds
+1. 安装测试版 Zotero：https://www.zotero.org/support/beta_builds
 2. 安装 [Node.js](https://nodejs.org/en/) 和 [Git](https://git-scm.com/)
 
 > [!note]
-> 本指南默认你已经对Zotero插件的基础结构和工作原理有初步的了解. 如果你还不了解，请先参考 [文档](https://www.zotero.org/support/dev/zotero_7_for_developers) 和官方插件样例 [Make It Red](https://github.com/zotero/make-it-red) .
+> 本指南假定你已经对 Zotero 插件的基本结构和工作原理有初步的了解. 如果你还不了解，请先参考 [文档](https://www.zotero.org/support/dev/zotero_7_for_developers) 和官方插件样例 [Make It Red](https://github.com/zotero/make-it-red) .
 
 ### 1 创建你的仓库(Create Your Repo)
 
 1. 点击 `Use this template`；
-2. 使用 `git clone` 克隆此库；
+2. 使用 `git clone` 克隆上一步生成的仓库；
 	<details >
 	<summary>💡 从 GitHub Codespace 开始</summary>
 
@@ -154,11 +154,12 @@ Obsidian风格的指令输入模块，它通过接受文本来运行插件，并
 
 	- 去 [homepage](https://github.com/windingwind/zotero-plugin-template)顶部，点击绿色按钮`Use this template`，点击 `Open in codespace`， 你需要登录你的GitHub账号.
 	- 等待 codespace 加载.
+
   	</details>
 
 3. 进入项目文件夹；
 
-### 2 调整模板设置和环境(Config Template Settings and Enviroment)
+### 2 配置模板和开发环境(Config Template Settings and Enviroment)
 
 1. 修改 `./package.json` 中的设置，包括：
 
@@ -183,30 +184,30 @@ Obsidian风格的指令输入模块，它通过接受文本来运行插件，并
     > [!warning]
     > 注意设置 addonID 和 addonRef 以避免冲突.
 
-如果你需要在GitHub意外的地方托管你的 XPI 包，请删除 `releasePage` 并添加 `updateLink`，并将值设置为你的 XPI 下载地址.
+如果你需要在GitHub以外的地方托管你的 XPI 包，请删除 `releasePage` 并添加 `updateLink`，并将值设置为你的 XPI 下载地址.
 
-2. 复制 Zotero 命令行配置文件. 修改启动你之前安装的 beta 版 Zotero 的命令
+2. 复制 Zotero 启动配置，填入 Zotero 可执行文件路径和 profile 路径. 
 
 	> (可选项) 此操作仅需执行一次: 使用 `/path/to/zotero -p` 启动 Zotero，创建一个新的配置文件并用作开发配置文件.
 	> 将配置文件的路径 `profilePath` 放入 `zotero-cmd.json` 中，以指定要使用的配置文件.
 
 	```sh
-	cp ./scripts/zotero-cmd-default.json ./scripts/zotero-cmd.json
+	cp ./scripts/zotero-cmd-template.json ./scripts/zotero-cmd.json
 	vim ./scripts/zotero-cmd.json
 	```
 
 3. 运行 `npm install` 以安装相关依赖
 
-	> 如果你使用 `pnpm` 作为你项目的包管理器，你需要添加 `public-hoist-pattern[]=*@types/bluebird*` 到`.npmrc`, 详情请[跳转这里](https://github.com/windingwind/zotero-types?tab=readme-ov-file#usage) .
+	> 如果你使用 `pnpm` 作为包管理器，你需要添加 `public-hoist-pattern[]=*@types/bluebird*` 到`.npmrc`, 详情请查看 [zotero-types](https://github.com/windingwind/zotero-types?tab=readme-ov-file#usage) 的文档.
 
-### 3 编码(Coding)
+### 3 开始开发(Coding)
 
 使用 `npm start` 启动开发服务器，它将：
 
 * 在开发模式下预构建插件
-* 让 Zotero 从`build/` 中加载插件
-* 开启开发工具（devtool） 
-* 注意 `src/**` 和 `addon/**`.
+* 启动 Zotero ，并让其从 `build/` 中加载插件
+* 打开开发者工具（devtool） 
+* 监听 `src/**` 和 `addon/**`.
     - 如果 `src/**` 修改了，运行 esbuild 并且重新加载
     - 如果 `addon/**` 修改了，(在开发模式下)重新构建插件并且重新加载
 
@@ -243,14 +244,14 @@ Obsidian风格的指令输入模块，它通过接受文本来运行插件，并
 
 ### 4 构建(Build)
 
-运行 `npm run build` 在生产模式下构建插件，然后用于安装的 xpi 和构建的代码在 `build` 文件夹中.
+运行 `npm run build` 在生产模式下构建插件，构建的结果位于 `build/` 目录中.
 
 `scripts/build.mjs` 的运行步骤:
 
 * 创建/清空 `build/`
 * 复制 `addon/**` 到 `build/addon/**`
 * 替换占位符：使用 `replace-in-file` 去替换在 `package.json` 中定义的关键字和配置 (`xhtml`、`.flt` 等)
-* 准备语言文件到 [avaid conflict](https://www.zotero.org/support/dev/zotero_7_for_developers#avoiding_localization_conflicts)
+* 准备本地化文件以 [避免冲突](https://www.zotero.org/support/dev/zotero_7_for_developers#avoiding_localization_conflicts)
     * 重命名`**/*.flt` 为 `**/${addonRef}-*.flt`
     * 在每个消息前加上 `addonRef-`
 * 使用 Esbuild 来将 `.ts` 源码构建为 `.js`，从 `src/index.ts` 构建到`./build/addon/chrome/content/scripts`
@@ -278,14 +279,14 @@ npm run release
 > [!note]
 > 在此模板中，release-it 被配置为在本地升级版本、构建、推送提交和 git 标签，随后GitHub Action 将重新构建插件并将 XPI 发布到 GitHub Release. 
 >
-> 如果你需要发布一个本地构建的 XPI，设置  `package.json` 中的 `release-it.github.release` 为 `true` 然后移除 `.github/workflows/release.yml`. 此外，你需要设置环境变量 `GITHUB_TOKEN`，它在[这里](https://github.com/settings/tokens)获取.
+> 如果你需要发布一个本地构建的 XPI，将  `package.json` 中的 `release-it.github.release` 设置为 `true`，然后移除 `.github/workflows/release.yml`. 此外，你还需要设置环境变量 `GITHUB_TOKEN`，由此跳转[获取 GitHub Token](https://github.com/settings/tokens).
 
 #### 关于预发布
 
-该模板将 `prerelease` 定义为插件的测试版，当你在 release-it 中选择 `prerelease` 版本 (版本号中带有 `-` )，构建脚本将创建一个新的 `update-beta.json` 给预发布版本使用，这将确保常规版本的用户无法更新到测试版，只有手动下载并安装了测试版的用户才能自动更新到下一个测试版. 当下一个常规版本更新时，将更新 `update.json` 和 `update-beta.json`，以便常规版和测试版用户都可以更新到最新的常规版本.
+该模板将 `prerelease` 定义为插件的测试版，当你在 release-it 中选择 `prerelease` 版本 (版本号中带有 `-` )，构建脚本将创建一个 `update-beta.json` 给预发布版本使用，这将确保常规版本的用户不会自动更新到测试版，只有手动下载并安装了测试版的用户才能自动更新到下一个测试版. 当下一个正式版本更新时，脚本将同步更新 `update.json` 和 `update-beta.json`，这将使正式版和测试版用户都可以更新到最新的正式版.
 
 > [!warning]
-> 严格来说，区分 Zotero 6 和 Zotero 7 兼容的插件版本应该通过 `update.json` 的 `addons.__addonID__.updates[]` 中分别配置 `applications.zotero.strict_min_version`，这样 Zotero 才能正确识别，详情在[这里](https://www.zotero.org/support/dev/zotero_7_for_developers#updaterdf_updatesjson)获取.
+> 严格来说，区分 Zotero 6 和 Zotero 7 兼容的插件版本应该通过 `update.json` 的 `addons.__addonID__.updates[]` 中分别配置 `applications.zotero.strict_min_version`，这样 Zotero 才能正确识别，详情在 [Zotero 7 开发文档](https://www.zotero.org/support/dev/zotero_7_for_developers#updaterdf_updatesjson)获取.
 
 ## Details 更多细节
 
@@ -307,7 +308,7 @@ npm run release
 
 > 可以在 [`src/index.ts`](https://github.com/windingwind/zotero-plugin-template/blob/main/src/index.ts)中查看更多
 
-引导插件在沙盒中运行，但沙盒中没有默认的全局变量，例如 `Zotero` 或 `window` 等我们曾在覆盖插件环境中使用的变量.
+bootstrap插件在沙盒中运行，但沙盒中没有默认的全局变量，例如 `Zotero` 或 `window` 等我们曾在overlay插件环境中使用的变量.
 
 此模板将以下变量注册到全局范围:
 
