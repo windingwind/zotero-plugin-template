@@ -224,7 +224,7 @@ Obsidian风格的指令输入模块，它通过接受文本来运行插件，并
 <summary>💡 将此功能添加到现有插件的步骤</summary>
 
 1. 复制 `scripts/**.mjs`
-2. 复制 `server` 、`build` 和 `stop` 命令 `package.json`
+2. 复制 `server` 、`build` 和 `stop` 命令到 `package.json`
 3. 运行 `npm install --save-dev chokidar`
 4. 结束.
 
@@ -331,7 +331,7 @@ createElement(document, "button", { namespace: "xul" }); // manually set namespa
 
 ### 关于 Zotero API(About Zotero API)
 
-Zotero 文档已过时且不完整，克隆 [Zotero 代码仓库](https://github.com/zotero/zotero) 并全局搜索关键字.
+Zotero 文档已过时且不完整，克隆 https://github.com/zotero/zotero 并全局搜索关键字.
 
 > ⭐[zotero-types](https://github.com/windingwind/zotero-types) 提供了最常用的 Zotero API，在默认情况下它被包含在此模板中. 你的 IDE 将为大多数的 API 提供提醒.
 

@@ -192,7 +192,7 @@ export class UIExampleFactory {
     });
     document.documentElement.appendChild(styles);
     document.getElementById("zotero-item-pane-content")
-      ?.classList.add("make");
+      ?.classList.add("makeItRed");
   }
 
   @example
@@ -370,7 +370,7 @@ export class UIExampleFactory {
         panel.append(elem);
       },
       {
-        targetIndex: 0, 
+        targetIndex: 0,
       },
     );
   }

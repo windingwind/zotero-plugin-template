@@ -56,7 +56,7 @@ If you are using this repo, I recommended that you put the following badge on yo
 
 - Event-driven, functional programming, under extensive skeleton;
 - Simple and user-friendly, works out-of-the-box.
-- ⭐ [New!] Auto hot reload! Whenever the source code is modified, automatically compile and reload. See more in [section auto hot reload](#auto-hot-reload)
+- ⭐ [New!] Auto hot reload! Whenever the source code is modified, automatically compile and reload. [See here→](#auto-hot-reload)
 - Abundant examples in `src/modules/examples.ts`, covering most of the commonly used APIs in plugins (using [zotero-plugin-toolkit](https://github.com/windingwind/zotero-plugin-toolkit));
 - TypeScript support:
   - Full type definition support for the whole Zotero project, which is written in JavaScript (using [zotero-types](https://github.com/windingwind/zotero-types));
@@ -330,7 +330,7 @@ createElement(document, "button", { namespace: "xul" }); // manually set namespa
 
 ### About Zotero API
 
-Zotero docs are outdated and incomplete. Clone [Zotero Code Repo](https://github.com/zotero/zotero) and search the keyword globally.
+Zotero docs are outdated and incomplete. Clone <https://github.com/zotero/zotero> and search the keyword globally.
 
 > ⭐The [zotero-types](https://github.com/windingwind/zotero-types) provides most frequently used Zotero APIs. It's included in this template by default. Your IDE would provide hint for most of the APIs.
 
