@@ -317,7 +317,7 @@ export class UIExampleFactory {
         panel.append(elem);
       },
       {
-        targetIndex: 0,
+        targetIndex: 1,
       },
     );
   }
