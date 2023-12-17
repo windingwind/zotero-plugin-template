@@ -137,7 +137,8 @@ export class UIExampleFactory {
       },
     });
     document.documentElement.appendChild(styles);
-    document.getElementById("zotero-item-pane-content")
+    document
+      .getElementById("zotero-item-pane-content")
       ?.classList.add("makeItRed");
   }
 
