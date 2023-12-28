@@ -27,7 +27,7 @@ async function watch() {
       Logger.info("Server Ready! \n");
     })
     .on("change", async (path) => {
-      Logger.info(`${path} changed.`);
+      Logger.info(`${path} changed at ${new Date().toLocaleTimeString()}`);
 
       async function rebuild() {
         if (path.startsWith("src")) {
