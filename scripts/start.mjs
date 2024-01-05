@@ -27,22 +27,16 @@ if (!existsSync(profilePath)) {
 function prepareDevEnv() {
   const addonProxyFilePath = path.join(profilePath, `extensions/${addonID}`);
   const buildPath = path.resolve("build/addon");
-
-  function writeAddonProxyFile() {
+  if (
+    !existsSync(addonProxyFilePath) ||
+    readFileSync(addonProxyFilePath, "utf-8") !== buildPath
+  ) {
     writeFileSync(addonProxyFilePath, buildPath);
     Logger.debug(
       `Addon proxy file has been updated. 
-          File path: ${addonProxyFilePath} 
-          Addon path: ${buildPath} `,
+      File path: ${addonProxyFilePath} 
+      Addon path: ${buildPath} `,
     );
-  }
-
-  if (existsSync(addonProxyFilePath)) {
-    if (readFileSync(addonProxyFilePath, "utf-8") !== buildPath) {
-      writeAddonProxyFile();
-    }
-  } else {
-    writeAddonProxyFile();
   }
 
   const addonXpiFilePath = path.join(profilePath, `extensions/${addonID}.xpi`);
