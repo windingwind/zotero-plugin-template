@@ -60,6 +60,7 @@ async function startWebExt() {
       firefoxProfile: profilePath,
       sourceDir: path.resolve("build/addon"),
       keepProfileChanges: true,
+      args: ["--debugger", "--purgecaches"],
       // browserConsole: true,
     },
     {
