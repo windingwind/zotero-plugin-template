@@ -1,12 +1,14 @@
 import { main as build, esbuildOptions } from "./build.mjs";
 import { openDevToolScript, reloadScript } from "./scripts.mjs";
-import { main as startZotero } from "./start.mjs";
+// import { main as startZotero } from "./start.mjs";
 import { Logger } from "./utils.mjs";
 import cmd from "./zotero-cmd.json" assert { type: "json" };
 import { execSync } from "child_process";
 import chokidar from "chokidar";
 import { context } from "esbuild";
+import path from "path";
 import { exit } from "process";
+import webExt from "web-ext";
 
 process.env.NODE_ENV = "development";
 
@@ -20,39 +22,62 @@ async function watch() {
     persistent: true,
   });
 
-  let esbuildCTX = await context(esbuildOptions);
+  const esbuildCTX = await context(esbuildOptions);
+  let currentTimeout = null;
 
   watcher
     .on("ready", () => {
       Logger.info("Server Ready! \n");
     })
     .on("change", async (path) => {
-      Logger.info(`${path} changed.`);
-      if (path.startsWith("src")) {
-        await esbuildCTX.rebuild();
-      } else if (path.startsWith("addon")) {
-        await build()
-          // Do not abort the watcher when errors occur in builds triggered by the watcher.
-          .catch((err) => {
-            Logger.error(err);
-          });
+      Logger.info(`${path} changed at ${new Date().toLocaleTimeString()}`);
+
+      async function rebuild() {
+        if (path.startsWith("src")) {
+          await esbuildCTX.rebuild();
+        } else if (path.startsWith("addon")) {
+          await build();
+        }
       }
-      // reload
-      reload();
+
+      clearTimeout(currentTimeout);
+      currentTimeout = setTimeout(async () => {
+        await rebuild().catch((err) => {
+          // Do not abort the watcher when errors occur in builds triggered by the watcher.
+          Logger.error(err);
+        });
+      }, 500);
     })
     .on("error", (err) => {
       Logger.error("Server start failed!", err);
     });
 }
 
-function reload() {
-  Logger.debug("Reloading...");
-  const url = `zotero://ztoolkit-debug/?run=${encodeURIComponent(
-    reloadScript,
-  )}`;
-  const command = `${startZoteroCmd} -url "${url}"`;
-  execSync(command);
+async function startWebExt() {
+  await webExt.cmd.run(
+    {
+      firefox: zoteroBinPath,
+      firefoxProfile: profilePath,
+      sourceDir: path.resolve("build/addon"),
+      keepProfileChanges: true,
+      args: ["--debugger", "--purgecaches"],
+      // browserConsole: true,
+    },
+    {
+      // These are non CLI related options for each function.
+      // You need to specify this one so that your NodeJS application
+      // can continue running after web-ext is finished.
+      shouldExitProgram: false,
+    },
+  );
 }
+
+// function reload() {
+//     Logger.debug("Reloading...");
+//     const url = `zotero://ztoolkit-debug/?run=${encodeURIComponent(reloadScript)}`;
+//     const command = `${startZoteroCmd} -url "${url}"`;
+//     execSync(command, { timeout: 8000 });
+// }
 
 function openDevTool() {
   Logger.debug("Open dev tools...");
@@ -68,7 +93,8 @@ async function main() {
   await build();
 
   // start Zotero
-  startZotero(openDevTool);
+  // startZotero(openDevTool);
+  await startWebExt();
 
   // watch
   await watch();
