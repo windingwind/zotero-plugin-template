@@ -9,7 +9,16 @@
     "addonInstance": "AddonTemplate",
     "prefsPrefix": "extensions.zotero.addontemplate"
   },
-  "main": "src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/windingwind/zotero-addon-template.git"
+  },
+  "author": "windingwind",
+  "bugs": {
+    "url": "https://github.com/windingwind/zotero-addon-template/issues"
+  },
+  "homepage": "https://github.com/windingwind/zotero-addon-template#readme",
+  "license": "AGPL-3.0-or-later",
   "scripts": {
     "start": "zotero-plugin serve",
     "build": "tsc --noEmit && zotero-plugin build",
@@ -18,16 +27,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "update-deps": "npm update --save"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/windingwind/zotero-addon-template.git"
-  },
-  "author": "windingwind",
-  "license": "AGPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/windingwind/zotero-addon-template/issues"
-  },
-  "homepage": "https://github.com/windingwind/zotero-addon-template#readme",
   "dependencies": {
     "zotero-plugin-toolkit": "^2.3.15"
   },
