@@ -7,8 +7,10 @@
     ":prConcurrentLimitNone",
     ":enableVulnerabilityAlerts",
     ":dependencyDashboard",
-    "schedule:weekends"
+    "group:allNonMajor",
+    "schedule:weekly"
   ],
+  "labels": ["dependencies"],
   "packageRules": [
     {
       "matchPackageNames": ["zotero-plugin-toolkit", "zotero-types"],
