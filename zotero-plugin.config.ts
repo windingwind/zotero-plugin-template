@@ -17,11 +17,7 @@ export default defineConfig({
   build: {
     assets: ["addon/**/*.*"],
     define: {
-      addonName: pkg.config.addonName,
-      addonID: pkg.config.addonID,
-      addonRef: pkg.config.addonRef,
-      addonInstance: pkg.config.addonInstance,
-      prefsPrefix: pkg.config.prefsPrefix,
+      ...pkg.config,
       author: pkg.author,
       description: pkg.description,
       homepage: pkg.homepage,
