@@ -2,7 +2,7 @@ import details from "../package.json" assert { type: "json" };
 import { Logger } from "./utils.mjs";
 import cmd from "./zotero-cmd.json" assert { type: "json" };
 import { spawn } from "child_process";
-import { existsSync, readFileSync, writeFileSync, rmSync } from "fs";
+import { existsSync, readFileSync, writeFileSync, rmSync, mkdirSync } from "fs";
 import { clearFolder } from "./utils.mjs";
 import path from "path";
 import { exit } from "process";
@@ -25,7 +25,8 @@ if (!existsSync(profilePath)) {
 }
 
 function prepareDevEnv() {
-  const addonProxyFilePath = path.join(profilePath, `extensions/${addonID}`);
+  const extensionsPath = path.join(profilePath, "extensions");
+  const addonProxyFilePath = path.join(extensionsPath, addonID);
   const buildPath = path.resolve("build/addon");
 
   function writeAddonProxyFile() {
@@ -42,6 +43,9 @@ function prepareDevEnv() {
       writeAddonProxyFile();
     }
   } else {
+    if (!existsSync(extensionsPath)) {
+      mkdirSync(extensionsPath);
+    }
     writeAddonProxyFile();
   }
 
