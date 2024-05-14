@@ -14,6 +14,10 @@ export default defineConfig({
   xpiDownloadLink:
     "https://github.com/{{owner}}/{{repo}}/releases/download/v{{version}}/{{xpiName}}.xpi",
 
+  server: {
+    asProxy: true,
+  },
+
   build: {
     assets: ["addon/**/*.*"],
     define: {
