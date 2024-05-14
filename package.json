@@ -1,6 +1,6 @@
 {
   "name": "zotero-addon-template",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Zotero Addon Template",
   "config": {
     "addonName": "Zotero Addon Template",
@@ -28,18 +28,18 @@
     "update-deps": "npm update --save"
   },
   "dependencies": {
-    "zotero-plugin-toolkit": "^2.3.28"
+    "zotero-plugin-toolkit": "^2.3.31"
   },
   "devDependencies": {
-    "@types/node": "^20.12.2",
-    "@typescript-eslint/eslint-plugin": "^7.5.0",
-    "@typescript-eslint/parser": "^7.5.0",
+    "@types/node": "^20.12.12",
+    "@typescript-eslint/eslint-plugin": "^7.9.0",
+    "@typescript-eslint/parser": "^7.9.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.4.3",
+    "typescript": "^5.4.5",
     "zotero-plugin-scaffold": "^0.0.18",
-    "zotero-types": "^1.3.22"
+    "zotero-types": "^1.3.24"
   },
   "eslintConfig": {
     "env": {
@@ -81,6 +81,7 @@
       "@typescript-eslint/no-non-null-assertion": "off"
     },
     "ignorePatterns": [
+      "**/.vscode/**",
       "**/build/**",
       "**/logs/**",
       "**/dist/**",

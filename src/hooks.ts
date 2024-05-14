@@ -32,12 +32,23 @@ async function onStartup() {
 
   KeyExampleFactory.registerShortcuts();
 
+  await UIExampleFactory.registerExtraColumn();
+
+  await UIExampleFactory.registerExtraColumnWithCustomCell();
+
+  UIExampleFactory.registerItemPaneSection();
+
+  UIExampleFactory.registerReaderItemPaneSection();
+
   await onMainWindowLoad(window);
 }
 
 async function onMainWindowLoad(win: Window): Promise<void> {
   // Create ztoolkit for every window
   addon.data.ztoolkit = createZToolkit();
+
+  // @ts-ignore
+  window.MozXULElement.insertFTLIfNeeded(`${config.addonRef}-mainWindow.ftl`);
 
   const popupWin = new ztoolkit.ProgressWindow(config.addonName, {
     closeOnClick: true,
@@ -64,15 +75,7 @@ async function onMainWindowLoad(win: Window): Promise<void> {
 
   UIExampleFactory.registerWindowMenuWithSeparator();
 
-  await UIExampleFactory.registerExtraColumn();
-
-  await UIExampleFactory.registerExtraColumnWithCustomCell();
-
   await UIExampleFactory.registerCustomItemBoxRow();
-
-  UIExampleFactory.registerLibraryTabPanel();
-
-  await UIExampleFactory.registerReaderTabPanel();
 
   PromptExampleFactory.registerNormalCommandExample();
 
