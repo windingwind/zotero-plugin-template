@@ -200,7 +200,7 @@ Obsidian风格的指令输入模块，它通过接受文本来运行插件，并
 
    > 如果你使用 `pnpm` 作为包管理器，你需要添加 `public-hoist-pattern[]=*@types/bluebird*` 到`.npmrc`, 详情请查看 [zotero-types](https://github.com/windingwind/zotero-types?tab=readme-ov-file#usage) 的文档.
 
-    如果你使用 `npm install` 的过程中遇到了 `npm ERR! ERESOLVE unable to resolve dependency tree` ，这是由于上游依赖 typescript-eslint 导致的错误，请使用 `npm i -f` 命令进行安装。
+   如果你使用 `npm install` 的过程中遇到了 `npm ERR! ERESOLVE unable to resolve dependency tree` ，这是由于上游依赖 typescript-eslint 导致的错误，请使用 `npm i -f` 命令进行安装。
 
 ### 3 开发插件
 
