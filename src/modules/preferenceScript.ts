@@ -46,7 +46,7 @@ async function updatePrefsUI() {
   // with addon.data.prefs.window.document
   // Or bind some events to the elements
   const renderLock = ztoolkit.getGlobal("Zotero").Promise.defer();
-  if (addon.data.prefs?.window == undefined) return;
+  if (addon.data.prefs?.window === undefined) return;
   const tableHelper = new ztoolkit.VirtualizedTable(addon.data.prefs?.window)
     .setContainerId(`${config.addonRef}-table-container`)
     .setProp({
@@ -83,7 +83,10 @@ async function updatePrefsUI() {
     // When pressing delete, delete selected line and refresh table.
     // Returning false to prevent default event.
     .setProp("onKeyDown", (event: KeyboardEvent) => {
-      if (event.key == "Delete" || (Zotero.isMac && event.key == "Backspace")) {
+      if (
+        event.key === "Delete" ||
+        (Zotero.isMac && event.key === "Backspace")
+      ) {
         addon.data.prefs!.rows =
           addon.data.prefs?.rows.filter(
             (v, i) => !tableHelper.treeInstance.selection.isSelected(i),

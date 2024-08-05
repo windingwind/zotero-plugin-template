@@ -30,6 +30,7 @@ export class BasicExampleFactory {
         extraData: { [key: string]: any },
       ) => {
         if (!addon?.data.alive) {
+          // eslint-disable-next-line ts/no-use-before-define
           this.unregisterNotifier(notifierID);
           return;
         }
@@ -74,7 +75,7 @@ export class BasicExampleFactory {
   static registerPrefs() {
     const prefOptions = {
       pluginID: config.addonID,
-      src: rootURI + "chrome/content/preferences.xhtml",
+      src: `${rootURI}chrome/content/preferences.xhtml`,
       label: getString("prefs-title"),
       image: `chrome://${config.addonRef}/content/icons/favicon.png`,
       defaultXUL: true,
@@ -222,7 +223,7 @@ export class UIExampleFactory {
         );
         span.className = `cell ${column.className}`;
         span.style.background = "#0dd068";
-        span.innerText = "⭐" + data;
+        span.textContent = `⭐${data}`;
         return span;
       },
     });
@@ -241,6 +242,7 @@ export class UIExampleFactory {
       {
         editable: true,
         setFieldHook: (field, value, loadIn, item, original) => {
+          // eslint-disable-next-line no-alert
           window.alert("Custom itemBox value is changed and saved to extra!");
           ztoolkit.ExtraField.setExtraField(
             item,
@@ -257,9 +259,7 @@ export class UIExampleFactory {
       "itemBoxFieldNonEditable",
       "Non-Editable Custom Field",
       (field, unformatted, includeBaseMapped, item, original) => {
-        return (
-          "[CANNOT EDIT THIS]" + (item.getField("title") as string).slice(0, 10)
-        );
+        return `[CANNOT EDIT THIS]${(item.getField("title") as string).slice(0, 10)}`;
       },
       {
         editable: false,
@@ -401,14 +401,15 @@ export class PromptExampleFactory {
           function getItemDescription(item: Zotero.Item) {
             const nodes = [];
             let str = "";
-            let author,
-              authorDate = "";
+            let author;
+            let authorDate = "";
             if (item.firstCreator) {
               author = authorDate = item.firstCreator;
             }
-            let date = item.getField("date", true, true) as string;
-            if (date && (date = date.substr(0, 4)) !== "0000") {
-              authorDate += " (" + parseInt(date) + ")";
+            const date = item.getField("date", true, true) as string;
+            const year = date ? new Date(date).getFullYear() : "";
+            if (year) {
+              authorDate += ` (${year})`;
             }
             authorDate = authorDate.trim();
             if (authorDate) nodes.push(authorDate);
@@ -423,14 +424,14 @@ export class PromptExampleFactory {
             }
             let volumeIssue = item.getField("volume");
             const issue = item.getField("issue");
-            if (issue) volumeIssue += "(" + issue + ")";
+            if (issue) volumeIssue += `(${issue})`;
             if (volumeIssue) nodes.push(volumeIssue);
 
             const publisherPlace = [];
-            let field;
-            if ((field = item.getField("publisher")))
-              publisherPlace.push(field);
-            if ((field = item.getField("place"))) publisherPlace.push(field);
+            let field = item.getField("publisher");
+            if (field) publisherPlace.push(field);
+            field = item.getField("place");
+            if (field) publisherPlace.push(field);
             if (publisherPlace.length) nodes.push(publisherPlace.join(": "));
 
             const pages = item.getField("pages");
@@ -445,7 +446,7 @@ export class PromptExampleFactory {
             for (let i = 0, n = nodes.length; i < n; i++) {
               const node = nodes[i];
 
-              if (i != 0) str += ", ";
+              if (i !== 0) str += ", ";
 
               if (typeof node === "object") {
                 const label = document.createElement("label");
@@ -456,7 +457,7 @@ export class PromptExampleFactory {
                 str += node;
               }
             }
-            str.length && (str += ".");
+            if (str.length) str += ".";
             return str;
           }
           function filter(ids: number[]) {
@@ -473,13 +474,13 @@ export class PromptExampleFactory {
           s.addCondition("itemType", "isNot", "attachment");
           let ids = await s.search();
           // prompt.exit will remove current container element.
-          // @ts-ignore ignore
+          // @ts-expect-error ignore
           prompt.exit();
           const container = prompt.createCommandsContainer();
           container.classList.add("suggestions");
           ids = filter(ids);
-          console.log(ids.length);
-          if (ids.length == 0) {
+          ztoolkit.log(ids.length);
+          if (ids.length === 0) {
             const s = new Zotero.Search();
             const operators = [
               "is",
@@ -501,8 +502,8 @@ export class PromptExampleFactory {
             text.split(/\s*(&&|\|\|)\s*/g).forEach((conditinString: string) => {
               const conditions = conditinString.split(/\s+/g);
               if (
-                conditions.length == 3 &&
-                operators.indexOf(conditions[1]) != -1
+                conditions.length === 3 &&
+                operators.includes(conditions[1])
               ) {
                 hasValidCondition = true;
                 s.addCondition(
@@ -522,7 +523,7 @@ export class PromptExampleFactory {
             }
           }
           ids = filter(ids);
-          console.log(ids.length);
+          ztoolkit.log(ids.length);
           if (ids.length > 0) {
             ids.forEach((id: number) => {
               const item = Zotero.Items.get(id);
@@ -533,8 +534,8 @@ export class PromptExampleFactory {
                 listeners: [
                   {
                     type: "mousemove",
-                    listener: function () {
-                      // @ts-ignore ignore
+                    listener() {
+                      // @ts-expect-error ignore
                       prompt.selectItem(this);
                     },
                   },
@@ -581,7 +582,7 @@ export class PromptExampleFactory {
               container.appendChild(ele);
             });
           } else {
-            // @ts-ignore ignore
+            // @ts-expect-error ignore
             prompt.exit();
             prompt.showTip("Not Found.");
           }
@@ -608,7 +609,7 @@ export class PromptExampleFactory {
             `You select ${items.length} items!\n\n${items
               .map(
                 (item, index) =>
-                  String(index + 1) + ". " + item.getDisplayTitle(),
+                  `${String(index + 1)}. ${item.getDisplayTitle()}`,
               )
               .join("\n")}`,
           );
@@ -840,7 +841,7 @@ export class HelperExampleFactory {
     addon.data.dialog = dialogHelper;
     await dialogData.unloadLock.promise;
     addon.data.dialog = undefined;
-    addon.data.alive &&
+    if (addon.data.alive)
       ztoolkit.getGlobal("alert")(
         `Close dialog with ${dialogData._lastButtonId}.\nCheckbox: ${dialogData.checkboxValue}\nInput: ${dialogData.inputValue}.`,
       );

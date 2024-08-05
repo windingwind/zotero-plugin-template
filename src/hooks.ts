@@ -1,3 +1,4 @@
+import { config } from "../package.json";
 import {
   BasicExampleFactory,
   HelperExampleFactory,
@@ -5,7 +6,6 @@ import {
   PromptExampleFactory,
   UIExampleFactory,
 } from "./modules/examples";
-import { config } from "../package.json";
 import { getString, initLocale } from "./utils/locale";
 import { registerPrefsScripts } from "./modules/preferenceScript";
 import { createZToolkit } from "./utils/ztoolkit";
@@ -40,7 +40,6 @@ async function onMainWindowLoad(win: Window): Promise<void> {
   // Create ztoolkit for every window
   addon.data.ztoolkit = createZToolkit();
 
-  // @ts-ignore This is a moz feature
   window.MozXULElement.insertFTLIfNeeded(`${config.addonRef}-mainWindow.ftl`);
 
   const popupWin = new ztoolkit.ProgressWindow(config.addonName, {
@@ -113,13 +112,11 @@ async function onNotify(
   // You can add your code to the corresponding notify type
   ztoolkit.log("notify", event, type, ids, extraData);
   if (
-    event == "select" &&
-    type == "tab" &&
-    extraData[ids[0]].type == "reader"
+    event === "select" &&
+    type === "tab" &&
+    extraData[ids[0]].type === "reader"
   ) {
     BasicExampleFactory.exampleNotifierCallback();
-  } else {
-    return;
   }
 }
 
@@ -135,7 +132,6 @@ async function onPrefsEvent(type: string, data: { [key: string]: any }) {
       registerPrefsScripts(data.window);
       break;
     default:
-      return;
   }
 }
 

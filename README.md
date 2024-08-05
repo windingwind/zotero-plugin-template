@@ -305,7 +305,7 @@ The bootstrapped plugin runs in a sandbox, which does not have default global va
 
 This template registers the following variables to the global scope:
 
-```ts
+```plain
 Zotero, ZoteroPane, Zotero_Tabs, window, document, rootURI, ztoolkit, addon;
 ```
 

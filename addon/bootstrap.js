@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/* eslint-disable no-undef, no-unused-vars, unused-imports/no-unused-vars */
 
 /**
  * Most of this code is from Zotero team's official Make It Red example[1]
@@ -7,7 +7,7 @@
  * [2] https://www.zotero.org/support/dev/zotero_7_for_developers
  */
 
-var chromeHandle;
+let chromeHandle;
 
 function install(data, reason) {}
 
@@ -19,12 +19,12 @@ async function startup({ id, version, resourceURI, rootURI }, reason) {
     rootURI = resourceURI.spec;
   }
 
-  var aomStartup = Components.classes[
+  const aomStartup = Components.classes[
     "@mozilla.org/addons/addon-manager-startup;1"
   ].getService(Components.interfaces.amIAddonManagerStartup);
-  var manifestURI = Services.io.newURI(rootURI + "manifest.json");
+  const manifestURI = Services.io.newURI(`${rootURI}manifest.json`);
   chromeHandle = aomStartup.registerChrome(manifestURI, [
-    ["content", "__addonRef__", rootURI + "chrome/content/"],
+    ["content", "__addonRef__", `${rootURI}chrome/content/`],
   ]);
 
   /**

@@ -309,7 +309,7 @@ bootstrap插件在沙盒中运行，但沙盒中没有默认的全局变量，�
 
 此模板将以下变量注册到全局范围:
 
-```ts
+```plain
 Zotero, ZoteroPane, Zotero_Tabs, window, document, rootURI, ztoolkit, addon;
 ```
 

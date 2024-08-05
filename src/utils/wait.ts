@@ -42,7 +42,7 @@ export function waitUtilAsync(
         resolve();
       } else if (Date.now() - start > timeout) {
         ztoolkit.getGlobal("clearInterval")(intervalId);
-        reject();
+        reject(new Error("timeout"));
       }
     }, interval);
   });

@@ -1,6 +1,6 @@
+import { env } from "node:process";
 import { defineConfig } from "zotero-plugin-scaffold";
 import pkg from "./package.json";
-import { copyFileSync } from "fs";
 
 export default defineConfig({
   source: ["src", "addon"],
@@ -32,7 +32,7 @@ export default defineConfig({
       {
         entryPoints: ["src/index.ts"],
         define: {
-          __env__: `"${process.env.NODE_ENV}"`,
+          __env__: `"${env.NODE_ENV}"`,
         },
         bundle: true,
         target: "firefox115",

@@ -1,11 +1,9 @@
 import { config } from "../../package.json";
 
-export { initLocale, getString, getLocaleID };
-
 /**
  * Initialize locale data
  */
-function initLocale() {
+export function initLocale() {
   const l10n = new (
     typeof Localization === "undefined"
       ? ztoolkit.getGlobal("Localization")
@@ -19,8 +17,6 @@ function initLocale() {
 /**
  * Get locale string, see https://firefox-source-docs.mozilla.org/l10n/fluent/tutorial.html#fluent-translation-list-ftl
  * @param localString ftl key
- * @param options.branch branch name
- * @param options.args args
  * @example
  * ```ftl
  * # addon.ftl
@@ -39,13 +35,13 @@ function initLocale() {
  * getString("addon-dynamic-example", { args: { count: 2 } }); // I have 2 apples
  * ```
  */
-function getString(localString: string): string;
-function getString(localString: string, branch: string): string;
-function getString(
+export function getString(localString: string): string;
+export function getString(localString: string, branch: string): string;
+export function getString(
   localeString: string,
   options: { branch?: string | undefined; args?: Record<string, unknown> },
 ): string;
-function getString(...inputs: any[]) {
+export function getString(...inputs: any[]) {
   if (inputs.length === 1) {
     return _getString(inputs[0]);
   } else if (inputs.length === 2) {
@@ -83,6 +79,6 @@ function _getString(
   }
 }
 
-function getLocaleID(id: string) {
+export function getLocaleID(id: string) {
   return `${config.addonRef}-${id}`;
 }

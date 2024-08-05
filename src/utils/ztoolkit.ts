@@ -1,9 +1,11 @@
 import ZoteroToolkit from "zotero-plugin-toolkit";
+
+import { BasicTool, unregister } from "zotero-plugin-toolkit/dist/basic";
+import { UITool } from "zotero-plugin-toolkit/dist/tools/ui";
+import { PreferencePaneManager } from "zotero-plugin-toolkit/dist/managers/preferencePane";
 import { config } from "../../package.json";
 
-export { createZToolkit };
-
-function createZToolkit() {
+export function createZToolkit() {
   const _ztoolkit = new ZoteroToolkit();
   /**
    * Alternatively, import toolkit modules you use to minify the plugin size.
@@ -28,10 +30,6 @@ function initZToolkit(_ztoolkit: ReturnType<typeof createZToolkit>) {
     `chrome://${config.addonRef}/content/icons/favicon.png`,
   );
 }
-
-import { BasicTool, unregister } from "zotero-plugin-toolkit/dist/basic";
-import { UITool } from "zotero-plugin-toolkit/dist/tools/ui";
-import { PreferencePaneManager } from "zotero-plugin-toolkit/dist/managers/preferencePane";
 
 class MyToolkit extends BasicTool {
   UI: UITool;
