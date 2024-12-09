@@ -4,7 +4,7 @@
 
 Ceci est un modèle pour développer une extension pour [Zotero](https://www.zotero.org/).
 
-[English](README.md) | [简体中文](doc/README-zhCN.md) | [Français](doc/README-frFR.md)
+[English](../README.md) | [简体中文](./README-zhCN.md) | [Français](./README-frFR.md)
 
 - Documentation 
   - [📖 Plugin Development Documentation](https://zotero-chinese.com/plugin-dev-guide/) (Chinese, not yet complete)
@@ -18,7 +18,8 @@ Ceci est un modèle pour développer une extension pour [Zotero](https://www.zot
 
 > [!tip]
 > 👁 Surveillez ce dépôt afin d'être informé des corrections et des mises à jour.
- ce modèle
+
+## Exetensions développées sur la base de ce modèle
 [![GitHub Repo stars](https://img.shields.io/github/stars/windingwind/zotero-better-notes?label=zotero-better-notes&style=flat-square)](https://github.com/windingwind/zotero-better-notes)
 [![GitHub Repo stars](https://img.shields.io/github/stars/windingwind/zotero-pdf-preview?label=zotero-pdf-preview&style=flat-square)](https://github.com/windingwind/zotero-pdf-preview)
 [![GitHub Repo stars](https://img.shields.io/github/stars/windingwind/zotero-pdf-translate?label=zotero-pdf-translate&style=flat-square)](https://github.com/windingwind/zotero-pdf-translate)
