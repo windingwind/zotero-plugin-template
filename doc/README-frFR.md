@@ -120,7 +120,7 @@ Voir [`src/modules/preferenceScript.ts`](./src/modules/preferenceScript.ts)
 - progressWindowExample
 - vtableExample (voir Exemples avec des panneaux de préférences)
 
-### PromptExamples
+### Exemples de prompts
 
 Un module d'invite (entrée de commande contextuelle) de style Obsidian. Il accepte les commandes textuelles pour exécuter le callback, avec un affichage optionnel dans la fenêtre popup.
 
@@ -130,35 +130,52 @@ S'aactive avec `Shift+P`.
 
 - registerAlertPromptExample
 
-## Quick Start Guide
+## Guide de démarrage rapide
+0 Requirement
+
+    Install a beta version of Zotero: https://www.zotero.org/support/beta_builds
+    Install Node.js and Git
+
+Note
+
+This guide assumes that you have an initial understanding of the basic structure and workings of the Zotero plugin. If you don't, please refer to the documentation and official plugin examples Make It Red first.
+1 Creat Your Repo
+
+    Click Use this template
+
+    Git clone your new repo
+    💡 Start with GitHub Codespace
+
+    Enter the repo folder
+
 
 ### 0 Requirement
 
-1. Install a beta version of Zotero: <https://www.zotero.org/support/beta_builds>
-2. Install [Node.js](https://nodejs.org/en/) and [Git](https://git-scm.com/)
+1. Installez une version beta de Zotero: <https://www.zotero.org/support/beta_builds>
+2. Installez [Node.js](https://nodejs.org/en/) and [Git](https://git-scm.com/)
 
 > [!note]
-> This guide assumes that you have an initial understanding of the basic structure and workings of the Zotero plugin. If you don't, please refer to the [documentation](https://www.zotero.org/support/dev/zotero_7_for_developers) and official plugin examples [Make It Red](https://github.com/zotero/make-it-red) first.
+> Ce guide suppose que vous avez une compréhension initiale de la structure de base et du fonctionnement du plugin Zotero. Si ce n'est pas le cas, veuillez vous référer à la [documentation](https://www.zotero.org/support/dev/zotero_7_for_developers)et aux exemples officiels du plugin  [Make It Red](https://github.com/zotero/make-it-red)  en premier lieu.
 
-### 1 Creat Your Repo
+### 1 Créer votre dépôt
 
-1. Click `Use this template`
-2. Git clone your new repo
+1. Cliquez sur `Use this template`
+2. Clonez votre dépôt avec git.
    <details >
-   <summary>💡 Start with GitHub Codespace</summary>
+   <summary>💡 Démarrer votre projet avec GitHub Codespace</summary>
 
-   _GitHub CodeSpace_ enables you getting started without the need to download code/IDE/dependencies locally.
+   _GitHub CodeSpace_ vous permet de démarrer votre projet sans avoir à télécharger le code/IDE/dépendances localement.
 
-   Replace the steps above and build you first plugin in 30 seconds!
+   Effectuez les étapes ci-dessus et créez votre premier plugin en 30 secondes!
 
-   - Goto top of the [homepage](https://github.com/windingwind/zotero-plugin-template), click the green button `Use this template`, click `Open in codespace`. You may need to login to your GitHub account.
-   - Wait for codespace to load.
+   - Allez en haut de la  [page d'accueil](https://github.com/windingwind/zotero-plugin-template), cliquez sur le bouton vert `Use this template`, cliquez sur `Open in codespace`. ous devrez peut-être vous connecter à votre compte GitHub.
+   - Attendez que _GitHub CodeSpace_ se charge.
 
    </details>
 
-3. Enter the repo folder
+3. Entrez dans le dossier du dépôt
 
-### 2 Config Template Settings and Enviroment
+### 2 Configurez les paramètres du Modèle  et l'environnement de dévreloppement
 
 1. Modify the settings in `./package.json`, including:
 
