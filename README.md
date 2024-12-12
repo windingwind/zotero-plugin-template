@@ -157,7 +157,7 @@ Activate with `Shift+P`.
 
 3. Enter the repo folder
 
-### 2 Config Template Settings and Enviroment
+### 2 Config Template Settings and Environment
 
 1. Modify the settings in `./package.json`, including:
 
