@@ -16,7 +16,7 @@ Ceci est un modèle pour développer une extension pour [Zotero](https://www.zot
   - [📜 Zotero Source Code](https://github.com/zotero/zotero)
   - [📌 Zotero Plugin Template](https://github.com/windingwind/zotero-plugin-template) (Ce dépot)
 
-> [!tip]
+> [!TIP]
 > 👁 Surveillez ce dépôt afin d'être informé des corrections et des mises à jour.
 
 ## Exetensions développées sur la base de ce modèle
@@ -54,12 +54,12 @@ Si vous utilisez ce dépôt, je vous recommande de mettre le badge suivant dans 
 - Architecture orientée événements, basée sur la programmation fonctionnelle utilisant des squeletteq étendus ;
 - Simple et convivial, il est prêt à l'emploi.
 - ⭐ [New!] Rechargement automatique à chaud ! Chaque fois que le code source est modifié, il est automatiquement compilé et rechargé. [Voir ici→]((#auto-hot-reload)
-- Nombreux exemples dans `src/modules/examples.ts` ; ils couvrent la plupart des usages des APIs habituellement utilisées dans les extensions (using [zotero-plugin-toolkit](https://github.com/windingwind/zotero-plugin-toolkit));
+- Nombreux exemples dans `src/modules/examples.ts` ; ils couvrent la plupart des usages des APIs habituellement utilisées dans les extensions (en utilisant [zotero-plugin-toolkit](https://github.com/windingwind/zotero-plugin-toolkit));
 - Support de TypeScript :
   - Prise en charge complète de la définition des types pour l'ensemble du projet Zotero, qui est écrit en JavaScript (avec les  [zotero-types](https://github.com/windingwind/zotero-types));
   - Variables globales et configuration de l'environnement ;
-- Gestion des workflows pour le développement, la finalisation et la publication des plugins :
-  - - Génére / mets à jour automatiquement l'id/version du plugin, mets à jour les configurations, et définit les variables d'environnement (`development` / `production`);
+- Gestion des workflows pour le développement, la finalisation et la publication des extensions :
+  - - Génére / mets à jour automatiquement l'id/version de l'extension, mets à jour les configurations, et définit les variables d'environnement (`development` / `production`);
   - Construit et recharge automatiquement le code dans Zotero ;
   - Publie automatiquement les nouvelles versions sur GitHub ;;
 - Intégration avec Prettier et ES Lint (analyseur et formatteur de code).
@@ -108,7 +108,7 @@ Recherchez `@example` dans `src/examples.ts`. Les exemples sont  appelés dans `
 
 - Locale
 
-Voir [`src/modules/preferenceScript.ts`](./src/modules/preferenceScript.ts)
+Voir [`src/modules/preferenceScript.ts`](../src/modules/preferenceScript.ts)
 
 ### Exemples de fenêtre d'aide
 
@@ -131,33 +131,15 @@ S'aactive avec `Shift+P`.
 - registerAlertPromptExample
 
 ## Guide de démarrage rapide
-0 Requirement
-
-    Install a beta version of Zotero: https://www.zotero.org/support/beta_builds
-    Install Node.js and Git
-
-Note
-
-This guide assumes that you have an initial understanding of the basic structure and workings of the Zotero plugin. If you don't, please refer to the documentation and official plugin examples Make It Red first.
-1 Creat Your Repo
-
-    Click Use this template
-
-    Git clone your new repo
-    💡 Start with GitHub Codespace
-
-    Enter the repo folder
-
-
-### 0 Requirement
+### 0. Pré-requis
 
 1. Installez une version beta de Zotero: <https://www.zotero.org/support/beta_builds>
 2. Installez [Node.js](https://nodejs.org/en/) and [Git](https://git-scm.com/)
 
-> [!note]
-> Ce guide suppose que vous avez une compréhension initiale de la structure de base et du fonctionnement du plugin Zotero. Si ce n'est pas le cas, veuillez vous référer à la [documentation](https://www.zotero.org/support/dev/zotero_7_for_developers)et aux exemples officiels du plugin  [Make It Red](https://github.com/zotero/make-it-red)  en premier lieu.
+> [!NOTE]
+> Ce guide suppose que vous avez une compréhension initiale de la structure de base et du fonctionnement des extensiosn Zotero. Si ce n'est pas le cas, veuillez vous référer à la [documentation](https://www.zotero.org/support/dev/zotero_7_for_developers)et aux exemples officiels de l'extension [Make It Red](https://github.com/zotero/make-it-red)  en premier lieu.
 
-### 1 Créer votre dépôt
+### 1. Créer votre dépôt
 
 1. Cliquez sur `Use this template`
 2. Clonez votre dépôt avec git.
@@ -166,7 +148,7 @@ This guide assumes that you have an initial understanding of the basic structure
 
    _GitHub CodeSpace_ vous permet de démarrer votre projet sans avoir à télécharger le code/IDE/dépendances localement.
 
-   Effectuez les étapes ci-dessus et créez votre premier plugin en 30 secondes!
+   Effectuez les étapes ci-dessus et créez votre première extension en 30 secondes!
 
    - Allez en haut de la  [page d'accueil](https://github.com/windingwind/zotero-plugin-template), cliquez sur le bouton vert `Use this template`, cliquez sur `Open in codespace`. ous devrez peut-être vous connecter à votre compte GitHub.
    - Attendez que _GitHub CodeSpace_ se charge.
@@ -175,9 +157,9 @@ This guide assumes that you have an initial understanding of the basic structure
 
 3. Entrez dans le dossier du dépôt
 
-### 2 Configurez les paramètres du Modèle  et l'environnement de dévreloppement
+### 2. Configurez les paramètres du Modèle  et l'environnement de développement
 
-1. Modify the settings in `./package.json`, including:
+1. Modifier les paramètres dans `./package.json`, y compris :
 
    ```json5
    {
@@ -195,91 +177,89 @@ This guide assumes that you have an initial understanding of the basic structure
    }
    ```
 
-   > [!warning]
-   > Be careful to set the addonID and addonRef to avoid conflict.
+    > ![WARNING]
+    > Veillez à bien définir addonID et addonRef pour éviter tout conflit.
 
-   If you need to host your XPI packages outside of GitHub, moidify `updateURL` and add `xpiDownloadLink` in `zotero-plugin.config.ts`.
+    Si vous avez besoin d'héberger vos paquets XPI en dehors de GitHub, modifiez `updateURL` et ajoutez `xpiDownloadLink` dans `zotero-plugin.config.ts`.
 
-2. Copy the environment variable file. Modify the commands that starts your installation of the beta Zotero.
+2.  Copiez le fichier de la variable d'environnement. Modifiez la commandes quilance la version beta de Zotero.
 
-   > Create a development profile (Optional)  
-   > Start the beta Zotero with `/path/to/zotero -p`. Create a new profile and use it as your development profile. Do this only once
-
+    > Créez un profil de développement (Optionnel)    
+    > Démarrez la version beta de Zotero avec `/path/to/zotero -p`. Créez un nouveau profil et utilisez-le comme profil de développement. Ne le faites qu'une seule fois !
    ```sh
    cp .env.example .env
    vim .env
    ```
 
-   If you are developing more than one plugin, you can store the bin path and profile path in the system environment variables, which can be omitted here.
+    Si vous développez plus d'une extension, vous pouvez stocker le chemin bin et le chemin profile dans les variables d'environnement du système, qui peuvent être omises ici.
 
-3. Install dependencies with `npm install`
+3. Installez les dépendances avec `npm install`
 
-   > If you are using `pnpm` as the package manager for your project, you need to add `public-hoist-pattern[]=*@types/bluebird*` to `.npmrc`, see <https://github.com/windingwind/zotero-types?tab=readme-ov-file#usage>.
+   > Si vous utilisez `pnpm` comme gestionnaire de paquets pour votre projet, vous devez ajouter `public-hoist-pattern[]=*@types/bluebird*` à `.npmrc`, voir <https://github.com/windingwind/zotero-types?tab=readme-ov-file#usage>.
 
-   If you get `npm ERR! ERESOLVE unable to resolve dependency tree` with `npm install`, which is an upstream dependency bug of typescript-eslint, use the `npm i -f` command to install it.
+    Si vous obtenez `npm ERR ! ERESOLVE unable to resolve dependency tree` avec `npm install`, qui est un bogue de dépendance en amont de typescript-eslint, utilisez la commande `npm i -f` pour l'installer.
 
-### 3 Coding
+### 3. Codez !
 
-Start development server with `npm start`, it will:
+Démarrez le serveur de développement avec `npm start`:
+- Il fera La pré-construction de l'extension en mode développement
+- Il démarrera Zotero avec l'extension chargée depuis `build/`
+- Il surveillera `src/**` et `addon/**`.
+    - Si `src/**` a changé, lancez esbuild et rechargez.
+    - Si `addon/**` a changé, reconstruisez l'extension (en mode développement) et recharger là.
 
-- Prebuild the plugin in development mode
-- Start Zotero with plugin loaded from `build/`
-- Watch `src/**` and `addon/**`.
-  - If `src/**` changed, run esbuild and reload
-  - If `addon/**` has changed, rebuild the plugin (in development mode) and reload
+#### Rechargement automatique à chaud
 
-#### Auto Hot Reload
+Fatigué des redémarrages incessants ? Oubliez-les !
 
-Tired of endless restarting? Forget about it!
+1. Lancez `npm start`.
+2. Coder. (Oui, c'est tout)
 
-1. Run `npm start`.
-2. Coding. (Yes, that's all)
-
-When file changes are detected in `src` or `addon`, the plugin will be automatically compiled and reloaded.
+Lorsque des changements de fichiers sont détectés dans `src` ou `addon`, l'extension 'sera automatiquement compilé et rechargé.
 
 <details style="text-indent: 2em">
-<summary>💡 Steps to add this feature to an existing plugin</summary>
+<summary>💡 Étapes pour ajouter cette fonctionnalité à une extension existante :</summary>
 
-Please see [zotero-plugin-scaffold](https://github.com/northword/zotero-plugin-scaffold).
+Voir [zotero-plugin-scaffold](https://github.com/northword/zotero-plugin-scaffold).
 
 </details>
 
-#### Debug in Zotero
+#### Déboguer dans Zotero
 
-You can also:
+Vous pouvez également :
 
-- Test code snippets in Tools -> Developer -> Run Javascript;
-- Debug output with `Zotero.debug()`. Find the outputs in Help->Debug Output Logging->View Output;
-- Debug UI. Zotero is built on the Firefox XUL framework. Debug XUL UI with software like [XUL Explorer](https://udn.realityripple.com/docs/Archive/Mozilla/XUL_Explorer).
-  > XUL Documentation: <http://www.devdoc.net/web/developer.mozilla.org/en-US/docs/XUL.html>
+- Tester les extraits de code dans Outils -> Développeur -> Run Javascript ;
+- Déboguer la sortie avec`Zotero.debug()`. Trouver les sorties dans Aide->Journal de débogage->Voir le journal;
+- Déboguer l'interface utilisateur. Zotero est construit sur le cadre XUL de Firefox. Déboguez l'interface utilisateur XUL avec un logiciel comme  [XUL Explorer](https://udn.realityripple.com/docs/Archive/Mozilla/XUL_Explorer).
+  > Documentation de XUL : <http://www.devdoc.net/web/developer.mozilla.org/en-US/docs/XUL.html>
 
-### 4 Build
+### 4. Construction (Build)
 
-Run `npm run build` to build the plugin in production mode, and the xpi for installation and the built code is under `build` folder.
+Exécutez `npm run build` construire l'extension en mode production : t le xpi pour l'installation et le code construit se trouve dans le dossier `build`.
 
-Steps of build:
+Étapes de la construction :
+- Créez/videz `build/`.
+- Copiez `addon/**` dans `build/addon/**`.
+- Remplacez les espaces réservés : utilisez `replace-in-file` pour remplacer les mots-clés et les configurations définis dans `package.json` dans les fichiers non-construits (`xhtml`, `json`, et al.).
 
-- Create/empty `build/`.
-- Copy `addon/**` to `build/addon/**`
-- Replace placeholders: use `replace-in-file` to replace keywords and configurations defined in `package.json` in non-build files (`xhtml`, `json`, et al.).
-- Prepare locale files to [avoid conflict](https://www.zotero.org/support/dev/zotero_7_for_developers#avoiding_localization_conflicts)
-  - Rename `**/*.flt` to `**/${addonRef}-*.flt`
-  - Prefix each fluent message with `addonRef-`
-- Use ESBuild to build `.ts` source code to `.js`, build `src/index.ts` to `./build/addon/content/scripts`.
-- (Production mode only) Zip the `./build/addon` to `./build/*.xpi`
-- (Production mode only) Prepare `update.json` or `update-beta.json`
+- Préparez les fichiers de locale pour [éviter les conflits] (https://www.zotero.org/support/dev/zotero_7_for_developers#avoiding_localization_conflicts)
+- Renommer `**/*.flt` en `**/${addonRef}-*.flt`
+- Préfixer chaque message fluent avec `addonRef-`
+- Utilisez ESBuild pour construire le code source `.ts` vers `.js`, construisez `src/index.ts` vers `./build/addon/content/scripts`.
+- (Mode production uniquement) Zipper le fichier `./build/addon` vers `./build/*.xpi`.
+- (Mode production uniquement) Préparez `update.json` ou `update-beta.json`
 
-> [!note]
+> [!NOTE]
 >
-> **What's the difference between dev & prod?**
+> **Quelle est la différence entre mode développement et production ?**
 >
-> - This environment variable is stored in `Zotero.${addonInstance}.data.env`. The outputs to console is disabled in prod mode.
-> - You can decide what users cannot see/use based on this variable.
-> - In production mode, the build script will pack the plugin and update the `update.json`.
+> - Cette variable d'environnement est stockée dans `Zotero.${addonInstance}.data.env`. La sortie vers la console est désactivée en mode production.
+> - Vous pouvez décider ce que les utilisateurs ne peuvent pas voir/utiliser en fonction de cette variable.
+> - En mode production, le script de construction va empaqueter l'extension et mettre à jour le fichier `update.json`.
 
-### 5 Release
+### 5. Produire une Release
 
-To build and release, use
+pour construire et produire une Release, utilisez :
 
 ```shell
 # version increase, git add, commit and push
@@ -287,54 +267,59 @@ To build and release, use
 npm run release
 ```
 
-> [!note]
-> This will use [Bumpp](https://github.com/antfu-collective/bumpp) to prompt for the new version number, locally bump the version, run any (pre/post)version scripts defined in `package.json`, commit, build (optional), tag the commit with the version number and push commits and git.tags. Bumpp can be configured in `zotero-plugin-config.ts`; for example, add `release: { bumpp: { execute: "npm run build" } }` to also build before committing.
->
-> Subsequently GitHub Action will rebuild the plugin and use `zotero-plugin-scaffold`'s `release` script to publish the XPI to GitHub Release. In addition, a separate release (tag: `release`) will be created or updated that includes update manifests `update.json` and `update-beta.json` as assets. These will be available at `https://github.com/{{owner}}/{{repo}}/releases/download/release/update*.json`.
+> [!NOTE]
+> Cela utilisera [Bumpp](https://github.com/antfu-collective/bumpp) pour saisir le nouveau numéro de version, modifier localement la version, exécuter tous les scripts (pré/post) version définis dans `package.json`, commit, build (optionnel), marquer le commit avec le numéro de version et pousser les commits et les tags git. Bumpp peut être configuré dans `zotero-plugin-config.ts` ; par exemple, ajoutez `release : { bumpp : { execute : « npm run build » } }` pour construire également avant de commiter.
+> Par la suite, GitHub Action reconstruira l'extensions et utilisera le script `release` de `zotero-plugin-scaffold` pour publier l'XPI sur GitHub Release. De plus, une version séparée (tag : `release`) sera créée ou mise à jour qui inclura les manifestes de mise à jour `update.json` et `update-beta.json` en tant qu'actifs. Ceux-ci seront disponibles à `https://github.com/{{owner}}/{{repo}}/releases/download/release/update*.json`.
 
 #### About Prerelease
 
-The template defines `prerelease` as the beta version of the plugin, when you select a `prerelease` version in Bumpp (with `-` in the version number). The build script will create a new `update-beta.json` for prerelease use, which ensures that users of the regular version won't be able to update to the beta. Only users who have manually downloaded and installed the beta will be able to update to the next beta automatically.
+Le modèle définit `prerelease` comme la version beta de l'extension, lorsque vous sélectionnez une version `prerelease` dans Bumpp (avec `-` dans le numéro de version). Le script de construction créera un nouveau `update-beta.json` pour l'utilisation de la prerelease, ce qui assure que les utilisateurs de la version normale ne seront pas en mesure de mettre à jour vers la version beta. Seuls les utilisateurs qui ont téléchargé et installé manuellement la version bêta seront en mesure de mettre à jour automatiquement vers la prochaine version bêta.
 
-When the next regular release is updated, both `update.json` and `update-beta.json` will be updated (on the special `release` release, see above) so that both regular and beta users can update to the new regular release.
 
-> [!warning]
-> Strictly, distinguishing between Zotero 6 and Zotero 7 compatible plugin versions should be done by configuring `applications.zotero.strict_min_version` in `addons.__addonID__.updates[]` of `update.json` respectively, so that Zotero recognizes it properly, see <https://www.zotero.org/support/dev/zotero_7_for_developers#updaterdf_updatesjson>.
+Lorsque la prochaine version normale sera mise à jour, `update.json` et `update-beta.json` seront tous deux mis à jour (sur la version spéciale `release`, voir ci-dessus) afin que les utilisateurs de la version normale et de la version bêta puissent se mettre à jour vers la nouvelle version normale.
 
-## Details
+> [!WARNING]
+>  La distinction entre les versions des extensions compatibles avec Zotero 6 et Zotero 7 devrait être strictement faite en configurant `applications.zotero.strict_min_version` dans `addons.__addonID__.updates[]` de `update.json` respectivement, afin que Zotero le reconnaisse correctement, voir <https://www.zotero.org/support/dev/zotero_7_for_developers#updaterdf_updatesjson>.
 
-### About Hooks
 
-> See also [`src/hooks.ts`](https://github.com/windingwind/zotero-plugin-template/blob/main/src/hooks.ts)
 
-1. When install/enable/startup triggered from Zotero, `bootstrap.js` > `startup` is called
-   - Wait for Zotero ready
-   - Load `index.js` (the main entrance of plugin code, built from `index.ts`)
-   - Register resources if Zotero 7+
-2. In the main entrance `index.js`, the plugin object is injected under `Zotero` and `hooks.ts` > `onStartup` is called.
-   - Initialize anything you want, including notify listeners, preference panes, and UI elements.
-3. When uninstall/disabled triggered from Zotero, `bootstrap.js` > `shutdown` is called.
-   - `events.ts` > `onShutdown` is called. Remove UI elements, preference panes, or anything created by the plugin.
-   - Remove scripts and release resources.
+## Détails
 
-### About Global Variables
+### À propos des hooks
 
-> See also [`src/index.ts`](https://github.com/windingwind/zotero-plugin-template/blob/main/src/index.ts)
+> Voir également [`src/hooks.ts`](https://github.com/windingwind/zotero-plugin-template/blob/main/src/hooks.ts)
 
-The bootstrapped plugin runs in a sandbox, which does not have default global variables like `Zotero` or `window`, which we used to have in the overlay plugins' window environment.
+1. Lorsque l'installation/activation/démarrage est déclenché par Zotero, `bootstrap.js` > `startup` est appelé
+    - Attendez que Zotero soit prêt ;
+    - Chargez de `index.js` (l'entrée principale du code de lextension, construit à partir de `index.ts`) ;
+    - Enregistrez les ressources si Zotero 7+
+2. Dans l'entrée principale `index.js`, l'objet extension est injecté sous `Zotero` et `hooks.ts` > `onStartup` est appelé.
+    - Initialisez tout ce que vous voulez, y compris les auditeurs de notifications (hooks), les panneaux de préférences et les éléments de l'interface utilisateur.
+3. Lorsque la désinstallation/désactivation est déclenchée depuis Zotero, `bootstrap.js` > `shutdown` est appelé.
+    - `events.ts` > `onShutdown` est appelé. Cela supprime les éléments de l'interface utilisateur, les panneaux de préférences, ou tout ce qui a été créé par l'extension'.
+    - Supprimez les scripts et libérez les ressources.
 
-This template registers the following variables to the global scope:
+### À propos des variables globales
+
+> Voir aussi [`src/index.ts`] (https://github.com/windingwind/zotero-plugin-template/blob/main/src/index.ts)
+
+
+L'extension 'bootstrappé' fonctionne dans un bac à sable, qui n'a pas de variables globales par défaut comme `Zotero` ou `window`, que nous avions l'habitude d'avoir en superposition dans la fenêtre d'environnement des extensions.
+
+
+Ce modèle enregistre les variables suivantes avec une portée globale :
 
 ```ts
 Zotero, ZoteroPane, Zotero_Tabs, window, document, rootURI, ztoolkit, addon;
 ```
 
-### Create Elements API
+### Création d'une API pour les éléments
 
-The plugin template provides new APIs for bootstrap plugins. We have two reasons to use these APIs, instead of the `createElement/createElementNS`:
 
-- In bootstrap mode, plugins have to clean up all UI elements on exit (disable or uninstall), which is very annoying. Using the `createElement`, the plugin template will maintain these elements. Just `unregisterAll` at the exit.
-- Zotero 7 requires createElement()/createElementNS() → createXULElement() for remaining XUL elements, while Zotero 6 doesn't support `createXULElement`. The React.createElement-like API `createElement` detects namespace(xul/html/svg) and creates elements automatically, with the return element in the corresponding TS element type.
+Le modèle d'extension fournit de nouvelles API pour les extensions 'bootstrappées'. Nous avons deux raisons d'utiliser ces APIs, au lieu de `createElement/createElementNS` :
+
+- En mode bootstrap, les extensions doivent nettoyer tous les éléments de l'interface utilisateur à la sortie (désactivation ou désinstallation), ce qui est très ennuyeux. En utilisant `createElement`, le modèle de l'eextensions va maintenir ces éléments. Il suffit de lancer `unregisterAll` à la sortie.
+- Zotero 7 requiert createElement()/createElementNS() → createXULElement() pour les éléments XUL restants, alors que Zotero 6 ne supporte pas `createXULElement`. L'API React.createElement-like `createElement` détecte l'espace de noms (xul/html/svg) et crée des éléments automatiquement, avec l'élément de retour dans le type d'élément TS correspondant.
 
 ```ts
 createElement(document, "div"); // returns HTMLDivElement
@@ -342,25 +327,24 @@ createElement(document, "hbox"); // returns XUL.Box
 createElement(document, "button", { namespace: "xul" }); // manually set namespace. returns XUL.Button
 ```
 
-### About Zotero API
+### À propos de l'API Zotero
 
-Zotero docs are outdated and incomplete. Clone <https://github.com/zotero/zotero> and search the keyword globally.
+La documentation de Zotero est obsolète et incomplète. Clonez <https://github.com/zotero/zotero> et recherchez le mot-clé globalement.
 
-> ⭐The [zotero-types](https://github.com/windingwind/zotero-types) provides most frequently used Zotero APIs. It's included in this template by default. Your IDE would provide hint for most of the APIs.
+> ⭐Le [zotero-types](https://github.com/windingwind/zotero-types) fournit les API de Zotero les plus fréquemment utilisées. Il est inclus dans ce modèle par défaut. Votre IDE devrait fournir des indices pour la plupart des API.
 
-A trick for finding the API you want:
+Une astuce pour trouver l'API que vous voulez :
 
-Search the UI label in `.xhtml`/`.flt` files, find the corresponding key in locale file. Then search this keys in `.js`/`.jsx` files.
+Recherchez le label de l'interface utilisateur dans les fichiers `.xhtml`/`.flt`, trouvez la clé correspondante dans le fichier locale. Ensuite, recherchez cette clé dans les fichiers `.js`/`.jsx`.
 
-### Directory Structure
+### Structure des répertoires
 
-This section shows the directory structure of a template.
-
-- All `.js/.ts` code files are in `./src`;
-- Addon config files: `./addon/manifest.json`;
-- UI files: `./addon/content/*.xhtml`.
-- Locale files: `./addon/locale/**/*.flt`;
-- Preferences file: `./addon/prefs.js`;
+Cette section montre la structure des répertoires d'un modèle.
+- Tous les fichiers de code `.js/.ts` sont dans `./src` ;
+- Les fichiers de configuration des addons : `./addon/manifest.json` ;
+- Fichiers d'interface utilisateur : `./addon/content/*.xhtml`.
+- Les fichiers des Locales : `./addon/locale/**/*.flt` ;
+- Fichier de préférences : `./addon/prefs.js` ;
 
 ```shell
 .
@@ -417,8 +401,8 @@ This section shows the directory structure of a template.
 `-- zotero-plugin.config.ts   # scaffold conf, https://github.com/northword/zotero-plugin-scaffold
 ```
 
-## Disclaimer
+## Clause de non-responsabilité
 
-Use this code under AGPL. No warranties are provided. Keep the laws of your locality in mind!
+Utilisez ce code sous AGPL. Aucune garantie n'est fournie. Gardez à l'esprit les lois de votre pays !
 
-If you want to change the license, please contact me at <wyzlshx@foxmail.com>
+Si vous souhaitez modifier la licence, veuillez me contacter à l'adresse suivante : <wyzlshx@foxmail.com>
