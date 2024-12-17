@@ -53,15 +53,15 @@ Si vous utilisez ce dépôt, je vous recommande de mettre le badge suivant dans 
 
 - Architecture orientée événements, basée sur la programmation fonctionnelle utilisant des squeletteq étendus ;
 - Simple et convivial, il est prêt à l'emploi.
-- ⭐ [New!] Rechargement automatique à chaud ! Chaque fois que le code source est modifié, il est automatiquement compilé et rechargé. [Voir ici→]((#auto-hot-reload)
+- ⭐ [Nuveauté !] Rechargement automatique à chaud ! Chaque fois que le code source est modifié, il est automatiquement compilé et rechargé. [Voir ici→]((#auto-hot-reload)
 - Nombreux exemples dans `src/modules/examples.ts` ; ils couvrent la plupart des usages des APIs habituellement utilisées dans les extensions (en utilisant [zotero-plugin-toolkit](https://github.com/windingwind/zotero-plugin-toolkit));
 - Support de TypeScript :
   - Prise en charge complète de la définition des types pour l'ensemble du projet Zotero, qui est écrit en JavaScript (avec les  [zotero-types](https://github.com/windingwind/zotero-types));
   - Variables globales et configuration de l'environnement ;
 - Gestion des workflows pour le développement, la finalisation et la publication des extensions :
-  - - Génére / mets à jour automatiquement l'id/version de l'extension, mets à jour les configurations, et définit les variables d'environnement (`development` / `production`);
+  - - Génére / met à jour automatiquement l'id/version de l'extension, met à jour les configurations, et définit les variables d'environnement (`development` / `production`);
   - Construit et recharge automatiquement le code dans Zotero ;
-  - Publie automatiquement les nouvelles versions sur GitHub ;;
+  - Publie automatiquement les nouvelles versions sur GitHub.
 - Intégration avec Prettier et ES Lint (analyseur et formatteur de code).
 
 ## Exemples
@@ -86,7 +86,7 @@ Recherchez `@example` dans `src/examples.ts`. Les exemples sont  appelés dans `
 
 ![image](https://user-images.githubusercontent.com/33902321/211739774-cc5c2df8-5fd9-42f0-9cdf-0f2e5946d427.png)
 
-- registerStyleSheet(the official make-it-red example)
+- registerStyleSheet (utilisé par l'extension officielle make-it-red qui sert d'exemple)
 - registerRightClickMenuItem
 - registerRightClickMenuPopup
 - registerWindowMenuWithSeprator
@@ -124,7 +124,7 @@ Voir [`src/modules/preferenceScript.ts`](../src/modules/preferenceScript.ts)
 
 Un module d'invite (entrée de commande contextuelle) de style Obsidian. Il accepte les commandes textuelles pour exécuter le callback, avec un affichage optionnel dans la fenêtre popup.
 
-S'aactive avec `Shift+P`.
+S'active avec `Shift+P`.
 
 ![image](https://user-images.githubusercontent.com/33902321/215120009-e7c7ed27-33a0-44fe-b021-06c272481a92.png)
 
@@ -139,7 +139,7 @@ S'aactive avec `Shift+P`.
 > [!NOTE]
 > Ce guide suppose que vous avez une compréhension initiale de la structure de base et du fonctionnement des extensiosn Zotero. Si ce n'est pas le cas, veuillez vous référer à la [documentation](https://www.zotero.org/support/dev/zotero_7_for_developers)et aux exemples officiels de l'extension [Make It Red](https://github.com/zotero/make-it-red)  en premier lieu.
 
-### 1. Créer votre dépôt
+### 1. Créez votre dépôt
 
 1. Cliquez sur `Use this template`
 2. Clonez votre dépôt avec git.
