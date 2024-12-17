@@ -180,7 +180,7 @@ Activate with `Shift+P`.
    > [!warning]
    > Be careful to set the addonID and addonRef to avoid conflict.
 
-   If you need to host your XPI packages outside of GitHub, moidify `updateURL` and add `xpiDownloadLink` in `zotero-plugin.config.ts`.
+   If you need to host your XPI packages outside of GitHub, modify `updateURL` and add `xpiDownloadLink` in `zotero-plugin.config.ts`.
 
 2. Copy the environment variable file. Modify the commands that starts your installation of the beta Zotero.
 
