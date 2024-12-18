@@ -244,7 +244,7 @@ Exécutez `npm run build` construire l'extension en mode production : t le xpi p
 
 - Préparez les fichiers de locale pour [éviter les conflits] (https://www.zotero.org/support/dev/zotero_7_for_developers#avoiding_localization_conflicts)
 - Renommer `**/*.flt` en `**/${addonRef}-*.flt`
-- Préfixer chaque message fluent avec `addonRef-`
+- Préfixez chaque message fluent[TODO] avec `addonRef-`
 - Utilisez ESBuild pour construire le code source `.ts` vers `.js`, construisez `src/index.ts` vers `./build/addon/content/scripts`.
 - (Mode production uniquement) Zipper le fichier `./build/addon` vers `./build/*.xpi`.
 - (Mode production uniquement) Préparez `update.json` ou `update-beta.json`
@@ -271,7 +271,7 @@ npm run release
 > Cela utilisera [Bumpp](https://github.com/antfu-collective/bumpp) pour saisir le nouveau numéro de version, modifier localement la version, exécuter tous les scripts (pré/post) version définis dans `package.json`, commit, build (optionnel), marquer le commit avec le numéro de version et pousser les commits et les tags git. Bumpp peut être configuré dans `zotero-plugin-config.ts` ; par exemple, ajoutez `release : { bumpp : { execute : « npm run build » } }` pour construire également avant de commiter.
 > Par la suite, GitHub Action reconstruira l'extensions et utilisera le script `release` de `zotero-plugin-scaffold` pour publier l'XPI sur GitHub Release. De plus, une version séparée (tag : `release`) sera créée ou mise à jour qui inclura les manifestes de mise à jour `update.json` et `update-beta.json` en tant qu'actifs. Ceux-ci seront disponibles à `https://github.com/{{owner}}/{{repo}}/releases/download/release/update*.json`.
 
-#### About Prerelease
+#### À propos des pré-releases
 
 Le modèle définit `prerelease` comme la version beta de l'extension, lorsque vous sélectionnez une version `prerelease` dans Bumpp (avec `-` dans le numéro de version). Le script de construction créera un nouveau `update-beta.json` pour l'utilisation de la prerelease, ce qui assure que les utilisateurs de la version normale ne seront pas en mesure de mettre à jour vers la version beta. Seuls les utilisateurs qui ont téléchargé et installé manuellement la version bêta seront en mesure de mettre à jour automatiquement vers la prochaine version bêta.
 
@@ -313,7 +313,7 @@ Ce modèle enregistre les variables suivantes avec une portée globale :
 Zotero, ZoteroPane, Zotero_Tabs, window, document, rootURI, ztoolkit, addon;
 ```
 
-### Création d'une API pour les éléments
+### Création d'une API pour les éléments de l'extension
 
 
 Le modèle d'extension fournit de nouvelles API pour les extensions 'bootstrappées'. Nous avons deux raisons d'utiliser ces APIs, au lieu de `createElement/createElementNS` :
