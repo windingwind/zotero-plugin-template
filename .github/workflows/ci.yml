@@ -62,4 +62,4 @@ jobs:
         with:
           name: build-result
           path: |
-            dist
+            build
