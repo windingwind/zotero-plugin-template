@@ -1,6 +1,8 @@
+import { config } from "../../package.json";
+
 type PluginPrefsMap = _ZoteroTypes.Prefs["PluginPrefsMap"];
 
-const PREFS_PREFIX = addon.data.config.prefsPrefix;
+const PREFS_PREFIX = config.prefsPrefix;
 
 /**
  * Get preference value.
