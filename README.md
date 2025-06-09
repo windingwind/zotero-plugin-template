@@ -134,7 +134,7 @@ Activate with `Shift+P`.
 ### 0 Requirement
 
 1. Install a beta version of Zotero: <https://www.zotero.org/support/beta_builds>
-2. Install [Node.js](https://nodejs.org/en/) and [Git](https://git-scm.com/)
+2. Install [Node.js latest LTS version](https://nodejs.org/en/) and [Git](https://git-scm.com/)
 
 > [!note]
 > This guide assumes that you have an initial understanding of the basic structure and workings of the Zotero plugin. If you don't, please refer to the [documentation](https://www.zotero.org/support/dev/zotero_7_for_developers) and official plugin examples [Make It Red](https://github.com/zotero/make-it-red) first.
@@ -163,17 +163,24 @@ Activate with `Shift+P`.
 
    ```json5
    {
-     version: "", // to 0.0.0
-     author: "",
-     description: "",
-     homepage: "",
-     config: {
-       addonName: "", // name to be displayed in the plugin manager
-       addonID: "", // ID to avoid conflict. IMPORTANT!
-       addonRef: "", // e.g. Element ID prefix
-       addonInstance: "", // the plugin's root instance: Zotero.${addonInstance}
-       prefsPrefix: "extensions.zotero.${addonRef}", // the prefix of prefs
+     "version": "0.0.0",
+     "description": "",
+     "config": {
+       "addonName": "", // name to be displayed in the plugin manager
+       "addonID": "", // ID to avoid conflict. IMPORTANT!
+       "addonRef": "", // e.g. Element ID prefix
+       "addonInstance": "", // the plugin's root instance: Zotero.${addonInstance}
+       "prefsPrefix": "extensions.zotero.${addonRef}", // the prefix of prefs
      },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/your-github-name/repo-name.git"
+    },
+    "author": "Your Name",
+    "bugs": {
+      "url": "https://github.com/your-github-name/repo-name/issues"
+    },
+    "homepage": "https://github.com/your-github-name/repo-name#readme",
    }
    ```
 
