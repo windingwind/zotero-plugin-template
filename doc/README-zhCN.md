@@ -41,7 +41,6 @@
 [![GitHub Repo stars](https://img.shields.io/github/stars/MuiseDestiny/zotero-figure?label=zotero-figure&style=flat-square)](https://github.com/MuiseDestiny/zotero-figure)
 [![GitHub Repo stars](https://img.shields.io/github/stars/l0o0/jasminum?label=jasminum&style=flat-square)](https://github.com/l0o0/jasminum)
 [![GitHub Repo stars](https://img.shields.io/github/stars/lifan0127/ai-research-assistant?label=ai-research-assistant&style=flat-square)](https://github.com/lifan0127/ai-research-assistant)
-
 [![GitHub Repo stars](https://img.shields.io/github/stars/daeh/zotero-markdb-connect?label=zotero-markdb-connect&style=flat-square)](https://github.com/daeh/zotero-markdb-connect)
 
 如果你正在使用此库，我建议你将这个标志 ([![Using Zotero Plugin Template](https://img.shields.io/badge/Using-Zotero%20Plugin%20Template-blue?style=flat-square&logo=github)](https://github.com/windingwind/zotero-plugin-template)) 放在 README 文件中：
@@ -54,14 +53,13 @@
 
 - 事件驱动、函数式编程的可扩展框架；
 - 简单易用，开箱即用；
-- ⭐[新特性！]自动热重载！每当修改源码时，都会自动编译并重新加载插件；[详情请跳转→](#自动热重载)
 - `src/modules/examples.ts` 中有丰富的示例，涵盖了插件中常用的大部分 API (使用 [zotero-plugin-toolkit](https://github.com/windingwind/zotero-plugin-toolkit)；
 - TypeScript 支持：
   - 为使用 JavaScript 编写的 Zotero 源码提供全面的类型定义支持 (使用 [zotero-types](https://github.com/windingwind/zotero-types))；
   - 全局变量和环境设置；
 - 插件开发/构建/发布工作流：
+  - ⭐自动热重载！每当修改源码时，都会自动编译并重新加载插件；
   - 自动生成/更新插件版本、更新配置和设置环境变量 (`development`/`production`)；
-  - 自动在 Zotero 中构建和重新加载代码；
   - 自动发布到 GitHub ;
 - 集成 Prettier 和 ES Lint;
 
@@ -214,9 +212,7 @@ Obsidian 风格的指令输入模块，它通过接受文本来运行插件，�
 - 在开发模式下预构建插件
 - 启动 Zotero，并让其从 `build/` 中加载插件
 - 打开开发者工具（devtool）
-- 监听 `src/**` 和 `addon/**`.
-  - 如果 `src/**` 修改了，运行 esbuild 并且重新加载
-  - 如果 `addon/**` 修改了，(在开发模式下) 重新构建插件并且重新加载
+- 监听 `src/**` 和 `addon/**`，当文件发生修改时，重新构建插件并且重新加载
 
 #### 自动热重载
 
@@ -248,18 +244,20 @@ Obsidian 风格的指令输入模块，它通过接受文本来运行插件，�
 
 ### 4 构建插件
 
-运行 `npm run build` 在生产模式下构建插件，构建的结果位于 `build/` 目录中。
+运行 `npm run build` 在生产模式下构建插件，构建的结果位于 `.scaffold/build/` 目录中。
 
-构建步骤：
+构建步骤文档可参阅 [zotero-plugin-scaffold](https://northword.github.io/zotero-plugin-scaffold/build.html)简单来说，可以分为以下几步：
 
 - 创建/清空 `build/`
-- 复制 `addon/**` 到 `build/addon/**`
-- 替换占位符：使用 `replace-in-file` 去替换在 `package.json` 中定义的关键字和配置 (`xhtml`、`.flt` 等)
-- 准备本地化文件以避免冲突，查看官方文档了解更多（<https://www.zotero.org/support/dev/zotero_7_for_developers#avoiding_localization_conflicts）>
+- 复制 `addon/**` 到 `.scaffold/build/addon/**`
+- 替换占位符：替换在 `package.json` 中定义的关键字和配置
+- 准备本地化文件以避免冲突，查看 [zotero_7_for_developers](https://www.zotero.org/support/dev/zotero_7_for_developers#avoiding_localization_conflicts) 了解更多
   - 重命名`**/*.flt` 为 `**/${addonRef}-*.flt`
   - 在每个消息前加上 `addonRef-`
-- 使用 Esbuild 来将 `.ts` 源码构建为 `.js`，从 `src/index.ts` 构建到`./build/addon/content/scripts`
-- (仅在生产模式下工作) 压缩 `./build/addon` 目录为 `./build/*.xpi`
+  - 为 FTL 消息生成类型声明文件
+- 准备首选项文件，在首选项键前添加前缀 `package.json#prefsPrefix`，并为首选项生成类型声明文件
+- 使用 ESBuild 来将 `.ts` 源码构建为 `.js`，从 `src/index.ts` 构建到`.scaffold/build/addon/content/scripts`
+- (仅在生产模式下工作) 压缩 `.scaffold/build/addon` 目录为 `.scaffold/build/*.xpi`
 - (仅在生产模式下工作) 准备 `update.json` 或 `update-beta.json`
 
 > [!note]
@@ -281,20 +279,20 @@ npm run release
 ```
 
 > [!note]
-> 在此模板中，release-it 被配置为在本地更新版本号、提交并推送标签，随后 GitHub Action 将重新构建插件并将 XPI 发布到 GitHub Release.
+> 在此模板中，发布流程被配置为在本地更新版本号、提交并推送标签，随后 GitHub Action 将重新构建插件并将 XPI 发布到 GitHub Release。
 
 #### 关于预发布
 
-该模板将 `prerelease` 定义为插件的测试版，当你在 release-it 中选择 `prerelease` 版本 (版本号中带有 `-` )，构建脚本将创建一个 `update-beta.json` 给预发布版本使用，这将确保常规版本的用户不会自动更新到测试版，只有手动下载并安装了测试版的用户才能自动更新到下一个测试版。当下一个正式版本更新时，脚本将同步更新 `update.json` 和 `update-beta.json`，这将使正式版和测试版用户都可以更新到最新的正式版。
+该模板将 `prerelease` 定义为插件的测试版，当你在版本选择中选择 `prerelease` 版本 (版本号中带有 `-` )，构建脚本将创建一个 `update-beta.json` 给预发布版本使用，这将确保常规版本的用户不会自动更新到测试版，只有手动下载并安装了测试版的用户才能自动更新到下一个测试版。当下一个正式版本更新时，脚本将同步更新 `update.json` 和 `update-beta.json`，这将使正式版和测试版用户都可以更新到最新的正式版。
 
 > [!warning]
-> 严格来说，区分 Zotero 6 和 Zotero 7 兼容的插件版本应该通过 `update.json` 的 `addons.__addonID__.updates[]` 中分别配置 `applications.zotero.strict_min_version`，这样 Zotero 才能正确识别，详情在 Zotero 7 开发文档（<https://www.zotero.org/support/dev/zotero_7_for_developers#updaterdf_updatesjson）获取>.
+> 严格来说，区分 Zotero 6 和 Zotero 7 兼容的插件版本应该通过 `update.json` 的 `addons.__addonID__.updates[]` 中分别配置 `applications.zotero.strict_min_version`，这样 Zotero 才能正确识别，详情请参阅 [Zotero 7 开发文档](https://www.zotero.org/support/dev/zotero_7_for_developers#updaterdf_updatesjson)。
 
 ## Details 更多细节
 
 ### 关于 Hooks(About Hooks)
 
-> 可以在 [`src/hooks.ts`](https://github.com/windingwind/zotero-plugin-template/blob/main/src/hooks.ts) 中查看更多
+> 可以在 [`src/hooks.ts`](https://github.com/windingwind/zotero-plugin-template/blob/main/src/hooks.ts) 中查看更多。
 
 1. 当在 Zotero 中触发安装/启用/启动时，`bootstrap.js` > `startup` 被调用
    - 等待 Zotero 就绪
