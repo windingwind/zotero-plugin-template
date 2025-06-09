@@ -161,7 +161,7 @@ Activate with `Shift+P`.
 
 1. Modify the settings in `./package.json`, including:
 
-   ```json5
+   ```jsonc
    {
      "version": "0.0.0",
      "description": "",
@@ -172,15 +172,15 @@ Activate with `Shift+P`.
        "addonInstance": "", // the plugin's root instance: Zotero.${addonInstance}
        "prefsPrefix": "extensions.zotero.${addonRef}", // the prefix of prefs
      },
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/your-github-name/repo-name.git"
-    },
-    "author": "Your Name",
-    "bugs": {
-      "url": "https://github.com/your-github-name/repo-name/issues"
-    },
-    "homepage": "https://github.com/your-github-name/repo-name#readme",
+     "repository": {
+       "type": "git",
+       "url": "git+https://github.com/your-github-name/repo-name.git",
+     },
+     "author": "Your Name",
+     "bugs": {
+       "url": "https://github.com/your-github-name/repo-name/issues",
+     },
+     "homepage": "https://github.com/your-github-name/repo-name#readme",
    }
    ```
 

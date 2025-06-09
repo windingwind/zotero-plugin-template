@@ -160,7 +160,7 @@ Obsidian 风格的指令输入模块，它通过接受文本来运行插件，�
 
 1. 修改 `./package.json` 中的设置，包括：
 
-   ```json5
+   ```jsonc
    {
      "version": "", // 修改为 0.0.0
      "description": "",
@@ -172,14 +172,14 @@ Obsidian 风格的指令输入模块，它通过接受文本来运行插件，�
        "prefsPrefix": "extensions.zotero.${addonRef}", // 首选项的前缀
      },
      "repository": {
-        "type": "git",
-        "url": "git+https://github.com/your-github-name/repo-name.git"
-      },
-      "author": "Your Name",
-      "bugs": {
-        "url": "https://github.com/your-github-name/repo-name/issues"
-      },
-      "homepage": "https://github.com/your-github-name/repo-name#readme",
+       "type": "git",
+       "url": "git+https://github.com/your-github-name/repo-name.git",
+     },
+     "author": "Your Name",
+     "bugs": {
+       "url": "https://github.com/your-github-name/repo-name/issues",
+     },
+     "homepage": "https://github.com/your-github-name/repo-name#readme",
    }
    ```
 
