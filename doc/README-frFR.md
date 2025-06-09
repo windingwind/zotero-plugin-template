@@ -255,7 +255,7 @@ Exécutez `npm run build` construire l'extension en mode production : t le xpi p
 - Copiez `addon/**` dans `build/addon/**`.
 - Remplacez les espaces réservés : utilisez `replace-in-file` pour remplacer les mots-clés et les configurations définis dans `package.json` dans les fichiers non-construits (`xhtml`, `json`, et al.).
 
-- Préparez les fichiers de locale pour [éviter les conflits] (<https://www.zotero.org/support/dev/zotero_7_for_developers#avoiding_localization_conflicts>)
+- Préparez les fichiers de locale pour [éviter les conflits](https://www.zotero.org/support/dev/zotero_7_for_developers#avoiding_localization_conflicts)
 - Renommer `**/*.flt` en `**/${addonRef}-*.flt`
 - Préfixez chaque message fluent[TODO] avec `addonRef-`
 - Utilisez ESBuild pour construire le code source `.ts` vers `.js`, construisez `src/index.ts` vers `./build/addon/content/scripts`.
@@ -311,7 +311,7 @@ Lorsque la prochaine version normale sera mise à jour, `update.json` et `update
 
 ### À propos des variables globales
 
-> Voir aussi [`src/index.ts`] (<https://github.com/windingwind/zotero-plugin-template/blob/main/src/index.ts>)
+> Voir aussi [`src/index.ts`](https://github.com/windingwind/zotero-plugin-template/blob/main/src/index.ts)
 
 L'extension 'bootstrappé' fonctionne dans un bac à sable, qui n'a pas de variables globales par défaut comme `Zotero` ou `window`, que nous avions l'habitude d'avoir en superposition dans la fenêtre d'environnement des extensions.
 
