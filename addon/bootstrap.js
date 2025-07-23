@@ -65,8 +65,6 @@ async function shutdown({ id, version, resourceURI, rootURI }, reason) {
     .getService(Components.interfaces.nsIStringBundleService)
     .flushBundles();
 
-  Cu.unload(`${rootURI}/content/scripts/__addonRef__.js`);
-
   if (chromeHandle) {
     chromeHandle.destruct();
     chromeHandle = null;
