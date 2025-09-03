@@ -1,6 +1,24 @@
 import { config } from "../../package.json";
 import { getString } from "../utils/locale";
 
+/**
+ * Module: UI - Menu
+ * Purpose: Register a menu
+ *
+ * Lifecycle:
+ * - Register: onStartup
+ * - Unregister: onShutdown
+ * - Requires manual unregister: No, handled by Zotero
+ */
+export function registerPrefs() {
+  Zotero.PreferencePanes.register({
+    pluginID: addon.data.config.addonID,
+    src: rootURI + "content/preferences.xhtml",
+    label: getString("prefs-title"),
+    image: `chrome://${addon.data.config.addonRef}/content/icons/favicon.png`,
+  });
+}
+
 export async function registerPrefsScripts(_window: Window) {
   // This function is called when the prefs window is opened
   // See addon/content/preferences.xhtml onpaneload
