@@ -61,7 +61,7 @@ function getString(...inputs: any[]) {
 }
 
 interface Pattern {
-  value: string;
+  value: string | null;
   attributes: Array<{
     name: string;
     value: string;
