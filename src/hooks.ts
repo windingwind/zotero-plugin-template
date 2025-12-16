@@ -1,13 +1,40 @@
-import {
-  BasicExampleFactory,
-  HelperExampleFactory,
-  KeyExampleFactory,
-  PromptExampleFactory,
-  UIExampleFactory,
-} from "./modules/examples";
+import { HelperExampleFactory } from "./modules/examples";
 import { getString, initLocale } from "./utils/locale";
-import { registerPrefsScripts } from "./modules/preferenceScript";
+import {
+  registerPrefs,
+  registerPrefsScripts,
+} from "./modules/preferenceScript";
 import { createZToolkit } from "./utils/ztoolkit";
+import {
+  exampleNotifierCallback,
+  registerNotifier,
+  unregisterNotifier,
+} from "./modules/notifier";
+import {
+  registerExtraColumn,
+  registerExtraColumnWithCustomCell,
+} from "./modules/item-tree";
+import {
+  exampleShortcutLargerCallback,
+  exampleShortcutSmallerCallback,
+  registerShortcuts,
+} from "./modules/shortcut";
+import {
+  registerItemPaneCustomInfoRow,
+  registerItemPaneSection,
+  registerReaderItemPaneSection,
+} from "./modules/item-pane";
+import { registerStyleSheet, unregisterStyleSheet } from "./modules/stylesheet";
+import {
+  registerRightClickMenuItem,
+  registerRightClickMenuPopup,
+  registerWindowMenuWithSeparator,
+} from "./modules/menu";
+import {
+  registerAnonymousCommandExample,
+  registerConditionalCommandExample,
+  registerNormalCommandExample,
+} from "./modules/prompt";
 
 async function onStartup() {
   await Promise.all([
@@ -18,25 +45,23 @@ async function onStartup() {
 
   initLocale();
 
-  BasicExampleFactory.registerPrefs();
+  registerPrefs();
 
-  BasicExampleFactory.registerNotifier();
+  registerNotifier();
 
-  KeyExampleFactory.registerShortcuts();
+  registerShortcuts();
 
-  await UIExampleFactory.registerExtraColumn();
+  await registerExtraColumn();
 
-  await UIExampleFactory.registerExtraColumnWithCustomCell();
+  await registerExtraColumnWithCustomCell();
 
-  UIExampleFactory.registerItemPaneCustomInfoRow();
+  registerItemPaneCustomInfoRow();
 
-  UIExampleFactory.registerItemPaneSection();
+  registerItemPaneSection();
 
-  UIExampleFactory.registerReaderItemPaneSection();
+  registerReaderItemPaneSection();
 
-  await Promise.all(
-    Zotero.getMainWindows().map((win) => onMainWindowLoad(win)),
-  );
+  await Promise.all(Zotero.getMainWindows().map(onMainWindowLoad));
 
   // Mark initialized as true to confirm plugin loading status
   // outside of the plugin (e.g. scaffold testing process)
@@ -68,19 +93,19 @@ async function onMainWindowLoad(win: _ZoteroTypes.MainWindow): Promise<void> {
     text: `[30%] ${getString("startup-begin")}`,
   });
 
-  UIExampleFactory.registerStyleSheet(win);
+  registerStyleSheet(win);
 
-  UIExampleFactory.registerRightClickMenuItem();
+  registerRightClickMenuItem();
 
-  UIExampleFactory.registerRightClickMenuPopup(win);
+  registerRightClickMenuPopup(win);
 
-  UIExampleFactory.registerWindowMenuWithSeparator();
+  registerWindowMenuWithSeparator();
 
-  PromptExampleFactory.registerNormalCommandExample();
+  registerNormalCommandExample();
 
-  PromptExampleFactory.registerAnonymousCommandExample(win);
+  registerAnonymousCommandExample(win);
 
-  PromptExampleFactory.registerConditionalCommandExample();
+  registerConditionalCommandExample();
 
   await Zotero.Promise.delay(1000);
 
@@ -93,12 +118,14 @@ async function onMainWindowLoad(win: _ZoteroTypes.MainWindow): Promise<void> {
   addon.hooks.onDialogEvents("dialogExample");
 }
 
-async function onMainWindowUnload(win: Window): Promise<void> {
+async function onMainWindowUnload(win: _ZoteroTypes.MainWindow): Promise<void> {
+  unregisterStyleSheet(win);
   ztoolkit.unregisterAll();
   addon.data.dialog?.window?.close();
 }
 
 function onShutdown(): void {
+  unregisterNotifier();
   ztoolkit.unregisterAll();
   addon.data.dialog?.window?.close();
   // Remove addon object
@@ -124,9 +151,7 @@ async function onNotify(
     type == "tab" &&
     extraData[ids[0]].type == "reader"
   ) {
-    BasicExampleFactory.exampleNotifierCallback();
-  } else {
-    return;
+    exampleNotifierCallback();
   }
 }
 
@@ -149,10 +174,10 @@ async function onPrefsEvent(type: string, data: { [key: string]: any }) {
 function onShortcuts(type: string) {
   switch (type) {
     case "larger":
-      KeyExampleFactory.exampleShortcutLargerCallback();
+      exampleShortcutLargerCallback();
       break;
     case "smaller":
-      KeyExampleFactory.exampleShortcutSmallerCallback();
+      exampleShortcutSmallerCallback();
       break;
     default:
       break;
