@@ -1,12 +1,35 @@
 import {
-  BasicExampleFactory,
-  HelperExampleFactory,
-  KeyExampleFactory,
-  PromptExampleFactory,
-  UIExampleFactory,
-} from "./modules/examples";
-import { getString, initLocale } from "./utils/locale";
-import { registerPrefsScripts } from "./modules/preferenceScript";
+  clipboardExample,
+  dialogExample,
+  filePickerExample,
+  progressWindowExample,
+  vtableExample,
+} from "./examples/helpers";
+import {
+  exampleShortcutLargerCallback,
+  exampleShortcutSmallerCallback,
+} from "./examples/shortcuts";
+import {
+  registerStyleSheetToWindow,
+  unregisterStyleSheetFromWindow,
+} from "./examples/ui-stylesheet";
+import {
+  registerItemPaneCustomInfoRow,
+  registerItemPaneSection,
+  registerReaderItemPaneSection,
+} from "./modules/item-pane";
+import {
+  registerExtraColumn,
+  registerExtraColumnWithCustomCell,
+} from "./modules/item-tree";
+import { registerMenu } from "./modules/menu";
+import { exampleNotifierCallback, registerNotifier } from "./modules/notifier";
+import { registerPrefPanes, registerPrefsScripts } from "./modules/preference";
+import {
+  initLocale,
+  registerMainWindowLocale,
+  unregisterMainWindowLocale,
+} from "./utils/locale";
 import { createZToolkit } from "./utils/ztoolkit";
 
 async function onStartup() {
@@ -18,26 +41,26 @@ async function onStartup() {
 
   initLocale();
 
-  BasicExampleFactory.registerPrefs();
+  /** --- Examples start --- */
 
-  BasicExampleFactory.registerNotifier();
+  registerPrefPanes();
+  registerNotifier();
 
-  KeyExampleFactory.registerShortcuts();
+  // Item Pane
+  registerItemPaneSection();
+  registerItemPaneCustomInfoRow();
+  registerReaderItemPaneSection();
 
-  await UIExampleFactory.registerExtraColumn();
+  // Item Tree
+  registerExtraColumn();
+  registerExtraColumnWithCustomCell();
 
-  await UIExampleFactory.registerExtraColumnWithCustomCell();
+  // Menu
+  registerMenu();
 
-  UIExampleFactory.registerItemPaneCustomInfoRow();
+  /** --- Examples end --- */
 
-  UIExampleFactory.registerItemPaneSection();
-
-  UIExampleFactory.registerReaderItemPaneSection();
-
-  await Promise.all(
-    Zotero.getMainWindows().map((win) => onMainWindowLoad(win)),
-  );
-
+  await Promise.all(Zotero.getMainWindows().map(onMainWindowLoad));
   // Mark initialized as true to confirm plugin loading status
   // outside of the plugin (e.g. scaffold testing process)
   addon.data.initialized = true;
@@ -47,53 +70,18 @@ async function onMainWindowLoad(win: _ZoteroTypes.MainWindow): Promise<void> {
   // Create ztoolkit for every window
   addon.data.ztoolkit = createZToolkit();
 
-  win.MozXULElement.insertFTLIfNeeded(
-    `${addon.data.config.addonRef}-mainWindow.ftl`,
-  );
+  registerMainWindowLocale(win);
 
-  const popupWin = new ztoolkit.ProgressWindow(addon.data.config.addonName, {
-    closeOnClick: true,
-    closeTime: -1,
-  })
-    .createLine({
-      text: getString("startup-begin"),
-      type: "default",
-      progress: 0,
-    })
-    .show();
+  /** --- Examples start --- */
+  // Stylesheet
+  registerStyleSheetToWindow(win);
 
-  await Zotero.Promise.delay(1000);
-  popupWin.changeLine({
-    progress: 30,
-    text: `[30%] ${getString("startup-begin")}`,
-  });
-
-  UIExampleFactory.registerStyleSheet(win);
-
-  UIExampleFactory.registerRightClickMenuItem();
-
-  UIExampleFactory.registerRightClickMenuPopup(win);
-
-  UIExampleFactory.registerWindowMenuWithSeparator();
-
-  PromptExampleFactory.registerNormalCommandExample();
-
-  PromptExampleFactory.registerAnonymousCommandExample(win);
-
-  PromptExampleFactory.registerConditionalCommandExample();
-
-  await Zotero.Promise.delay(1000);
-
-  popupWin.changeLine({
-    progress: 100,
-    text: `[100%] ${getString("startup-finish")}`,
-  });
-  popupWin.startCloseTimer(5000);
-
-  addon.hooks.onDialogEvents("dialogExample");
+  /** --- Examples end --- */
 }
 
-async function onMainWindowUnload(win: Window): Promise<void> {
+async function onMainWindowUnload(win: _ZoteroTypes.MainWindow): Promise<void> {
+  unregisterStyleSheetFromWindow(win);
+  unregisterMainWindowLocale(win);
   ztoolkit.unregisterAll();
   addon.data.dialog?.window?.close();
 }
@@ -124,9 +112,7 @@ async function onNotify(
     type == "tab" &&
     extraData[ids[0]].type == "reader"
   ) {
-    BasicExampleFactory.exampleNotifierCallback();
-  } else {
-    return;
+    exampleNotifierCallback();
   }
 }
 
@@ -142,17 +128,16 @@ async function onPrefsEvent(type: string, data: { [key: string]: any }) {
       registerPrefsScripts(data.window);
       break;
     default:
-      return;
   }
 }
 
 function onShortcuts(type: string) {
   switch (type) {
     case "larger":
-      KeyExampleFactory.exampleShortcutLargerCallback();
+      exampleShortcutLargerCallback();
       break;
     case "smaller":
-      KeyExampleFactory.exampleShortcutSmallerCallback();
+      exampleShortcutSmallerCallback();
       break;
     default:
       break;
@@ -162,19 +147,19 @@ function onShortcuts(type: string) {
 function onDialogEvents(type: string) {
   switch (type) {
     case "dialogExample":
-      HelperExampleFactory.dialogExample();
+      dialogExample();
       break;
     case "clipboardExample":
-      HelperExampleFactory.clipboardExample();
+      clipboardExample();
       break;
     case "filePickerExample":
-      HelperExampleFactory.filePickerExample();
+      filePickerExample();
       break;
     case "progressWindowExample":
-      HelperExampleFactory.progressWindowExample();
+      progressWindowExample();
       break;
     case "vtableExample":
-      HelperExampleFactory.vtableExample();
+      vtableExample();
       break;
     default:
       break;
