@@ -12,13 +12,22 @@ async function onStartup() {
 
   initLocale();
 
-  // Register the preference pane so it appears in Zotero Settings sidebar
-  Zotero.PreferencePanes.register({
-    pluginID: addon.data.config.addonID,
-    src: rootURI + "content/preferences.xhtml",
-    label: getString("pref-title"),
-    image: `chrome://${addon.data.config.addonRef}/content/icons/favicon.png`,
-  });
+  // Register the preference pane so it appears in Zotero Settings sidebar.
+  // Use the addon display name directly since getString() only loads addon.ftl
+  // and "pref-title" is defined in preferences.ftl (loaded later by the pane).
+  try {
+    Zotero.PreferencePanes.register({
+      pluginID: addon.data.config.addonID,
+      src: rootURI + "content/preferences.xhtml",
+      label: addon.data.config.addonName,
+      image: `chrome://${addon.data.config.addonRef}/content/icons/favicon.png`,
+    });
+  } catch (e) {
+    Zotero.log(
+      `[${addon.data.config.addonName}] Failed to register prefs pane: ${e}`,
+      "warning",
+    );
+  }
 
   await Promise.all(
     Zotero.getMainWindows().map((win) => onMainWindowLoad(win)),
@@ -28,14 +37,21 @@ async function onStartup() {
 }
 
 async function onMainWindowLoad(win: _ZoteroTypes.MainWindow): Promise<void> {
-  addon.data.ztoolkit = createZToolkit();
+  try {
+    addon.data.ztoolkit = createZToolkit();
 
-  win.MozXULElement.insertFTLIfNeeded(
-    `${addon.data.config.addonRef}-mainWindow.ftl`,
-  );
+    win.MozXULElement.insertFTLIfNeeded(
+      `${addon.data.config.addonRef}-mainWindow.ftl`,
+    );
 
-  ExportPdfsFactory.registerCollectionMenuItem();
-  ExportPdfsFactory.registerItemMenuItem();
+    ExportPdfsFactory.registerCollectionMenuItem();
+    ExportPdfsFactory.registerItemMenuItem();
+  } catch (e) {
+    Zotero.log(
+      `[${addon.data.config.addonName}] Failed to init main window: ${e}`,
+      "warning",
+    );
+  }
 }
 
 async function onMainWindowUnload(win: Window): Promise<void> {
