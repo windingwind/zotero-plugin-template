@@ -1,5 +1,4 @@
-pref-title = 插件模板设置示例
+pref-title = 文献 PDF 导出工具
 pref-enable =
-    .label = 开启
-pref-input = 输入
+    .label = 启用
 pref-help = { $name } Build { $version } { $time }
