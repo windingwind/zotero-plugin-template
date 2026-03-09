@@ -302,20 +302,34 @@ export class ExportPdfsFactory {
   /**
    * Generate a BibTeX-style citation key: "authorYear" (lowercase).
    * Example: "smith2023", "vanderberg2022"
+   *
+   * Uses item.getCreators() instead of item.firstCreator to avoid
+   * locale-dependent connectors (e.g. Chinese "和" for "and", "等" for "et al.").
    */
   private static generateBibtexKey(item: Zotero.Item): string {
-    const firstCreator = item.firstCreator || "";
-    // Extract last name: take the part before any comma, or the whole string
-    let lastName = firstCreator.includes(",")
-      ? firstCreator.split(",")[0].trim()
-      : firstCreator.trim();
-    // Remove spaces and special chars, lowercase
-    lastName = lastName
+    const lastName = this.getFirstAuthorLastName(item);
+    // Remove spaces and non-Latin chars, lowercase for BibTeX key
+    const cleanName = lastName
       .replace(/\s+/g, "")
-      .replace(/[^a-zA-Z\u00C0-\u024F\u4e00-\u9fff]/g, "")
+      .replace(/[^a-zA-Z\u00C0-\u024F]/g, "")
       .toLowerCase();
     const year = this.getYear(item) || "";
-    return (lastName || "unknown") + year;
+    return (cleanName || "unknown") + year;
+  }
+
+  /**
+   * Get the raw last name of the first creator, free of locale formatting.
+   */
+  private static getFirstAuthorLastName(item: Zotero.Item): string {
+    try {
+      const creators = item.getCreators();
+      if (creators.length > 0) {
+        return creators[0].lastName || "";
+      }
+    } catch {
+      // fallback if getCreators is unavailable
+    }
+    return "";
   }
 
   /**
@@ -367,8 +381,17 @@ export class ExportPdfsFactory {
   private static getYear(item: Zotero.Item): string {
     const date = item.getField("date") as string;
     if (!date) return "";
-    const year = date.substring(0, 4);
-    return year && year !== "0000" ? year : "";
+    try {
+      // Use Zotero's date parser for robust handling of all date formats
+      // (e.g. "2023", "2023-05-15", "12/2/2024", "March 2023")
+      const parsed = Zotero.Date.strToDate(date);
+      const year = parsed.year;
+      return year && year !== "0000" ? year : "";
+    } catch {
+      // Fallback: extract 4-digit year via regex
+      const match = date.match(/\b(\d{4})\b/);
+      return match ? match[1] : "";
+    }
   }
 
   private static getTitle(item: Zotero.Item): string {
