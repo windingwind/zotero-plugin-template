@@ -11,6 +11,39 @@
     data-l10n-id="pref-enable"
   />
 </groupbox>
+<groupbox>
+  <label><html:h2 data-l10n-id="pref-filename-format-title"></html:h2></label>
+  <menulist
+    id="zotero-prefpane-__addonRef__-filename-format"
+    preference="filenameFormat"
+  >
+    <menupopup>
+      <menuitem
+        value="author-year-title"
+        data-l10n-id="pref-format-author-year-title"
+      />
+      <menuitem value="bibtex" data-l10n-id="pref-format-bibtex" />
+      <menuitem value="bibtex-title" data-l10n-id="pref-format-bibtex-title" />
+      <menuitem value="bbt" data-l10n-id="pref-format-bbt" />
+      <menuitem value="bbt-title" data-l10n-id="pref-format-bbt-title" />
+      <menuitem value="year-title" data-l10n-id="pref-format-year-title" />
+      <menuitem value="custom" data-l10n-id="pref-format-custom" />
+    </menupopup>
+  </menulist>
+  <hbox
+    id="zotero-prefpane-__addonRef__-custom-row"
+    align="center"
+    style="display: none"
+  >
+    <html:input
+      type="text"
+      id="zotero-prefpane-__addonRef__-filename-custom"
+      preference="filenameCustomTemplate"
+      style="flex: 1"
+    />
+  </hbox>
+  <html:small data-l10n-id="pref-format-help"></html:small>
+</groupbox>
 <vbox>
   <html:label
     data-l10n-id="pref-help"

@@ -235,43 +235,155 @@ export class ExportPdfsFactory {
   ): string {
     const originalFilename = PathUtils.filename(originalPath);
     try {
-      const parts: string[] = [];
+      const format =
+        (getPref("filenameFormat") as string) || "author-year-title";
+      const title = this.getTitle(parentItem);
+      let name: string;
 
-      const firstCreator = parentItem.firstCreator;
-      if (firstCreator) {
-        parts.push(firstCreator);
-      }
-
-      const date = parentItem.getField("date") as string;
-      if (date) {
-        const year = date.substring(0, 4);
-        if (year && year !== "0000") {
-          parts.push(year);
+      switch (format) {
+        case "bibtex":
+          name = this.generateBibtexKey(parentItem);
+          break;
+        case "bibtex-title":
+          name = this.generateBibtexKey(parentItem) + " - " + title;
+          break;
+        case "bbt":
+          name = this.getBetterBibtexKey(parentItem);
+          break;
+        case "bbt-title":
+          name = this.getBetterBibtexKey(parentItem) + " - " + title;
+          break;
+        case "year-title": {
+          const year = this.getYear(parentItem);
+          const underscoreTitle = title.replace(/\s+/g, "_");
+          name = year ? year + "_" + underscoreTitle : underscoreTitle;
+          break;
         }
+        case "custom": {
+          const template =
+            (getPref("filenameCustomTemplate") as string) ||
+            "{author} {year} - {title}";
+          name = this.formatCustomTemplate(parentItem, template);
+          break;
+        }
+        case "author-year-title":
+        default:
+          name = this.formatAuthorYearTitle(parentItem);
+          break;
       }
 
-      const title = parentItem.getField("title") as string;
-
-      if (parts.length === 0 && !title) {
-        return originalFilename;
-      }
-
-      let name = parts.join(" ");
-      if (title) {
-        if (name) name += " - ";
-        name += title.length > 100 ? title.substring(0, 100) : title;
-      }
-
-      // Sanitize: remove characters invalid on Windows/Mac/Linux
-      name = name
-        .replace(/[<>:"/\\|?*]/g, "_")
-        .replace(/\s+/g, " ")
-        .trim();
-
-      return name + ".pdf";
+      if (!name) return originalFilename;
+      return this.sanitizeFilename(name) + ".pdf";
     } catch {
       return originalFilename;
     }
+  }
+
+  // ── Filename format helpers ─────────────────────────────────
+
+  /**
+   * Default format: "Author Year - Title"
+   */
+  private static formatAuthorYearTitle(item: Zotero.Item): string {
+    const parts: string[] = [];
+    const firstCreator = item.firstCreator;
+    if (firstCreator) parts.push(firstCreator);
+    const year = this.getYear(item);
+    if (year) parts.push(year);
+    const title = this.getTitle(item);
+    let name = parts.join(" ");
+    if (title) {
+      if (name) name += " - ";
+      name += title;
+    }
+    return name;
+  }
+
+  /**
+   * Generate a BibTeX-style citation key: "authorYear" (lowercase).
+   * Example: "smith2023", "vanderberg2022"
+   */
+  private static generateBibtexKey(item: Zotero.Item): string {
+    const firstCreator = item.firstCreator || "";
+    // Extract last name: take the part before any comma, or the whole string
+    let lastName = firstCreator.includes(",")
+      ? firstCreator.split(",")[0].trim()
+      : firstCreator.trim();
+    // Remove spaces and special chars, lowercase
+    lastName = lastName
+      .replace(/\s+/g, "")
+      .replace(/[^a-zA-Z\u00C0-\u024F\u4e00-\u9fff]/g, "")
+      .toLowerCase();
+    const year = this.getYear(item) || "";
+    return (lastName || "unknown") + year;
+  }
+
+  /**
+   * Read Better BibTeX citation key from item's "extra" field.
+   * BBT stores it as "Citation Key: <key>" in the extra field.
+   * Falls back to auto-generated BibTeX key if not found.
+   */
+  private static getBetterBibtexKey(item: Zotero.Item): string {
+    try {
+      const extra = item.getField("extra") as string;
+      if (extra) {
+        // Match "Citation Key: <value>" pattern (case-insensitive)
+        const match = extra.match(/^citation\s*key:\s*(.+)$/im);
+        if (match && match[1]) {
+          return match[1].trim();
+        }
+      }
+    } catch {
+      // extra field may not exist for all item types
+    }
+    // Fallback to auto-generated BibTeX key
+    return this.generateBibtexKey(item);
+  }
+
+  /**
+   * Format a custom template string with placeholders.
+   * Supported: {author}, {year}, {title}, {citekey}, {bbt}
+   */
+  private static formatCustomTemplate(
+    item: Zotero.Item,
+    template: string,
+  ): string {
+    const author = item.firstCreator || "";
+    const year = this.getYear(item) || "";
+    const title = this.getTitle(item);
+    const citekey = this.generateBibtexKey(item);
+    const bbt = this.getBetterBibtexKey(item);
+
+    return template
+      .replace(/\{author\}/gi, author)
+      .replace(/\{year\}/gi, year)
+      .replace(/\{title\}/gi, title)
+      .replace(/\{citekey\}/gi, citekey)
+      .replace(/\{bbt\}/gi, bbt);
+  }
+
+  // ── Item field helpers ──────────────────────────────────────
+
+  private static getYear(item: Zotero.Item): string {
+    const date = item.getField("date") as string;
+    if (!date) return "";
+    const year = date.substring(0, 4);
+    return year && year !== "0000" ? year : "";
+  }
+
+  private static getTitle(item: Zotero.Item): string {
+    const title = (item.getField("title") as string) || "";
+    return title.length > 100 ? title.substring(0, 100) : title;
+  }
+
+  /**
+   * Sanitize a string for use as a filename on Windows/Mac/Linux.
+   */
+  private static sanitizeFilename(name: string): string {
+    return name
+      .replace(/[<>:"/\\|?*]/g, "_")
+      .replace(/\s+/g, " ")
+      .trim();
   }
 
   // ── Manifest I/O ────────────────────────────────────────────

@@ -10,6 +10,8 @@ declare namespace _ZoteroTypes {
       "enable": boolean;
       "exportPdfPath": string;
       "exportPdfRecursive": boolean;
+      "filenameFormat": string;
+      "filenameCustomTemplate": string;
     };
   }
 }
