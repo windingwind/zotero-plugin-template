@@ -333,16 +333,44 @@ export class ExportPdfsFactory {
   }
 
   /**
-   * Read Better BibTeX citation key from item's "extra" field.
-   * BBT stores it as "Citation Key: <key>" in the extra field.
-   * Falls back to auto-generated BibTeX key if not found.
+   * Get the Better BibTeX citation key for an item.
+   *
+   * Uses a multi-layered strategy:
+   * 1. item.getField("citationKey") — BBT patches getField in Zotero 7
+   *    to return its managed key; also works natively in Zotero 8+.
+   * 2. Zotero.BetterBibTeX.KeyManager API — direct access to BBT's
+   *    internal key database (undocumented but widely used).
+   * 3. Extra field parsing — catches manually pinned keys stored as
+   *    "Citation Key: <value>" in the extra field.
+   * 4. Fallback to auto-generated BibTeX key if BBT is not installed.
    */
   private static getBetterBibtexKey(item: Zotero.Item): string {
+    // Strategy 1: item.getField("citationKey")
+    // Works when BBT patches getField (Zotero 7) or natively (Zotero 8+)
+    try {
+      const key = item.getField("citationKey") as string;
+      if (key) return key;
+    } catch {
+      // Field may not exist for this item type in vanilla Zotero 7
+    }
+
+    // Strategy 2: BBT KeyManager API
+    try {
+      // @ts-expect-error - BBT injects Zotero.BetterBibTeX at runtime
+      const bbt = Zotero.BetterBibTeX;
+      if (bbt?.KeyManager) {
+        const entry = bbt.KeyManager.first({ itemID: item.id });
+        if (entry?.citationKey) return entry.citationKey;
+      }
+    } catch {
+      // BBT may not be installed
+    }
+
+    // Strategy 3: Parse "Citation Key: <value>" from extra field (pinned keys)
     try {
       const extra = item.getField("extra") as string;
       if (extra) {
-        // Match "Citation Key: <value>" pattern (case-insensitive)
-        const match = extra.match(/^citation\s*key:\s*(.+)$/im);
+        const match = extra.match(/^(?:citation[\s-]*key)\s*:\s*(.+)$/im);
         if (match && match[1]) {
           return match[1].trim();
         }
@@ -350,7 +378,8 @@ export class ExportPdfsFactory {
     } catch {
       // extra field may not exist for all item types
     }
-    // Fallback to auto-generated BibTeX key
+
+    // Strategy 4: Fallback to auto-generated BibTeX key
     return this.generateBibtexKey(item);
   }
 
