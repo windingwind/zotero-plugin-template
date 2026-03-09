@@ -1,0 +1,11 @@
+startup-begin = 文獻 PDF 匯出工具載入中
+startup-finish = 文獻 PDF 匯出工具已就緒
+menuitem-export-collection-pdfs = 匯出合集 PDF 到資料夾...
+menuitem-export-selected-pdfs = 匯出所選文獻 PDF 到資料夾...
+export-pdfs-pick-folder = 選擇目標資料夾
+export-pdfs-start = 開始匯出 PDF...
+export-pdfs-copying = [{ $percent }%] 複製中 { $current }/{ $total }: { $filename }
+export-pdfs-done = 完成：新增 { $added } 個、更新 { $updated } 個、跳過 { $skipped } 個、刪除 { $deleted } 個
+export-pdfs-error = 匯出錯誤：{ $message }
+export-pdfs-no-pdfs = 找不到 PDF 附件
+export-pdfs-no-collection = 未選擇合集

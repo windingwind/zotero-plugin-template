@@ -1,24 +1,24 @@
 {
-  "name": "zotero-plugin-template",
+  "name": "zotero-literature-pdf-export",
   "type": "module",
-  "version": "3.1.0",
-  "description": "Zotero Plugin Template",
+  "version": "0.1.0",
+  "description": "Export PDF attachments from Zotero collections to a local folder with smart sync and configurable filename formats",
   "config": {
-    "addonName": "Zotero Plugin Template",
-    "addonID": "addontemplate@euclpts.com",
-    "addonRef": "addontemplate",
-    "addonInstance": "AddonTemplate",
-    "prefsPrefix": "extensions.zotero.addontemplate"
+    "addonName": "Literature PDF Export",
+    "addonID": "literature-pdf-export@euclpts.com",
+    "addonRef": "litpdfexport",
+    "addonInstance": "LitPdfExport",
+    "prefsPrefix": "extensions.zotero.litpdfexport"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/windingwind/zotero-plugin-template.git"
+    "url": "git+https://github.com/email81227/zotero-liturature-survey-plugin.git"
   },
-  "author": "windingwind",
+  "author": "email81227",
   "bugs": {
-    "url": "https://github.com/windingwind/zotero-plugin-template/issues"
+    "url": "https://github.com/email81227/zotero-liturature-survey-plugin/issues"
   },
-  "homepage": "https://github.com/windingwind/zotero-plugin-template#readme",
+  "homepage": "https://github.com/email81227/zotero-liturature-survey-plugin#readme",
   "license": "AGPL-3.0-or-later",
   "scripts": {
     "start": "zotero-plugin serve",
