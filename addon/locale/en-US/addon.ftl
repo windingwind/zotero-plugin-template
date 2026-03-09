@@ -1,5 +1,5 @@
-startup-begin = Addon is loading
-startup-finish = Addon is ready
+startup-begin = Literature PDF Export is loading
+startup-finish = Literature PDF Export is ready
 menuitem-export-collection-pdfs = Export Collection PDFs to Folder...
 menuitem-export-selected-pdfs = Export Selected PDFs to Folder...
 export-pdfs-pick-folder = Select Destination Folder

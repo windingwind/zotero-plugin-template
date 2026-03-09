@@ -1,5 +1,5 @@
-startup-begin = 外掛載入中
-startup-finish = 外掛已就緒
+startup-begin = 文獻 PDF 匯出工具載入中
+startup-finish = 文獻 PDF 匯出工具已就緒
 menuitem-export-collection-pdfs = 匯出合集 PDF 到資料夾...
 menuitem-export-selected-pdfs = 匯出所選文獻 PDF 到資料夾...
 export-pdfs-pick-folder = 選擇目標資料夾

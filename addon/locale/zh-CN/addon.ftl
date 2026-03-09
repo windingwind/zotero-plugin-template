@@ -1,5 +1,5 @@
-startup-begin = 插件加载中
-startup-finish = 插件已就绪
+startup-begin = 文献 PDF 导出工具加载中
+startup-finish = 文献 PDF 导出工具已就绪
 menuitem-export-collection-pdfs = 导出合集 PDF 到文件夹...
 menuitem-export-selected-pdfs = 导出所选文献 PDF 到文件夹...
 export-pdfs-pick-folder = 选择目标文件夹
