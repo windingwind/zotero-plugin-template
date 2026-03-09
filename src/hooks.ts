@@ -1,4 +1,4 @@
-import { initLocale } from "./utils/locale";
+import { initLocale, getString } from "./utils/locale";
 import { registerPrefsScripts } from "./modules/preferenceScript";
 import { ExportPdfsFactory } from "./modules/exportPdfs";
 import { createZToolkit } from "./utils/ztoolkit";
@@ -11,6 +11,14 @@ async function onStartup() {
   ]);
 
   initLocale();
+
+  // Register the preference pane so it appears in Zotero Settings sidebar
+  Zotero.PreferencePanes.register({
+    pluginID: addon.data.config.addonID,
+    src: rootURI + "content/preferences.xhtml",
+    label: getString("pref-title"),
+    image: `chrome://${addon.data.config.addonRef}/content/icons/favicon.png`,
+  });
 
   await Promise.all(
     Zotero.getMainWindows().map((win) => onMainWindowLoad(win)),
