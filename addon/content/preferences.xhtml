@@ -44,6 +44,24 @@
   </hbox>
   <html:small data-l10n-id="pref-format-help"></html:small>
 </groupbox>
+<groupbox>
+  <label><html:h2 data-l10n-id="pref-api-title"></html:h2></label>
+  <checkbox
+    id="zotero-prefpane-__addonRef__-api-enabled"
+    preference="apiEnabled"
+    data-l10n-id="pref-api-enabled"
+  />
+  <hbox align="center">
+    <html:label data-l10n-id="pref-api-key-label"></html:label>
+    <html:input
+      type="password"
+      id="zotero-prefpane-__addonRef__-api-key"
+      preference="apiKey"
+      style="flex: 1; margin-left: 8px"
+    />
+  </hbox>
+  <html:small data-l10n-id="pref-api-help"></html:small>
+</groupbox>
 <vbox>
   <html:label
     data-l10n-id="pref-help"

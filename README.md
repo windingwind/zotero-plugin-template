@@ -3,9 +3,9 @@
 [![zotero target version](https://img.shields.io/badge/Zotero-7-green?style=flat-square&logo=zotero&logoColor=CC2936)](https://www.zotero.org)
 [![Using Zotero Plugin Template](https://img.shields.io/badge/Using-Zotero%20Plugin%20Template-blue?style=flat-square&logo=github)](https://github.com/windingwind/zotero-plugin-template)
 
-A Zotero 7 plugin that exports PDF attachments from collections or selected items to a local folder (e.g. a Google Drive sync directory) with smart sync and configurable filename formats.
+A Zotero 7 plugin that exports PDF attachments from collections or selected items to a local folder (e.g. a Google Drive sync directory) with smart sync, configurable filename formats, and an HTTP API for LLM integration.
 
-[English](README.md) | [简体中文](doc/README-zhCN.md)
+[English](README.md) | [繁體中文](doc/README-zhTW.md) | [简体中文](doc/README-zhCN.md)
 
 ## Features
 
@@ -26,6 +26,7 @@ A Zotero 7 plugin that exports PDF attachments from collections or selected item
 - **Custom Template Placeholders** - `{author}`, `{year}`, `{title}`, `{citekey}`, `{bbt}`
 - **Better BibTeX Integration** - Reads BBT citation keys from item metadata; falls back to auto-generated BibTeX key if BBT is not installed.
 - **Multi-language Support** - English, Traditional Chinese, Simplified Chinese.
+- **HTTP API for LLM Integration** - Expose REST endpoints on `localhost:23119` so that AI agents (Claude, Codex, etc.) can programmatically import items and query the library.
 
 ## Installation
 
@@ -53,6 +54,36 @@ A Zotero 7 plugin that exports PDF attachments from collections or selected item
 1. Go to `Tools` > `Add-ons` > **Literature PDF Export** > `Preferences`.
 2. Select your preferred filename format from the dropdown.
 3. If using **Custom Template**, enter your template string with placeholders.
+
+### HTTP API (for LLM Integration)
+
+1. Go to `Tools` > `Add-ons` > **Literature PDF Export** > `Preferences`.
+2. Enable **HTTP API** and optionally set an API key.
+3. The following endpoints become available on `http://localhost:23119`:
+
+| Method | Endpoint | Description |
+| ------ | -------- | ----------- |
+| `POST` | `/litpdfexport/addByIdentifier` | Import items by DOI, ISBN, PMID, or arXiv ID |
+| `GET`  | `/litpdfexport/search?q=...`    | Search existing library items |
+| `GET`  | `/litpdfexport/collections`     | List all collections |
+
+**Example - Add by DOI:**
+
+```bash
+curl -X POST http://localhost:23119/litpdfexport/addByIdentifier \
+  -H "Content-Type: application/json" \
+  -d '{"DOI": "10.1038/nature12373"}'
+```
+
+**Example - Batch import:**
+
+```bash
+curl -X POST http://localhost:23119/litpdfexport/addByIdentifier \
+  -H "Content-Type: application/json" \
+  -d '{"identifiers": [{"DOI": "10.1038/nature12373"}, {"ISBN": "978-0-321-12521-7"}]}'
+```
+
+If an API key is set, include `X-API-Key: <your-key>` in the request headers.
 
 ## Smart Sync Behavior
 
