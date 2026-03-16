@@ -72,6 +72,15 @@ curl -X POST http://localhost:23119/litpdfexport/addByIdentifier \
       "title": "The article title"
     }
   ],
+  "skipped": [
+    {
+      "identifier": {"DOI": "10.1038/nature12373"},
+      "itemID": 42,
+      "key": "ABC12345",
+      "title": "The article title",
+      "reason": "Item already exists in library"
+    }
+  ],
   "failed": [
     {
       "identifier": {"DOI": "10.9999/invalid"},
@@ -108,13 +117,38 @@ curl http://localhost:23119/litpdfexport/collections
 | 403         | `API_DISABLED`     | API not enabled in prefs   |
 | 500         | `INTERNAL_ERROR`   | Unexpected server error    |
 
+### Duplicate Prevention (Built-in)
+
+The `addByIdentifier` endpoint **automatically checks for duplicates** before importing.
+- If a DOI/ISBN/PMID/arXiv already exists in the library, the item is returned in the `skipped` array instead of being imported again.
+- To force re-import (skip dedup), pass `"skipDuplicateCheck": true` in the request body.
+- **LLM agents should NOT need to manually search before importing** — just call `addByIdentifier` directly.
+
 ### Typical Workflow for an LLM Agent
 
+> **IMPORTANT: The simplest correct workflow is just step 1 + step 2. The API handles dedup automatically.**
+
 1. Check if Zotero is running: `curl http://localhost:23119/connector/ping`
-2. List collections to find target: `GET /litpdfexport/collections`
-3. Search if item already exists: `GET /litpdfexport/search?q=<doi>&field=doi`
-4. If not found, import: `POST /litpdfexport/addByIdentifier` with the DOI/ISBN
-5. Verify import succeeded by checking the `success` array in the response
+2. Import by identifier — duplicates are auto-skipped:
+   ```bash
+   curl -X POST http://localhost:23119/litpdfexport/addByIdentifier \
+     -H "Content-Type: application/json" \
+     -d '{"DOI": "10.1038/nature12373"}'
+   ```
+3. Check the response:
+   - `success` array → newly imported items
+   - `skipped` array → items already in library (not duplicated)
+   - `failed` array → items that could not be resolved
+4. (Optional) Search existing items: `GET /litpdfexport/search?q=<query>`
+5. (Optional) List collections: `GET /litpdfexport/collections`
+
+### How to Find the DOI for a Paper
+
+If you only have a paper title, use CrossRef to resolve the DOI first:
+```bash
+curl "https://api.crossref.org/works?query.bibliographic=PAPER+TITLE+HERE&rows=3"
+```
+Then extract the DOI from the response and pass it to `addByIdentifier`.
 
 ## Build & Development
 

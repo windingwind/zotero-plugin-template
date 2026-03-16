@@ -79,6 +79,50 @@ function serializeItem(item: any): Record<string, any> {
 }
 
 // ---------------------------------------------------------------------------
+// Duplicate-detection helpers
+// ---------------------------------------------------------------------------
+
+/**
+ * Search Zotero library for an existing item matching the given identifier.
+ * Returns the first matching regular item, or null.
+ */
+async function findExistingItem(
+  identifier: Record<string, string>,
+  libraryID: number,
+): Promise<any | null> {
+  // Map identifier keys to Zotero search fields
+  const fieldMap: Record<string, { condition: string; operator: string }> = {
+    DOI: { condition: "DOI", operator: "is" },
+    ISBN: { condition: "ISBN", operator: "is" },
+    PMID: { condition: "extra", operator: "contains" },
+    arXiv: { condition: "extra", operator: "contains" },
+  };
+
+  for (const [key, value] of Object.entries(identifier)) {
+    const mapping = fieldMap[key];
+    if (!mapping) continue;
+
+    // For PMID/arXiv, search the Extra field where Zotero stores them
+    const searchValue =
+      key === "PMID" ? `PMID: ${value}` : key === "arXiv" ? `arXiv: ${value}` : value;
+
+    try {
+      const search = new Zotero.Search({ libraryID });
+      (search.addCondition as Function)(mapping.condition, mapping.operator, searchValue);
+      const ids = await search.search();
+      if (ids && ids.length > 0) {
+        const items = await Zotero.Items.getAsync(ids);
+        const regular = items.find((item: any) => item.isRegularItem());
+        if (regular) return regular;
+      }
+    } catch (_e) {
+      // Search failed — fall through to import
+    }
+  }
+  return null;
+}
+
+// ---------------------------------------------------------------------------
 // Endpoint: POST /litpdfexport/addByIdentifier
 // ---------------------------------------------------------------------------
 
@@ -124,13 +168,45 @@ const AddByIdentifierEndpoint = class {
       const libraryID =
         data.libraryID ?? (Zotero.Libraries as any).userLibraryID;
       const collectionID = data.collectionID ?? null;
+      // skipDuplicateCheck defaults to false — callers must explicitly opt out
+      const skipDuplicateCheck = data.skipDuplicateCheck === true;
 
       const success: any[] = [];
       const failed: any[] = [];
+      const skipped: any[] = [];
 
       for (const identifier of identifiers) {
         try {
-          // Use Zotero.Translate.Search to look up the identifier
+          // --- Duplicate check (unless caller explicitly opts out) ---
+          if (!skipDuplicateCheck) {
+            const existing = await findExistingItem(identifier, libraryID);
+            if (existing) {
+              skipped.push({
+                identifier,
+                itemID: existing.id,
+                key: existing.key,
+                title: existing.getField ? existing.getField("title") : "",
+                reason: "Item already exists in library",
+              });
+
+              // Still add to collection if requested
+              if (collectionID) {
+                try {
+                  const collection =
+                    await Zotero.Collections.getAsync(collectionID);
+                  if (collection) {
+                    collection.addItem(existing.id);
+                    await collection.saveTx();
+                  }
+                } catch (_e) {
+                  // ignore collection error for existing item
+                }
+              }
+              continue;
+            }
+          }
+
+          // --- Import via Zotero.Translate.Search ---
           const translate = new (Zotero as any).Translate.Search();
           translate.setIdentifier(identifier);
 
@@ -183,7 +259,7 @@ const AddByIdentifierEndpoint = class {
         }
       }
 
-      return jsonResponse(200, { success, failed });
+      return jsonResponse(200, { success, skipped, failed });
     } catch (e: any) {
       return errorResponse(500, e.message || String(e), "INTERNAL_ERROR");
     }
