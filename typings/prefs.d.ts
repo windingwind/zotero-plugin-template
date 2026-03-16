@@ -12,6 +12,9 @@ declare namespace _ZoteroTypes {
       "exportPdfRecursive": boolean;
       "filenameFormat": string;
       "filenameCustomTemplate": string;
+      "apiEnabled": boolean;
+      "apiKey": string;
+      "apiMaxBatchSize": number;
     };
   }
 }

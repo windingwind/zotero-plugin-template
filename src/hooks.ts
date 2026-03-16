@@ -1,6 +1,10 @@
 import { initLocale, getString } from "./utils/locale";
 import { registerPrefsScripts } from "./modules/preferenceScript";
 import { ExportPdfsFactory } from "./modules/exportPdfs";
+import {
+  registerApiEndpoints,
+  unregisterApiEndpoints,
+} from "./modules/apiEndpoints";
 import { createZToolkit } from "./utils/ztoolkit";
 
 async function onStartup() {
@@ -25,6 +29,15 @@ async function onStartup() {
   } catch (e) {
     Zotero.log(
       `[${addon.data.config.addonName}] Failed to register prefs pane: ${e}`,
+      "warning",
+    );
+  }
+
+  try {
+    registerApiEndpoints();
+  } catch (e) {
+    Zotero.log(
+      `[${addon.data.config.addonName}] Failed to register API endpoints: ${e}`,
       "warning",
     );
   }
@@ -59,6 +72,7 @@ async function onMainWindowUnload(win: Window): Promise<void> {
 }
 
 function onShutdown(): void {
+  unregisterApiEndpoints();
   ztoolkit.unregisterAll();
   // Remove addon object
   addon.data.alive = false;
