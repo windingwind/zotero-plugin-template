@@ -108,6 +108,23 @@ Query parameters:
 curl http://localhost:23119/litpdfexport/collections
 ```
 
+### List Items in a Collection
+
+By collection name:
+```bash
+curl "http://localhost:23119/litpdfexport/collection-items?name=My+Collection&limit=50"
+```
+
+By collection ID:
+```bash
+curl "http://localhost:23119/litpdfexport/collection-items?collectionID=123&limit=50"
+```
+
+Query parameters:
+- `name` or `collectionID` (one required): identify the collection
+- `limit`: max results, 1-500 (default 100)
+- `libraryID`: optional
+
 ### Error Codes
 
 | HTTP Status | Code             | Meaning                    |

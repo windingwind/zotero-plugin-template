@@ -66,6 +66,7 @@ A Zotero 7 plugin that exports PDF attachments from collections or selected item
 | `POST` | `/litpdfexport/addByIdentifier` | Import items by DOI, ISBN, PMID, or arXiv ID |
 | `GET`  | `/litpdfexport/search?q=...`    | Search existing library items |
 | `GET`  | `/litpdfexport/collections`     | List all collections |
+| `GET`  | `/litpdfexport/collection-items?name=...` | List all items in a collection |
 
 **Example - Add by DOI:**
 

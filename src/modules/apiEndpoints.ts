@@ -381,6 +381,77 @@ const CollectionsEndpoint = class {
 };
 
 // ---------------------------------------------------------------------------
+// Endpoint: GET /litpdfexport/collection-items
+// ---------------------------------------------------------------------------
+
+const CollectionItemsEndpoint = class {
+  supportedMethods = ["GET"];
+  supportedDataTypes = ["application/json"];
+  permitBookmarklet = false;
+
+  async init(options: {
+    method: "GET" | "POST";
+    pathname: string;
+    query: Record<string, string>;
+    headers: Record<string, string>;
+    data: any;
+  }): Promise<EndpointResponse> {
+    try {
+      const authErr = checkAuth(options.headers);
+      if (authErr) return authErr;
+
+      const libraryID = options.query.libraryID
+        ? parseInt(options.query.libraryID, 10)
+        : (Zotero.Libraries as any).userLibraryID;
+
+      // Resolve collection by ID or name
+      let collection: any = null;
+
+      if (options.query.collectionID) {
+        collection = await Zotero.Collections.getAsync(
+          parseInt(options.query.collectionID, 10),
+        );
+      } else if (options.query.name) {
+        const allCollections = Zotero.Collections.getByLibrary(libraryID);
+        collection = allCollections.find(
+          (col: any) => col.name === options.query.name,
+        );
+      } else {
+        return errorResponse(
+          400,
+          "Missing required query parameter: collectionID or name",
+          "INVALID_REQUEST",
+        );
+      }
+
+      if (!collection) {
+        return errorResponse(400, "Collection not found", "INVALID_REQUEST");
+      }
+
+      const limit = Math.min(
+        parseInt(options.query.limit || "100", 10) || 100,
+        500,
+      );
+
+      const childItems = collection.getChildItems();
+      const regularItems = childItems
+        .filter((item: any) => item.isRegularItem())
+        .slice(0, limit)
+        .map(serializeItem);
+
+      return jsonResponse(200, {
+        collectionID: collection.id,
+        collectionName: collection.name,
+        items: regularItems,
+        total: regularItems.length,
+      });
+    } catch (e: any) {
+      return errorResponse(500, e.message || String(e), "INTERNAL_ERROR");
+    }
+  }
+};
+
+// ---------------------------------------------------------------------------
 // Registration
 // ---------------------------------------------------------------------------
 
@@ -388,6 +459,7 @@ const ENDPOINT_PATHS = [
   "/litpdfexport/addByIdentifier",
   "/litpdfexport/search",
   "/litpdfexport/collections",
+  "/litpdfexport/collection-items",
 ] as const;
 
 export function registerApiEndpoints(): void {
@@ -396,6 +468,8 @@ export function registerApiEndpoints(): void {
   Zotero.Server.Endpoints["/litpdfexport/search"] = SearchEndpoint as any;
   Zotero.Server.Endpoints["/litpdfexport/collections"] =
     CollectionsEndpoint as any;
+  Zotero.Server.Endpoints["/litpdfexport/collection-items"] =
+    CollectionItemsEndpoint as any;
 
   Zotero.log(
     `[${addon.data.config.addonName}] API endpoints registered on localhost:23119`,

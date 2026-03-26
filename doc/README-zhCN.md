@@ -66,6 +66,7 @@
 | `POST` | `/litpdfexport/addByIdentifier`  | 通过 DOI、ISBN、PMID 或 arXiv ID 导入书目 |
 | `GET`  | `/litpdfexport/search?q=...`     | 搜索现有文献库项目                   |
 | `GET`  | `/litpdfexport/collections`      | 列出所有收藏集                       |
+| `GET`  | `/litpdfexport/collection-items?name=...` | 列出指定收藏集中的所有文献项目       |
 
 **示例 - 以 DOI 导入：**
 

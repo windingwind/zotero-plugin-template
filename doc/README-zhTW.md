@@ -66,6 +66,7 @@
 | `POST` | `/litpdfexport/addByIdentifier`  | 透過 DOI、ISBN、PMID 或 arXiv ID 匯入書目 |
 | `GET`  | `/litpdfexport/search?q=...`     | 搜尋現有文獻庫項目                   |
 | `GET`  | `/litpdfexport/collections`      | 列出所有收藏集                       |
+| `GET`  | `/litpdfexport/collection-items?name=...` | 列出指定收藏集中的所有文獻項目       |
 
 **範例 - 以 DOI 匯入：**
 
