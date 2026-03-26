@@ -9,3 +9,7 @@ export-pdfs-done = Done: { $added } added, { $updated } updated, { $skipped } un
 export-pdfs-error = Export error: { $message }
 export-pdfs-no-pdfs = No PDF attachments found
 export-pdfs-no-collection = No collection selected
+menuitem-find-pdf = Find & Attach Available PDFs
+find-pdf-start = Searching for available PDFs...
+find-pdf-searching = [{ $percent }%] Searching { $current }/{ $total }: { $title }
+find-pdf-done = Done: { $found } found, { $alreadyHas } already had PDF, { $notFound } not available

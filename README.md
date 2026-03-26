@@ -26,7 +26,8 @@ A Zotero 7 plugin that exports PDF attachments from collections or selected item
 - **Custom Template Placeholders** - `{author}`, `{year}`, `{title}`, `{citekey}`, `{bbt}`
 - **Better BibTeX Integration** - Reads BBT citation keys from item metadata; falls back to auto-generated BibTeX key if BBT is not installed.
 - **Multi-language Support** - English, Traditional Chinese, Simplified Chinese.
-- **HTTP API for LLM Integration** - Expose REST endpoints on `localhost:23119` so that AI agents (Claude, Codex, etc.) can programmatically import items and query the library.
+- **Find & Attach PDFs** - Right-click selected items to automatically find and download available PDFs from publishers, Unpaywall, and open-access repositories.
+- **HTTP API for LLM Integration** - Expose REST endpoints on `localhost:23119` so that AI agents (Claude, Codex, etc.) can programmatically import items, find PDFs, and query the library.
 
 ## Installation
 
@@ -67,6 +68,7 @@ A Zotero 7 plugin that exports PDF attachments from collections or selected item
 | `GET`  | `/litpdfexport/search?q=...`    | Search existing library items |
 | `GET`  | `/litpdfexport/collections`     | List all collections |
 | `GET`  | `/litpdfexport/collection-items?name=...` | List all items in a collection |
+| `POST` | `/litpdfexport/findPdf`                   | Find & attach PDFs for existing items |
 
 **Example - Add by DOI:**
 
@@ -82,6 +84,14 @@ curl -X POST http://localhost:23119/litpdfexport/addByIdentifier \
 curl -X POST http://localhost:23119/litpdfexport/addByIdentifier \
   -H "Content-Type: application/json" \
   -d '{"identifiers": [{"DOI": "10.1038/nature12373"}, {"ISBN": "978-0-321-12521-7"}]}'
+```
+
+**Example - Find & attach PDF:**
+
+```bash
+curl -X POST http://localhost:23119/litpdfexport/findPdf \
+  -H "Content-Type: application/json" \
+  -d '{"itemID": 42}'
 ```
 
 If an API key is set, include `X-API-Key: <your-key>` in the request headers.

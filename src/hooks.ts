@@ -1,6 +1,7 @@
 import { initLocale, getString } from "./utils/locale";
 import { registerPrefsScripts } from "./modules/preferenceScript";
 import { ExportPdfsFactory } from "./modules/exportPdfs";
+import { FindPdfFactory } from "./modules/findPdf";
 import {
   registerApiEndpoints,
   unregisterApiEndpoints,
@@ -59,6 +60,7 @@ async function onMainWindowLoad(win: _ZoteroTypes.MainWindow): Promise<void> {
 
     ExportPdfsFactory.registerCollectionMenuItem();
     ExportPdfsFactory.registerItemMenuItem();
+    FindPdfFactory.registerItemMenuItem();
   } catch (e) {
     Zotero.log(
       `[${addon.data.config.addonName}] Failed to init main window: ${e}`,
@@ -113,6 +115,9 @@ function onDialogEvents(type: string) {
       break;
     case "exportSelectedPdfs":
       ExportPdfsFactory.exportSelectedItemsPdfs();
+      break;
+    case "findPdfForSelected":
+      FindPdfFactory.findPdfForSelectedItems();
       break;
     default:
       break;

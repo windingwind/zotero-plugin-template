@@ -9,3 +9,7 @@ export-pdfs-done = 完成：新增 { $added } 個、更新 { $updated } 個、�
 export-pdfs-error = 匯出錯誤：{ $message }
 export-pdfs-no-pdfs = 找不到 PDF 附件
 export-pdfs-no-collection = 未選擇合集
+menuitem-find-pdf = 尋找並附加可用的 PDF
+find-pdf-start = 正在搜尋可用的 PDF...
+find-pdf-searching = [{ $percent }%] 搜尋中 { $current }/{ $total }：{ $title }
+find-pdf-done = 完成：找到 { $found } 個、已有 PDF { $alreadyHas } 個、無法取得 { $notFound } 個

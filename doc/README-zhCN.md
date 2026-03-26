@@ -26,7 +26,8 @@
 - **自定义模板占位符** - `{author}`、`{year}`、`{title}`、`{citekey}`、`{bbt}`
 - **Better BibTeX 集成** - 读取 BBT citation key；若未安装 BBT，自动使用 BibTeX key 替代。
 - **多语言支持** - 英文、繁体中文、简体中文。
-- **HTTP API（大语言模型集成）** - 在 `localhost:23119` 上提供 REST API，让 AI 代理（Claude、Codex 等）可编程地导入书目及查询文献库。
+- **查找并附加 PDF** - 右键选中的文献项目，即可自动从出版商、Unpaywall、开放获取等来源查找并下载 PDF。
+- **HTTP API（大语言模型集成）** - 在 `localhost:23119` 上提供 REST API，让 AI 代理（Claude、Codex 等）可编程地导入书目、下载 PDF 及查询文献库。
 
 ## 安装
 
@@ -67,6 +68,7 @@
 | `GET`  | `/litpdfexport/search?q=...`     | 搜索现有文献库项目                   |
 | `GET`  | `/litpdfexport/collections`      | 列出所有收藏集                       |
 | `GET`  | `/litpdfexport/collection-items?name=...` | 列出指定收藏集中的所有文献项目       |
+| `POST` | `/litpdfexport/findPdf`                   | 查找并附加可用的 PDF 全文             |
 
 **示例 - 以 DOI 导入：**
 
@@ -82,6 +84,14 @@ curl -X POST http://localhost:23119/litpdfexport/addByIdentifier \
 curl -X POST http://localhost:23119/litpdfexport/addByIdentifier \
   -H "Content-Type: application/json" \
   -d '{"identifiers": [{"DOI": "10.1038/nature12373"}, {"ISBN": "978-0-321-12521-7"}]}'
+```
+
+**示例 - 查找并附加 PDF：**
+
+```bash
+curl -X POST http://localhost:23119/litpdfexport/findPdf \
+  -H "Content-Type: application/json" \
+  -d '{"itemID": 42}'
 ```
 
 若已设置 API 密钥，请在 request header 中加入 `X-API-Key: <your-key>`。

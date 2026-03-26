@@ -452,6 +452,131 @@ const CollectionItemsEndpoint = class {
 };
 
 // ---------------------------------------------------------------------------
+// Endpoint: POST /litpdfexport/findPdf
+// ---------------------------------------------------------------------------
+
+const FindPdfEndpoint = class {
+  supportedMethods = ["POST"];
+  supportedDataTypes = ["application/json"];
+  permitBookmarklet = false;
+
+  async init(options: {
+    method: "GET" | "POST";
+    pathname: string;
+    query: Record<string, string>;
+    headers: Record<string, string>;
+    data: any;
+  }): Promise<EndpointResponse> {
+    try {
+      const authErr = checkAuth(options.headers);
+      if (authErr) return authErr;
+
+      const data =
+        typeof options.data === "string"
+          ? JSON.parse(options.data)
+          : options.data;
+
+      // Resolve target items: single itemID, array of itemIDs, or DOI lookup
+      const itemIDs: number[] = [];
+
+      if (Array.isArray(data.itemIDs)) {
+        itemIDs.push(...data.itemIDs);
+      } else if (typeof data.itemID === "number") {
+        itemIDs.push(data.itemID);
+      } else if (typeof data.DOI === "string") {
+        // Look up items by DOI
+        const libraryID =
+          data.libraryID ?? (Zotero.Libraries as any).userLibraryID;
+        const search = new Zotero.Search({ libraryID });
+        search.addCondition("DOI", "is", data.DOI);
+        const ids = await search.search();
+        if (ids.length === 0) {
+          return errorResponse(
+            400,
+            `No item found with DOI: ${data.DOI}`,
+            "INVALID_REQUEST",
+          );
+        }
+        itemIDs.push(...ids);
+      } else {
+        return errorResponse(
+          400,
+          "Provide itemID, itemIDs, or DOI",
+          "INVALID_REQUEST",
+        );
+      }
+
+      const maxBatch = (getPref("apiMaxBatchSize") as number) || 50;
+      if (itemIDs.length > maxBatch) {
+        return errorResponse(
+          400,
+          `Batch size ${itemIDs.length} exceeds max ${maxBatch}`,
+          "BATCH_TOO_LARGE",
+        );
+      }
+
+      const success: any[] = [];
+      const failed: any[] = [];
+      const skipped: any[] = [];
+
+      for (const id of itemIDs) {
+        try {
+          const item = await Zotero.Items.getAsync(id);
+          if (!item || !item.isRegularItem()) {
+            failed.push({ itemID: id, error: "Item not found or not a regular item" });
+            continue;
+          }
+
+          // Check if item already has a PDF attachment
+          const existingAttachments = item.getAttachments();
+          let hasPdf = false;
+          for (const attID of existingAttachments) {
+            const att = await Zotero.Items.getAsync(attID);
+            if (att && att.attachmentContentType === "application/pdf") {
+              hasPdf = true;
+              skipped.push({
+                itemID: id,
+                key: item.key,
+                title: item.getField ? (item.getField("title") as string) : "",
+                reason: "PDF attachment already exists",
+              });
+              break;
+            }
+          }
+          if (hasPdf) continue;
+
+          // Use Zotero's built-in PDF finder
+          const attachment = await Zotero.Attachments.addAvailablePDF(item as any);
+
+          if (attachment) {
+            success.push({
+              itemID: id,
+              key: item.key,
+              title: item.getField ? (item.getField("title") as string) : "",
+              attachmentID: attachment.id,
+              attachmentKey: attachment.key,
+            });
+          } else {
+            failed.push({
+              itemID: id,
+              key: item.key,
+              title: item.getField ? (item.getField("title") as string) : "",
+              error: "No available PDF found (check network access or publisher permissions)",
+            });
+          }
+        } catch (e: any) {
+          failed.push({ itemID: id, error: e.message || String(e) });
+        }
+      }
+
+      return jsonResponse(200, { success, skipped, failed });
+    } catch (e: any) {
+      return errorResponse(500, e.message || String(e), "INTERNAL_ERROR");
+    }
+  }
+};
+
+// ---------------------------------------------------------------------------
 // Registration
 // ---------------------------------------------------------------------------
 
@@ -460,6 +585,7 @@ const ENDPOINT_PATHS = [
   "/litpdfexport/search",
   "/litpdfexport/collections",
   "/litpdfexport/collection-items",
+  "/litpdfexport/findPdf",
 ] as const;
 
 export function registerApiEndpoints(): void {
@@ -470,6 +596,7 @@ export function registerApiEndpoints(): void {
     CollectionsEndpoint as any;
   Zotero.Server.Endpoints["/litpdfexport/collection-items"] =
     CollectionItemsEndpoint as any;
+  Zotero.Server.Endpoints["/litpdfexport/findPdf"] = FindPdfEndpoint as any;
 
   Zotero.log(
     `[${addon.data.config.addonName}] API endpoints registered on localhost:23119`,

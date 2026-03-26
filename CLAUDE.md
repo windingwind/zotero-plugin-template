@@ -125,6 +125,32 @@ Query parameters:
 - `limit`: max results, 1-500 (default 100)
 - `libraryID`: optional
 
+### Find & Attach PDF for Existing Items
+
+By item ID:
+```bash
+curl -X POST http://localhost:23119/litpdfexport/findPdf \
+  -H "Content-Type: application/json" \
+  -d '{"itemID": 42}'
+```
+
+By DOI (looks up the item first):
+```bash
+curl -X POST http://localhost:23119/litpdfexport/findPdf \
+  -H "Content-Type: application/json" \
+  -d '{"DOI": "10.1038/nature12373"}'
+```
+
+Batch (multiple items):
+```bash
+curl -X POST http://localhost:23119/litpdfexport/findPdf \
+  -H "Content-Type: application/json" \
+  -d '{"itemIDs": [42, 43, 44]}'
+```
+
+Uses Zotero's built-in PDF resolver (Unpaywall, publisher sites, open access).
+Requires network access to publishers (academic VPN / campus network).
+
 ### Error Codes
 
 | HTTP Status | Code             | Meaning                    |
