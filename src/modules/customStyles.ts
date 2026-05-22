@@ -402,33 +402,39 @@ class CustomStylesManager {
     const render = () => {
       container.innerHTML = "";
       for (const style of styles) {
-        const row = this.buildStyleRow(doc, win, style, async (s, btn) => {
-          btn.textContent = getString("btn-installing");
-          btn.setAttribute("disabled", "true");
-          try {
-            const content = await this.fetchRemoteStyleContent(
-              s.id,
-              licenseKey,
-              s.hash,
-            );
-            await this.installStyleToZotero(s.id, content);
-            justInstalled.add(s.id);
-            statusEl.textContent = getString("status-installed-ok", {
-              args: { name: s.name },
-            });
-            statusEl.style.color = getColors(win).success;
-            render();
-          } catch (e) {
-            csLog("ERROR", "Install error:", e);
-            btn.textContent = getString("btn-failed");
-            btn.style.borderColor = getColors(win).error;
-            btn.removeAttribute("disabled");
-            statusEl.textContent = getString("status-install-failed", {
-              args: { name: s.name },
-            });
-            statusEl.style.color = getColors(win).error;
-          }
-        }, justInstalled);
+        const row = this.buildStyleRow(
+          doc,
+          win,
+          style,
+          async (s, btn) => {
+            btn.textContent = getString("btn-installing");
+            btn.setAttribute("disabled", "true");
+            try {
+              const content = await this.fetchRemoteStyleContent(
+                s.id,
+                licenseKey,
+                s.hash,
+              );
+              await this.installStyleToZotero(s.id, content);
+              justInstalled.add(s.id);
+              statusEl.textContent = getString("status-installed-ok", {
+                args: { name: s.name },
+              });
+              statusEl.style.color = getColors(win).success;
+              render();
+            } catch (e) {
+              csLog("ERROR", "Install error:", e);
+              btn.textContent = getString("btn-failed");
+              btn.style.borderColor = getColors(win).error;
+              btn.removeAttribute("disabled");
+              statusEl.textContent = getString("status-install-failed", {
+                args: { name: s.name },
+              });
+              statusEl.style.color = getColors(win).error;
+            }
+          },
+          justInstalled,
+        );
         container.appendChild(row);
       }
     };
