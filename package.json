@@ -1,7 +1,7 @@
 {
   "name": "citationstyler-client-sync",
   "type": "module",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A Zotero plugin for managing and installing custom citation styles with license validation.",
   "config": {
     "addonName": "Citation Styler Client Sync",
