@@ -192,8 +192,11 @@ class CustomStylesManager {
       btn: HTMLElement,
       row: HTMLElement,
     ) => Promise<void>,
+    installedIds?: Set<string>,
   ): HTMLElement {
-    const status = this.getStyleStatus(style);
+    const status = installedIds?.has(style.id)
+      ? "up-to-date"
+      : this.getStyleStatus(style);
     const installedDate = this.getInstalledStyleDate(style.id);
     const fmt = (d: Date | null) =>
       d ? d.toISOString().split("T")[0] : "unknown";
@@ -394,6 +397,8 @@ class CustomStylesManager {
     statusEl.style.color = getColors(win).success;
     container.innerHTML = "";
 
+    const justInstalled = new Set<string>();
+
     const render = () => {
       container.innerHTML = "";
       for (const style of styles) {
@@ -407,6 +412,7 @@ class CustomStylesManager {
               s.hash,
             );
             await this.installStyleToZotero(s.id, content);
+            justInstalled.add(s.id);
             statusEl.textContent = getString("status-installed-ok", {
               args: { name: s.name },
             });
@@ -422,7 +428,7 @@ class CustomStylesManager {
             });
             statusEl.style.color = getColors(win).error;
           }
-        });
+        }, justInstalled);
         container.appendChild(row);
       }
     };
