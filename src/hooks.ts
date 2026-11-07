@@ -2,7 +2,6 @@ import {
   BasicExampleFactory,
   HelperExampleFactory,
   KeyExampleFactory,
-  PromptExampleFactory,
   UIExampleFactory,
 } from "./modules/examples";
 import { getString, initLocale } from "./utils/locale";
@@ -72,15 +71,9 @@ async function onMainWindowLoad(win: _ZoteroTypes.MainWindow): Promise<void> {
 
   UIExampleFactory.registerRightClickMenuItem();
 
-  UIExampleFactory.registerRightClickMenuPopup(win);
+  UIExampleFactory.registerRightClickMenuPopup();
 
   UIExampleFactory.registerWindowMenuWithSeparator();
-
-  PromptExampleFactory.registerNormalCommandExample();
-
-  PromptExampleFactory.registerAnonymousCommandExample(win);
-
-  PromptExampleFactory.registerConditionalCommandExample();
 
   await Zotero.Promise.delay(1000);
 

@@ -89,7 +89,7 @@ Recherchez `@example` dans `src/examples.ts`. Les exemples sont appelés dans `s
 ![image](https://user-images.githubusercontent.com/33902321/211739774-cc5c2df8-5fd9-42f0-9cdf-0f2e5946d427.png)
 
 - registerStyleSheet (utilisé par l'extension officielle make-it-red qui sert d'exemple)
-- registerRightClickMenuItem
+- registerRightClickMenuItem (utilise l'API native `Zotero.MenuManager`, Zotero 8+)
 - registerRightClickMenuPopup
 - registerWindowMenuWithSeprator
 - registerExtraColumn
@@ -121,16 +121,6 @@ Voir [`src/modules/preferenceScript.ts`](../src/modules/preferenceScript.ts)
 - filePickerExample
 - progressWindowExample
 - vtableExample (voir Exemples avec des panneaux de préférences)
-
-### Exemples de prompts
-
-Un module d'invite (entrée de commande contextuelle) de style Obsidian. Il accepte les commandes textuelles pour exécuter le callback, avec un affichage optionnel dans la fenêtre popup.
-
-S'active avec `Shift+P`.
-
-![image](https://user-images.githubusercontent.com/33902321/215120009-e7c7ed27-33a0-44fe-b021-06c272481a92.png)
-
-- registerAlertPromptExample
 
 ## Guide de démarrage rapide
 
@@ -205,9 +195,9 @@ vim .env
 
 3. Installez les dépendances avec `npm install`
 
-   > Si vous utilisez `pnpm` comme gestionnaire de paquets pour votre projet, vous devez ajouter `public-hoist-pattern[]=*@types/bluebird*` à `.npmrc`, voir <https://github.com/windingwind/zotero-types?tab=readme-ov-file#usage>.
+> Si vous utilisez `pnpm` comme gestionnaire de paquets pour votre projet, vous devez ajouter `public-hoist-pattern[]=*@types/bluebird*` à `.npmrc`, voir <https://github.com/windingwind/zotero-types?tab=readme-ov-file#usage>.
 
-   Si vous obtenez `npm ERR ! ERESOLVE unable to resolve dependency tree` avec `npm install`, qui est un bogue de dépendance en amont de typescript-eslint, utilisez la commande `npm i -f` pour l'installer.
+Si vous obtenez `npm ERR ! ERESOLVE unable to resolve dependency tree` avec `npm install`, qui est un bogue de dépendance en amont de typescript-eslint, utilisez la commande `npm i -f` pour l'installer.
 
 ### 3. Codez
 

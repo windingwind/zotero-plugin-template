@@ -89,7 +89,7 @@ Search `@example` in `src/examples.ts`. The examples are called in `src/hooks.ts
 ![image](https://user-images.githubusercontent.com/33902321/211739774-cc5c2df8-5fd9-42f0-9cdf-0f2e5946d427.png)
 
 - registerStyleSheet(the official make-it-red example)
-- registerRightClickMenuItem
+- registerRightClickMenuItem (uses the native `Zotero.MenuManager`, Zotero 8+)
 - registerRightClickMenuPopup
 - registerWindowMenuWithSeprator
 - registerExtraColumn
@@ -118,16 +118,6 @@ See [`src/modules/preferenceScript.ts`](./src/modules/preferenceScript.ts)
 - filePickerExample
 - progressWindowExample
 - vtableExample(See Preference Pane Examples)
-
-### PromptExamples
-
-An Obsidian-style prompt(popup command input) module. It accepts text command to run callback, with optional display in the popup.
-
-Activate with `Shift+P`.
-
-![image](https://user-images.githubusercontent.com/33902321/215120009-e7c7ed27-33a0-44fe-b021-06c272481a92.png)
-
-- registerAlertPromptExample
 
 ## Quick Start Guide
 
