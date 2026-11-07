@@ -1,3 +1,7 @@
+menuitem-label = Addon Template: Helper Examples
+menupopup-label = Addon Template: Menupopup
+menuitem-submenulabel = Addon Template
+menuitem-filemenulabel = Addon Template: File Menuitem
 item-section-example1-head-text =
     .label = Plugin Template: Item Info
 item-section-example1-sidenav-tooltip =

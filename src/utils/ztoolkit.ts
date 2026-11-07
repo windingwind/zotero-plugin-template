@@ -1,15 +1,21 @@
-import { ZoteroToolkit } from "zotero-plugin-toolkit";
+import {
+  BasicTool,
+  ClipboardHelper,
+  DialogHelper,
+  FilePickerHelper,
+  KeyboardManager,
+  makeHelperTool,
+  ProgressWindowHelper,
+  UITool,
+  unregister,
+  VirtualizedTableHelper,
+} from "zotero-plugin-toolkit";
 import { config } from "../../package.json";
 
 export { createZToolkit };
 
 function createZToolkit() {
   const _ztoolkit = new ZoteroToolkit();
-  /**
-   * Alternatively, import toolkit modules you use to minify the plugin size.
-   * You can add the modules under the `MyToolkit` class below and uncomment the following line.
-   */
-  // const _ztoolkit = new MyToolkit();
   initZToolkit(_ztoolkit);
   return _ztoolkit;
 }
@@ -31,17 +37,37 @@ function initZToolkit(_ztoolkit: ReturnType<typeof createZToolkit>) {
   );
 }
 
-import { BasicTool, unregister } from "zotero-plugin-toolkit";
-import { UITool } from "zotero-plugin-toolkit";
-
-class MyToolkit extends BasicTool {
+/**
+ * On-demand toolkit: only the modules used by this plugin are bundled.
+ *
+ * Add the modules you need to the class below, e.g. `Reader: ReaderTool`,
+ * `ExtraField: ExtraFieldTool`, `FieldHooks: FieldHookManager`,
+ * `Patch: typeof PatchHelper`, `LargePrefObject: typeof LargePrefHelper`,
+ * `Guide: typeof GuideHelper`.
+ */
+class ZoteroToolkit extends BasicTool {
   UI: UITool;
+  Keyboard: KeyboardManager;
+  Clipboard: typeof ClipboardHelper;
+  FilePicker: typeof FilePickerHelper;
+  ProgressWindow: typeof ProgressWindowHelper;
+  VirtualizedTable: typeof VirtualizedTableHelper;
+  Dialog: typeof DialogHelper;
 
   constructor() {
     super();
     this.UI = new UITool(this);
+    this.Keyboard = new KeyboardManager(this);
+    this.Clipboard = makeHelperTool(ClipboardHelper, this);
+    this.FilePicker = makeHelperTool(FilePickerHelper, this);
+    this.ProgressWindow = makeHelperTool(ProgressWindowHelper, this);
+    this.VirtualizedTable = makeHelperTool(VirtualizedTableHelper, this);
+    this.Dialog = makeHelperTool(DialogHelper, this);
   }
 
+  /**
+   * Unregister everything created by the modules.
+   */
   unregisterAll() {
     unregister(this);
   }
