@@ -18,4 +18,5 @@ jobs:
     with:
       build: "npm run build"
       release: "npm run release"
-    secrets: inherit
+    secrets:
+      GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
