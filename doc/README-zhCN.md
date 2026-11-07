@@ -86,7 +86,7 @@
 ![image](https://user-images.githubusercontent.com/33902321/211739774-cc5c2df8-5fd9-42f0-9cdf-0f2e5946d427.png)
 
 - registerStyleSheet(the official make-it-red example)
-- registerRightClickMenuItem
+- registerRightClickMenuItem (使用原生 `Zotero.MenuManager`，需要 Zotero 8+)
 - registerRightClickMenuPopup
 - registerWindowMenuWithSeprator
 - registerExtraColumn
@@ -115,16 +115,6 @@
 - filePickerExample
 - progressWindowExample
 - vtableExample(See Preference Pane Examples)
-
-### 指令行示例 (PromptExamples)
-
-Obsidian 风格的指令输入模块，它通过接受文本来运行插件，并在弹出窗口中显示可选项。
-
-使用 `Shift+P` 激活。
-
-![image](https://user-images.githubusercontent.com/33902321/215120009-e7c7ed27-33a0-44fe-b021-06c272481a92.png)
-
-- registerAlertPromptExample
 
 ## 快速上手
 
